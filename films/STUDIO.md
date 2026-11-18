@@ -19,14 +19,14 @@ Runs in the CLOUD: every daily run is a fresh session. Set up first (see "Cloud 
 Library: /home/claude/ext/lemo-opuscar (after bootstrap: node deps, .venv, music tier, instruments freepats/vcsl/vsco2ce).
 Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pulley clothesline, crayon-book style).
 
-## Each morning (wake-up message arrives ~07:00 IST)
+## Each morning (run starts ~09:05 IST; topic options reach Jayant ~09:30 — he sleeps till then)
 1. **Trend research (WebSearch, 4–6 searches):** what India is talking about today — festivals/observances, cricket/sports results,
    weather (monsoon, fog, heatwave, winter), viral harmless moments, big cultural days. Never: real people, politicians, politics,
    religion-sensitive conflict, tragedies/disasters/deaths, brands/logos, film/TV/game characters, song lyrics. Use only the mood of the trend.
 1b. **Topic approval (Jayant picks):** send 3 options (2 if the day is thin), each: the trend in a few words + why it's trending
    (one source link), a 2-line story pitch with its hook and twist, and which characters. Mark your recommendation.
    SendUserMessage + PushNotification "Aaj ke 3 topic ready hain — ek chuno". STOP and wait for his pick (or his own topic / tweak).
-   If no reply by 11:00 IST, send one reminder (send_later in this session). If still nothing by 15:00, tell him today's post is skipped
+   If no reply by 12:30 IST, send one reminder (send_later in this session). If still nothing by 15:00, tell him today's post is skipped
    and stop — never pick for him.
 2. **Story:** 45–60 s, one turn, hook in first 2 s, one "native move" of the crayon style (wax-resist, colouring-as-action, child logic,
    drawn-live). Continuity: Arjun (glasses, teal kurta, left ochre building) and Meera (yellow kurta, pink dupatta, braid, bindi,
