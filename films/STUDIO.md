@@ -10,7 +10,8 @@ as run by a human in replies/DMs, and all sponsor deals, contracts and money go 
 - Frame 1 must already be interesting (no blank establishing shot). A question or mystery in the first 2 s.
 - 30–50 s is the sweet spot; one twist; end on a payoff that makes people rewatch or tag someone.
 - Last 2 s: end card drawn in crayon: "अगला पन्ना कल" + "@pannapalatkahani".
-- Caption: 1 hook line (Hinglish) + 1 question that invites comments ("Tum kya karte?") + 6–10 hashtags incl. #pannapalatkahani #pannapalat.
+- Caption: 1 hook line (Hinglish) + 1 question that invites comments ("Tum kya karte?") + EXACTLY 5 hashtags max (Instagram hard limit since Dec 2025;
+  more can make the API post fail): #pannapalatkahani + 4 specific to the story (topic, emotion, format, e.g. #hindistory #animation). No generic #reels/#explore.
 - Note in LOG.md which hook/topic was used, so the week's topics vary.
 
 
@@ -48,7 +49,7 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
    (linear=true), then `ffmpeg -i out/video.mp4 -i out/mixn.wav -map 0:v -map 1:a -c:v libx264 -preset medium -crf 22 -maxrate 8M -bufsize 16M
    -pix_fmt yuv420p -c:a aac -b:a 192k -ar 48000 -movflags +faststart -use_editlist 0 -shortest <name>.mp4` (Instagram wants no edit lists, moov first). Check blackdetect and ebur128; pull 8 frames and look.
 6. **Deliver:** copy mp4 + poster.jpg to /home/claude/outputs, SendUserFile both (FYI, not a second approval); SendUserMessage with the final Instagram caption
-   (Hinglish hook line + question for comments + 6–10 hashtags, incl. #pannapalatkahani) and suggested post time 7–8 PM IST;
+   (Hinglish hook line + question for comments + max 5 hashtags, incl. #pannapalatkahani) and suggested post time 7–8 PM IST;
    and say it goes live at 19:30 unless he says "ruko".
 7. **Host + post** (comic already approved):
    - Hosting: repo github.com/jayantgulati16/pannapalatkahani (public). Each reel gets its OWN orphan branch `reel-epNN`
