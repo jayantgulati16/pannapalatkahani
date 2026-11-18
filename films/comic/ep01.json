@@ -1,0 +1,47 @@
+{
+ "series": "पन्ना पलट",
+ "ep": "1",
+ "title": "बारिश वाली चिट्ठी",
+ "panels": [
+  {
+   "img": "/home/claude/ext/lemo-opuscar/films/baarish-wali-chitthi/stills/c_3.4.jpg",
+   "text": "मीरा को रस्सी पे एक चिट्ठी मिली… पर कागज़ कोरा था!",
+   "note": "Hook: पहले 3 सेकंड में सवाल"
+  },
+  {
+   "img": "/home/claude/ext/lemo-opuscar/films/baarish-wali-chitthi/stills/c_15.jpg",
+   "text": "एक तंग गली… आमने-सामने दो बालकनी, बीच में एक रस्सी।",
+   "note": ""
+  },
+  {
+   "img": "/home/claude/ext/lemo-opuscar/films/baarish-wali-chitthi/stills/c_22.jpg",
+   "text": "अर्जुन चुपके से कुछ लिखता है… सफ़ेद क्रेयॉन से।",
+   "note": "Clue: लिखता दिखता है, पर कुछ दिखता नहीं"
+  },
+  {
+   "img": "/home/claude/ext/lemo-opuscar/films/baarish-wali-chitthi/stills/c_30.jpg",
+   "text": "मीरा परेशान — हर बार कोरा कागज़! तीनों चिट्ठियाँ रेलिंग पे टाँग दीं।",
+   "note": ""
+  },
+  {
+   "img": "/home/claude/ext/lemo-opuscar/films/baarish-wali-chitthi/stills/c_39.6.jpg",
+   "text": "फिर आई बारिश… पूरी गली नीली हो गई।",
+   "note": "Silence → बारिश की आवाज़"
+  },
+  {
+   "img": "/home/claude/ext/lemo-opuscar/films/baarish-wali-chitthi/stills/c_44.jpg",
+   "text": "पानी ने छुपे शब्द पढ़ लिए: “चाय पर चलोगी?”",
+   "note": "Twist"
+  },
+  {
+   "img": "/home/claude/ext/lemo-opuscar/films/baarish-wali-chitthi/stills/c_51.4.jpg",
+   "text": "मीरा का जवाब लाल क्रेयॉन में — “हाँ!” अर्जुन उछल पड़ा!",
+   "note": ""
+  },
+  {
+   "img": "/home/claude/ext/lemo-opuscar/films/baarish-wali-chitthi/stills/c_56.5.jpg",
+   "text": "रस्सी पे चाय आई… और गली थोड़ी छोटी लगने लगी।",
+   "note": "End: अगला पन्ना कल"
+  }
+ ]
+}
