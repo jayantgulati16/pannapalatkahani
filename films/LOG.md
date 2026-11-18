@@ -1,2 +1,5 @@
 # Episode log — Gali Wali Kahaniyan
 - Ep 1 (2026-11-18) बारिश वाली चिट्ठी — Arjun sends blank notes on the pulley line; rain reveals white-crayon "चाय पर चलोगी?"; Meera answers "हाँ!"; chai on the rope. Delivered; Jayant to post on Instagram.
+- Ep 1 posted 2026-11-18 19:32 IST, media id 17920276506534772, https://www.instagram.com/reel/Df4rC5dj3Hi/
+- Ep 2 (for 2026-11-19, International Men's Day) पापा का मफ़लर — trend: North-India fog/cold wave + Men's Day. New characters Papa + Tara at a foggy school-bus stop. Hook: girl wrapped to the nose / Papa's red ears. Gag: "मुझे ठंड नहीं लगती" → आ-छीं!. Twist: crayon-drawn muffler becomes real; drawn sun melts the fog. No voice (Jayant: AI voice = monetisation risk). Built the evening before (Jayant: "kal ka kaam aaj").
+- Ep 2 rendered + mixed 2026-11-18 (48.5 s, −14 LUFS, no voice), hosted at branch reel-ep02 (reel.mp4); Instagram post scheduled 2026-11-19 19:30 IST from the 18 Nov session (send_later trig_018XZk5g9NMbmVVXe4qksDhv). The 19 Nov morning run must NOT make or post another episode for 19 Nov.

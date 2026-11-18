@@ -31,7 +31,7 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
    and stop — never pick for him.
 2. **Story:** 45–60 s, one turn, hook in first 2 s, one "native move" of the crayon style (wax-resist, colouring-as-action, child logic,
    drawn-live). Continuity: Arjun (glasses, teal kurta, left ochre building) and Meera (yellow kurta, pink dupatta, braid, bindi,
-   right teal building). Episode 1: they got together over chai (बारिश वाली चिट्ठी). Keep printed Hindi words (Kalam), 4–6 lines, no voice.
+   right teal building). Episode 1: they got together over chai (बारिश वाली चिट्ठी). Keep printed Hindi words (Kalam), 4–6 lines, no voice (Jayant, 18 Nov: no AI voice — monetisation risk; only his own recorded voice if ever).
 3. **Build:** `cp -r films/baarish-wali-chitthi films/ep-YYYYMMDD` (drop out/, stills/, *.mp4). Rewrite in film.js: SUBS, TITLE, camera
    track, note/prop timelines, meera()/arjun() acting, events (EV). Reuse person(), drawBG(), wash, rain, wtext. New props are fine.
    Rewrite mix.py cue sections for the new timeline (same instruments; original melody each time).
