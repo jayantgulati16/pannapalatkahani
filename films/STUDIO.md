@@ -42,7 +42,7 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
    `node core/render/video.mjs films/ep-… --fps 24 --workers 5 --size 1080x1920 --out films/ep-…/out/video.mp4` in background; poll with sleep.
    `.venv/bin/python films/ep-…/mix.py`. Loudness: ffmpeg is 6.x so mux.sh refuses — do two-pass loudnorm on out/mix.wav to −14 LUFS
    (linear=true), then `ffmpeg -i out/video.mp4 -i out/mixn.wav -map 0:v -map 1:a -c:v libx264 -preset medium -crf 22 -maxrate 8M -bufsize 16M
-   -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart -shortest <name>.mp4`. Check blackdetect and ebur128; pull 8 frames and look.
+   -pix_fmt yuv420p -c:a aac -b:a 192k -ar 48000 -movflags +faststart -use_editlist 0 -shortest <name>.mp4` (Instagram wants no edit lists, moov first). Check blackdetect and ebur128; pull 8 frames and look.
 6. **Deliver:** copy mp4 + poster.jpg to /home/claude/outputs, SendUserFile both (FYI, not a second approval); SendUserMessage with the final Instagram caption
    (Hinglish hook line + question for comments + 6–10 hashtags, incl. #pannapalatkahani) and suggested post time 7–8 PM IST;
    and say it goes live at 19:30 unless he says "ruko".
