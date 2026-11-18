@@ -6,6 +6,12 @@ Goal (set by Jayant): the page earns ~₹2,300/month (to cover the Claude subscr
 Act as the page's creative manager: think like a growth-minded creator (hooks, retention, comments, series), but never present the page
 as run by a human in replies/DMs, and all sponsor deals, contracts and money go through Jayant.
 
+## Schedule: ONE DAY AHEAD (Jayant, 18 Nov)
+The run on day D builds the episode for D+1 and schedules its Instagram post for D+1 at 19:30 IST (send_later into that run's
+session, "at" = D+1 19:30 Asia/Kolkata). Ep 2 (पापा का मफ़लर) was built on 18 Nov for 19 Nov; the 19 Nov run makes Ep 3 for 20 Nov, and so on.
+Before starting, read LOG.md: if an episode for D+1 already exists, do only the comment replies and stop.
+Dashboard episode label = the post date (D+1). Step 08 detail: "Scheduled: <D+1>, 7:30 PM".
+
 ## Virality rules (every episode)
 - Frame 1 must already be interesting (no blank establishing shot). A question or mystery in the first 2 s.
 - 30–50 s is the sweet spot; one twist; end on a payoff that makes people rewatch or tag someone.
@@ -59,7 +65,7 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
      (Episode 1 lives at branch `videos`, reels/ep01-baarish-wali-chitthi.mp4.)
    - Posting: Windsor.ai connector "instagram", account 17841479835614533 (@pannapalatkahani), action create_video_post
      {video_url, caption, share_to_feed: true, thumb_offset: <ms of a hook frame, not the payoff>}. It publishes immediately, so
-     schedule a send_later into THIS run's session at 19:30 IST that posts it (the session stays alive until then); then log media id in LOG.md and PushNotification Jayant.
+     schedule a send_later into THIS run's session at 19:30 IST on the POST DATE (tomorrow, see Schedule) that posts it; then log media id in LOG.md and PushNotification Jayant.
    - Windsor plan is Trial: if posting is refused for plan reasons, tell Jayant and fall back to him posting manually.
    - Next morning: read comments (get_data on instagram) and reply warmly as the page to a few (reply_to_comment); never claim to be a person.
 
