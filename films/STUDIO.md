@@ -21,9 +21,13 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
 
 ## Each morning (wake-up message arrives ~07:00 IST)
 1. **Trend research (WebSearch, 4–6 searches):** what India is talking about today — festivals/observances, cricket/sports results,
-   weather (monsoon, fog, heatwave, winter), viral harmless moments, big cultural days. Pick ONE theme that fits a gentle Arjun–Meera
-   gali story. Never: real people, politicians, politics, religion-sensitive conflict, tragedies/disasters/deaths, brands/logos,
-   film/TV/game characters, song lyrics. Use only the mood of the trend.
+   weather (monsoon, fog, heatwave, winter), viral harmless moments, big cultural days. Never: real people, politicians, politics,
+   religion-sensitive conflict, tragedies/disasters/deaths, brands/logos, film/TV/game characters, song lyrics. Use only the mood of the trend.
+1b. **Topic approval (Jayant picks):** send 3 options (2 if the day is thin), each: the trend in a few words + why it's trending
+   (one source link), a 2-line story pitch with its hook and twist, and which characters. Mark your recommendation.
+   SendUserMessage + PushNotification "Aaj ke 3 topic ready hain — ek chuno". STOP and wait for his pick (or his own topic / tweak).
+   If no reply by 11:00 IST, send one reminder (send_later in this session). If still nothing by 15:00, tell him today's post is skipped
+   and stop — never pick for him.
 2. **Story:** 45–60 s, one turn, hook in first 2 s, one "native move" of the crayon style (wax-resist, colouring-as-action, child logic,
    drawn-live). Continuity: Arjun (glasses, teal kurta, left ochre building) and Meera (yellow kurta, pink dupatta, braid, bindi,
    right teal building). Episode 1: they got together over chai (बारिश वाली चिट्ठी). Keep printed Hindi words (Kalam), 4–6 lines, no voice.
@@ -69,8 +73,8 @@ If a run fails (render error etc.), fix and retry; if it can't finish, notify hi
 Artifact slug 24eda043-97ef-4afd-b803-8b9bf331dc5a (https://claude.ai/artifact/5ZV2RdomrXAr4ictKxg7x5), Data type, store-backed.
 Write with db_write (read version first with db_get/db_list; every op on an existing doc needs ifVersion; one call at a time).
 - `data/pipeline/steps/01..09` = today's flow: {n, episode, step, status: done|running|waiting|todo|failed, detail, at (HH:MM IST)}.
-  Steps: 01 Trend research · 02 Story · 03 Drawing + look check · 04 Comic ready (approval) · 05 Approved ·
-  06 Render · 07 Music + sound mix · 08 Post on Instagram (19:30) · 09 Comments ka reply.
+  Steps: 01 Trend research + 3 topic options · 02 Topic chosen (approval) · 03 Story + drawing · 04 Comic ready (approval) ·
+  05 Comic approved · 06 Render · 07 Music + sound mix · 08 Post on Instagram (19:30) · 09 Comments ka reply.
   At the start of a run, reset all nine for the new episode (status todo, new `episode` label "Ep N · <title> · <date>"),
   then mark each step running → done as you go, with a short Hinglish detail. Render step: update detail with progress every ~10 min.
 - `data/episodes/list/epNN` = {ep, date, title, topic, status, media_id}. Set media_id right after posting (joins reel stats).
