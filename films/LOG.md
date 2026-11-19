@@ -20,3 +20,4 @@
 - YouTube schedule (Jayant, 19 Nov): every episode also on YouTube Shorts at 18:30 IST on its post date (Instagram stays 19:30). Backlog: Ep 2 → 20 Nov 18:30 (send_later), Ep 3 → 21 Nov 18:30 (send_later). From Ep 4 the daily run schedules both posts. YouTube publish_at needs Partner, so uploads happen at the time via send_later.
 - 2026-11-19 (Jayant): Facebook Page/uploads — 'Facebook 2 din baad dekhenge' (~21 Nov). No Zap workflow or Zapier skill for now; keep the current flow (Claude daily run + send_later posts).
 - Ep 2 posted on Instagram 2026-11-19 19:30 IST (Gemini-voice version from reel-ep02), media id 18068143898623884. Permalink not yet in Windsor's cache at post time.
+- 2026-11-19 (Jayant): target ~₹2,400/month, high quality. Length A/B test for a week: Ep 4 60 s, Ep 5 30 s, Ep 6 60 s, Ep 7 30 s, Ep 8 60 s; decide in the 25 Nov recap. Personalised crayon-reel service (₹299–499): 'abhi nahi'.

@@ -14,7 +14,7 @@ Dashboard episode label = the post date (D+1). Step 08 detail: "Scheduled: <D+1>
 
 ## Virality rules (every episode)
 - Frame 1 must already be interesting (no blank establishing shot). A question or mystery in the first 2 s.
-- 30–50 s is the sweet spot; one twist; end on a payoff that makes people rewatch or tag someone.
+- Length: see the A/B test in the Growth playbook; one twist (two in the 60 s version); end on a payoff that makes people rewatch or tag someone.
 - Last 2 s: end card drawn in crayon: "अगला पन्ना कल" + "@pannapalatkahani".
 - Caption: 1 hook line (Hinglish) + 1 question that invites comments ("Tum kya karte?") + EXACTLY 5 hashtags max (Instagram hard limit since Dec 2025;
   more can make the API post fail): #pannapalatkahani + 4 specific to the story (topic, emotion, format, e.g. #hindistory #animation). No generic #reels/#explore.
@@ -26,7 +26,12 @@ avg watch 6 s of 61 s (10%), 2 shares, 1 save, real comments only from friends. 
 Ranking signals (Mosseri, 2025–26 guides): watch time / completion, sends (DM shares) per reach, likes per reach; saves, rewatches help.
 Rules from Ep 4 on:
 - 0–1 s: VOICE starts at 0.2 s with a question/conflict line, and the frame already shows the conflict. No title card before the hook pays; title small or at ~3 s.
-- Length 25–35 s (not 45–60). One gag, one twist, payoff; cut establishing/wide holds to ≤1 s.
+- LENGTH A/B TEST (Jayant, 19 Nov, one week): alternate by episode — Ep 4 (21 Nov) ~60 s, Ep 5 (22 Nov) ~30 s, Ep 6 ~60 s, Ep 7 ~30 s, Ep 8 (25 Nov) ~60 s.
+  ~30 s version: one gag, one twist, payoff; establishing/wide holds ≤1 s.
+  ~60 s version ("hook rahe puri video pe"): three mini-chapters of ~18–20 s, each opening with its own question/turn; something new
+  (question, reveal, gag, sound hit) every 6–8 s; no hold longer than 2 s; mid-point twist ~30 s; second twist ~45 s; payoff + loop.
+  Log each episode's length + 24 h numbers (avg watch %, skip rate, views, shares/reach) in learnings; in the 25 Nov recap pick the winner with Jayant.
+- Goal (Jayant): ~₹2,400/month, "high quality" every time. No fake followers/bots/engagement pods ever. Personalised-reel service: Jayant said "abhi nahi" (19 Nov).
 - Loop: last 1–2 s visually rhyme with frame 1 so it replays (end card ≤1.5 s, over the loop frame).
 - Big readable text in the first 3 s (top third), short lines.
 - Make it SENDABLE: relatable situation people send to a specific person (dost, papa, bhai-behen, partner). Caption CTA: "Us dost ko bhejo jo…".
@@ -51,7 +56,7 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
    SendUserMessage + PushNotification "Aaj ke 3 topic ready hain — ek chuno". STOP and wait for his pick (or his own topic / tweak).
    If no reply by 12:30 IST, send one reminder (send_later in this session). If still nothing by 15:00, tell him today's post is skipped
    and stop — never pick for him.
-2. **Story:** 45–60 s, one turn, hook in first 2 s, one "native move" of the crayon style (wax-resist, colouring-as-action, child logic,
+2. **Story:** length per the A/B test (Growth playbook), one turn, hook in first 2 s, one "native move" of the crayon style (wax-resist, colouring-as-action, child logic,
    drawn-live). Continuity: Arjun (glasses, teal kurta, left ochre building) and Meera (yellow kurta, pink dupatta, braid, bindi,
    right teal building). Episode 1: they got together over chai (बारिश वाली चिट्ठी). Keep printed Hindi words (Kalam), 4–6 lines. VOICE (Jayant, 19 Nov — replaces the 18 Nov no-voice rule): Gemini TTS, gemini-3.8-flash-tts, narrator Sulafat + characters (Arjun Achird, Meera Leda); prompt format and scripts in films/ep-20261120/voice/make_voice.sh + /home/claude/tools/gemini_tts.py, gemini_stt.py (copied from studio tools/). Key: never in the repo; save only to /root/.gemini_key (ask Jayant if missing). Free quota ~20 req/day/model: generate each line once, speech-check with gemini-3-flash-preview. Each SUBS entry carries vo/vt; mix.py places voice/<id>.wav and ducks music under it.
 3. **Build:** `cp -r films/baarish-wali-chitthi films/ep-YYYYMMDD` (drop out/, stills/, *.mp4). Rewrite in film.js: SUBS, TITLE, camera
