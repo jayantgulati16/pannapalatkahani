@@ -21,3 +21,4 @@
 - 2026-11-19 (Jayant): Facebook Page/uploads — 'Facebook 2 din baad dekhenge' (~21 Nov). No Zap workflow or Zapier skill for now; keep the current flow (Claude daily run + send_later posts).
 - Ep 2 posted on Instagram 2026-11-19 19:30 IST (Gemini-voice version from reel-ep02), media id 18068143898623884. Permalink not yet in Windsor's cache at post time.
 - 2026-11-19 (Jayant): target ~₹2,400/month, high quality. Length A/B test for a week: Ep 4 60 s, Ep 5 30 s, Ep 6 60 s, Ep 7 30 s, Ep 8 60 s; decide in the 25 Nov recap. Personalised crayon-reel service (₹299–499): 'abhi nahi'.
+- IMPORTANT (19 Nov, Jayant): the daily task prompt's line 'No AI voice ever' is OUTDATED. Jayant replaced it on 19 Nov — every episode gets Gemini Hindi narration (hook line at 0.2 s) as in STUDIO.md VOICE. Narration drives interest; never ship without it.
