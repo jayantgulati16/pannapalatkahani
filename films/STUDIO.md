@@ -37,7 +37,7 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
    and stop — never pick for him.
 2. **Story:** 45–60 s, one turn, hook in first 2 s, one "native move" of the crayon style (wax-resist, colouring-as-action, child logic,
    drawn-live). Continuity: Arjun (glasses, teal kurta, left ochre building) and Meera (yellow kurta, pink dupatta, braid, bindi,
-   right teal building). Episode 1: they got together over chai (बारिश वाली चिट्ठी). Keep printed Hindi words (Kalam), 4–6 lines, no voice (Jayant, 18 Nov: no AI voice — monetisation risk; only his own recorded voice if ever).
+   right teal building). Episode 1: they got together over chai (बारिश वाली चिट्ठी). Keep printed Hindi words (Kalam), 4–6 lines. VOICE (Jayant, 19 Nov — replaces the 18 Nov no-voice rule): Gemini TTS, gemini-3.8-flash-tts, narrator Sulafat + characters (Arjun Achird, Meera Leda); prompt format and scripts in films/ep-20261120/voice/make_voice.sh + /home/claude/tools/gemini_tts.py, gemini_stt.py (copied from studio tools/). Key: never in the repo; save only to /root/.gemini_key (ask Jayant if missing). Free quota ~20 req/day/model: generate each line once, speech-check with gemini-3-flash-preview. Each SUBS entry carries vo/vt; mix.py places voice/<id>.wav and ducks music under it.
 3. **Build:** `cp -r films/baarish-wali-chitthi films/ep-YYYYMMDD` (drop out/, stills/, *.mp4). Rewrite in film.js: SUBS, TITLE, camera
    track, note/prop timelines, meera()/arjun() acting, events (EV). Reuse person(), drawBG(), wash, rain, wtext. New props are fine.
    Rewrite mix.py cue sections for the new timeline (same instruments; original melody each time).
