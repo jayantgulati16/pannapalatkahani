@@ -20,6 +20,22 @@ Dashboard episode label = the post date (D+1). Step 08 detail: "Scheduled: <D+1>
   more can make the API post fail): #pannapalatkahani + 4 specific to the story (topic, emotion, format, e.g. #hindistory #animation). No generic #reels/#explore.
 - Note in LOG.md which hook/topic was used, so the week's topics vary.
 
+## Growth playbook (Jayant, 19 Nov: "views kyun nahi aa rahe — analysis karo, seekho, waise hi kaam karo")
+Ep 1 data (24 h): 156 views, 133 reach, 97% of reach NON-followers (Instagram did test it on strangers), skip rate 65%,
+avg watch 6 s of 61 s (10%), 2 shares, 1 save, real comments only from friends. → It failed the test pool in the first 3 s, so distribution stopped.
+Ranking signals (Mosseri, 2025–26 guides): watch time / completion, sends (DM shares) per reach, likes per reach; saves, rewatches help.
+Rules from Ep 4 on:
+- 0–1 s: VOICE starts at 0.2 s with a question/conflict line, and the frame already shows the conflict. No title card before the hook pays; title small or at ~3 s.
+- Length 25–35 s (not 45–60). One gag, one twist, payoff; cut establishing/wide holds to ≤1 s.
+- Loop: last 1–2 s visually rhyme with frame 1 so it replays (end card ≤1.5 s, over the loop frame).
+- Big readable text in the first 3 s (top third), short lines.
+- Make it SENDABLE: relatable situation people send to a specific person (dost, papa, bhai-behen, partner). Caption CTA: "Us dost ko bhejo jo…".
+- Cover (thumb_offset) = the hook frame with the conflict visible.
+- Post daily, same time; ask Jayant to share each reel to his Story/WhatsApp in the first 30 min (real sends from real accounts).
+- Measure every reel at ~24 h (Windsor: media_views, media_reach, media_reel_skip_rate, media_reel_avg_watch_time, media_shares) and log in learnings:
+  targets skip rate < 50%, avg watch > 40% of length, shares/reach > 1%.
+- Instagram prefers original content: our drawings are code-drawn originals (good). Follow Instagram's AI-label rules for the AI voice when posting.
+
 
 Owner: Jayant. Language with him: Hinglish, direct. He approves every episode before it goes out.
 Runs in the CLOUD: every daily run is a fresh session. Set up first (see "Cloud session" at the end).

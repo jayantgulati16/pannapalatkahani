@@ -21,3 +21,4 @@ ok p1 && say p1 Algenib "Papa: a loving Indian father in his late thirties, teet
 ok n3 && say n3 Sulafat "$NAR" "Style: amused, knowing smile. Pace: medium." "पापा हमेशा कहते।"
 ok n4 && say n4 Sulafat "$NAR" "Style: a knowing, magical smile, slowing down on the last word like a secret. Pace: medium." "पर तारा के पास क्रेयॉन थे।"
 ok n5 && say n5 Sulafat "$NAR" "Style: warm and moving, a small pause after the first half, the last words soft and full of love. Pace: slow." "पापा को भी ठंड लगती है… बस वो बताते नहीं।"
+ok h0 && say h0 Sulafat "$NAR" "Style: curious and playful, a hook that makes you lean in, rising on the question at the end. Pace: lively." "इतना बड़ा मफ़लर… और पापा के कान लाल?"
