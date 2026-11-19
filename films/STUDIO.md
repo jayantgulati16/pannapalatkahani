@@ -111,6 +111,8 @@ Write with db_write (read version first with db_get/db_list; every op on an exis
   then mark each step running → done as you go, with a short Hinglish detail. Render step: update detail with progress every ~10 min.
 - `data/episodes/list/epNN` = {ep, date, title, topic, status, media_id}. Set media_id right after posting (joins reel stats).
 - `data/learnings/list/<YYYY-MM-DD>-<k>` = {date, learning, action}: 1–3 real learnings a day (what worked/failed, from stats or the build).
+- `data/ideas/list/<id>` = {title, detail, status: idea|try|done, source, added} — the "Notebook: aage kya try karein" (Jayant, 19 Nov). Add ideas there
+  whenever one comes up (his or yours), move status when tried; Jayant can add/tick them on the page too. Read it before planning each week.
 - `data/earnings/list/<id>` = {month: "YYYY-MM", source, amount} — only when Jayant reports money received.
 - Reel stats are a live Windsor query (last 30 days: the Windsor trial only allows 30 days of history).
 
