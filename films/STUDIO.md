@@ -83,6 +83,10 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
      {video_url, caption, share_to_feed: true, thumb_offset: <ms of a hook frame, not the payoff>}. It publishes immediately, so
      schedule a send_later into THIS run's session at 19:30 IST on the POST DATE (tomorrow, see Schedule) that posts it; then log media id in LOG.md and PushNotification Jayant.
    - Windsor plan is Trial: if posting is refused for plan reasons, tell Jayant and fall back to him posting manually.
+   - YouTube (Jayant, 19 Nov): also upload every episode as a YouTube Short at 18:30 IST on the post date, via Zapier YouTube upload_video
+     (video = the reel-epNN raw URL; title '<title> <emoji> <hook> | Hindi Crayon Kahani #shorts'; Hinglish description with the comment question,
+     the 'पन्ना पलट — हर दिन एक नई crayon कहानी · Roz shaam 7:30 baje' line and 4 hashtags; 8 tags; category_id 1 Film & Animation; language hi;
+     made_for_kids false; public). Schedule it with a second send_later at 18:30. Facebook Page upload (Zapier Facebook Pages page_video) once a Page is connected.
    - Next morning: read comments (get_data on instagram) and reply warmly as the page to a few (reply_to_comment); never claim to be a person.
 
 If a run fails (render error etc.), fix and retry; if it can't finish, notify him honestly with what happened.
