@@ -76,20 +76,20 @@ samp('hit', 'timpani', 28.55, 'A2', 2.0, .7)
 for t, p in [(29.0, 'A3'), (30.4, 'E4'), (31.6, 'C4'), (32.9, 'B3')]: piano(t, p, 1.6, .28, -.1)
 drone(28.6, 4.8, ('A1',), .18)
 # ===== H 33.4–37.6: "…1996 की आग": low strings swell under the watchman =====
-drone(33.4, 4.4, ('A1', 'E2'), .33)
+drone(33.4, 5.6, ('A1', 'E2'), .33)
 for i, p in enumerate(['C3', 'D#3', 'A3']): samp('str', 'cellos', 33.6 + i * .5, p, 3.8 - i * .5, .25, .2 * (-1) ** i, 1.0, attack=1.0, release=1.0)
-trem(34.6, 3.0, ['D#5', 'E5'], .16, 2.0)
-# ===== I 37.6–41: the warm tiffin: three music-box notes, steam =====
-for i, p in enumerate(['E5', 'C5', 'E5']): box(37.8 + i * .6, p, .38, .1)
-air(37.7, 3.0, ['A4', 'C5'], .16)
-# ===== J 41–43.3: the mirror: silence … the STING =====
-samp('str', 'violins_trem', 41.0, 'A6', .9, .08, 0, 1.0, attack=.6, release=.2)
-cluster(41.9, 1.0)
-for i, p in enumerate(['A5', 'A#5', 'B5', 'F6']): samp('str', 'violins', 41.9, p, 1.3, .3, .2 * (-1) ** i, 1.0, attack=.01, release=.8)
-add(st['hit'], crash(.5), 41.9, .5, 0)
-# ===== Z 43.3–45: end card: the lullaby fragment, out of tune, one bell =====
-drone(43.3, 1.9, ('A1',), .25)
-lullaby(43.4, .36, .38, upto=4.5, det=.5)
+trem(34.6, 4.2, ['D#5', 'E5'], .16, 2.0)
+# ===== I 39–42: the warm tiffin: three music-box notes, steam =====
+for i, p in enumerate(['E5', 'C5', 'E5']): box(39.2 + i * .6, p, .38, .1)
+air(39.1, 2.9, ['A4', 'C5'], .16)
+# ===== J 42–44.3: the mirror: silence … the STING =====
+samp('str', 'violins_trem', 42.0, 'A6', .9, .08, 0, 1.0, attack=.6, release=.2)
+cluster(42.9, 1.0)
+for i, p in enumerate(['A5', 'A#5', 'B5', 'F6']): samp('str', 'violins', 42.9, p, 1.3, .3, .2 * (-1) ** i, 1.0, attack=.01, release=.8)
+add(st['hit'], crash(.5), 42.9, .5, 0)
+# ===== Z 44.3–46: end card: the lullaby fragment, out of tune, one bell =====
+drone(44.3, 1.9, ('A1',), .25)
+lullaby(44.4, .36, .38, upto=4.5, det=.5)
 
 # ———————————————————— foley ————————————————————
 def env(n, a=.004, r=.05):
@@ -168,7 +168,7 @@ gains = {'drone': 1.0, 'str': .9, 'keys': .85, 'box': .9, 'hit': 1.0}
 mus = sum(st[k] * gains[k] for k in gains)
 # real silence: the bulb dies (26.5–27.0) and the breath before the sting (41.2–41.9)
 gate = np.ones(N, np.float32)
-for a, b in [(26.5, 27.0), (41.25, 41.88)]:
+for a, b in [(26.5, 27.0), (42.25, 42.88)]:
     i0, i1 = int(a * SR), int(b * SR); r = int(.08 * SR); gate[i0:i1] = .05; gate[i0 - r:i0] = np.linspace(1, .05, r)
 out = mus * (gate * duck)[:, None] + (st['foley'] * 1.1 + st['amb'] * gate[:, None]) * (1 - .3 * sm)[:, None] + st['voice'] * 1.3
 out = out[:int(DUR * SR)]

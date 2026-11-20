@@ -1,4 +1,4 @@
-// 13वाँ फ्लोर (भाग 1) — The 13th Floor, Part 1. Ep 4, posts 21 Nov 2026. Vertical 1080×1920, 24 fps, 45 s.
+// 13वाँ फ्लोर (भाग 1) — The 13th Floor, Part 1. Ep 4, posts 21 Nov 2026. Vertical 1080×1920, 24 fps, 46 s.
 // Night look: wax pastel on black paper (light is drawn, dark is the paper), one spot red (the lift's "13").
 // A 12-floor building. 11:40 pm, Riya alone in the lift. It stops at 13. An old amma in a shawl calls her by name, offers a tiffin.
 // Ground floor: the watchman says the 13th floor has been shut since the 1996 fire. The tiffin in her hand is still warm.
@@ -9,7 +9,7 @@ STYLE.clean = CLEAN;
 import { group, clearGroup, part, tube } from './rig.js';
 import { clamp, lerp, hash, ss, eio, eo, ei } from '/core/lib.js';
 
-export const DUR = 45.0;
+export const DUR = 46.0;
 const NOSUBS = new URLSearchParams(location.search).get('nosubs') === '1';
 const K = { ink: '#141218', bone: '#ece4d2', chalk: '#cfc9bb', grey: '#86858e', dgrey: '#45434d', steel: '#a3a9b1', steelD: '#5e646d', steelL: '#d3d8dc',
   red: '#ff3b2a', redD: '#9e2318', bulb: '#ffe6a0', amber: '#e7b25a', skin: '#d8a585', skinO: '#c99a7e', kurta: '#5f86b0', kurtaD: '#3e5f86', jeans: '#34456b',
@@ -23,16 +23,16 @@ const AH = 680;
 
 // ——— printed words / voice script (N narrator, R Riya, A amma, G guard) — '|' breaks a line ———
 export const SUBS = [
-  { t0: 0.0, t1: 3.0, text: 'बिल्डिंग में सिर्फ 12 फ्लोर हैं…|तो लिफ्ट 13 पे क्यों रुकी?', who: 'N', vo: 'n1', vt: 0.2 },
-  { t0: 4.4, t1: 7.4, text: 'रात 11:40… रिया लिफ्ट में अकेली थी।', who: 'N', vo: 'n2', vt: 4.4 },
-  { t0: 9.8, t1: 13.8, text: '“रिया… आ गई बेटा?|कब से राह देख रही थी।”', who: 'A', vo: 'a1', vt: 9.8 },
-  { t0: 14.4, t1: 17.4, text: 'रिया ने यहाँ किसी को|अपना नाम नहीं बताया था।', who: 'N', vo: 'n3', vt: 14.4 },
-  { t0: 17.9, t1: 20.9, text: '“बंद हो जा… प्लीज़!”', who: 'R', vo: 'r1', vt: 18.0 },
-  { t0: 23.2, t1: 26.6, text: '“तेरे लिए आलू के पराठे बनाए हैं…”', who: 'A', vo: 'a2', vt: 23.2 },
-  { t0: 29.6, t1: 32.0, text: '“मैडम, किस फ्लोर से आ रही हो?”', who: 'G', vo: 'g1', vt: 29.6 },
-  { t0: 32.2, t1: 33.6, text: '“…तेरह से।”', who: 'R', vo: 'r2', vt: 32.2 },
-  { t0: 33.8, t1: 37.5, text: '“तेरहवाँ फ्लोर?|वो तो 1996 की आग के बाद से बंद है…”', who: 'G', vo: 'g2', vt: 33.8 },
-  { t0: 37.8, t1: 40.9, text: 'तो ये टिफ़िन…|अब तक गरम क्यों है?', who: 'N', vo: 'n4', vt: 37.8 },
+  { t0: 0.0, t1: 5.0, text: 'बिल्डिंग में सिर्फ 12 फ्लोर हैं…|तो लिफ्ट 13 पे क्यों रुकी?', who: 'N', vo: 'n1', vt: 0.15 },
+  { t0: 5.1, t1: 9.6, text: 'रात 11:40… रिया लिफ्ट में अकेली थी।', who: 'N', vo: 'n2', vt: 5.1 },
+  { t0: 9.8, t1: 14.2, text: '“रिया… आ गई बेटा?|कब से राह देख रही थी।”', who: 'A', vo: 'a1', vt: 9.8 },
+  { t0: 14.3, t1: 18.7, text: 'रिया ने यहाँ किसी को|अपना नाम नहीं बताया था।', who: 'N', vo: 'n3', vt: 14.3 },
+  { t0: 18.8, t1: 21.1, text: '“बंद हो जा… प्लीज़!”', who: 'R', vo: 'r1', vt: 18.8 },
+  { t0: 22.6, t1: 26.8, text: '“तेरे लिए आलू के पराठे बनाए हैं…”', who: 'A', vo: 'a2', vt: 22.6 },
+  { t0: 29.5, t1: 31.7, text: '“मैडम, किस फ्लोर से आ रही हो?”', who: 'G', vo: 'g1', vt: 29.5 },
+  { t0: 32.0, t1: 33.3, text: '“…तेरह से।”', who: 'R', vo: 'r2', vt: 32.0 },
+  { t0: 33.5, t1: 38.9, text: '“तेरहवाँ फ्लोर?|वो तो 1996 की आग के बाद से बंद है…”', who: 'G', vo: 'g2', vt: 33.5 },
+  { t0: 39.1, t1: 41.9, text: 'तो ये टिफ़िन…|अब तक गरम क्यों है?', who: 'N', vo: 'n4', vt: 39.1 },
 ];
 
 // ——— text: Devanagari needs whole words; reveal = clip wiping left → right ———
@@ -73,13 +73,13 @@ const SHOTS = [
   [27.0, 27.65, 'corr', [4900, 2120, 1.12], [4900, 2120, 1.12]],
   [27.65, 28.6, 'panel', [900, 1050, 1.6], [900, 1050, 1.75]],
   [28.6, 33.4, 'lobby', [6950, 2050, 0.8], [7020, 2150, 0.98]],
-  [33.4, 37.6, 'lobby', [7470, 2380, 1.75], [7470, 2360, 2.1]],
-  [37.6, 41.0, 'tiffin', [8900, 1750, 1.0], [8900, 1700, 1.22]],
-  [41.0, 43.3, 'lobby', [6870, 2150, 1.1], [6858, 2330, 2.8]],
-  [43.3, 45.01, 'end', [900, 1050, 1.1], [900, 1050, 1.15]],
+  [33.4, 39.0, 'lobby', [7470, 2380, 1.75], [7470, 2360, 2.15]],
+  [39.0, 42.0, 'tiffin', [8900, 1750, 1.0], [8900, 1700, 1.22]],
+  [42.0, 44.3, 'lobby', [6870, 2150, 1.1], [6858, 2330, 2.8]],
+  [44.3, 46.01, 'end', [900, 1050, 1.1], [900, 1050, 1.15]],
 ];
 function shotAt(t) { return SHOTS.find(s => t >= s[0] && t < s[1]) || SHOTS[SHOTS.length - 1]; }
-const HITS = [[1.9, 10], [7.6, 6], [27.35, 34], [27.7, 18], [28.0, 14], [28.3, 10], [41.9, 16]];
+const HITS = [[1.9, 10], [7.6, 6], [27.35, 34], [27.7, 18], [28.0, 14], [28.3, 10], [42.9, 16]];
 function shake(t) {
   let x = 0, y = 0;
   for (const [h, a] of HITS) { const d = t - h; if (d < 0 || d > 0.6) continue; const e = a * Math.exp(-d / 0.09); x += (hash(BOIL.step * 3.1 + h) - .5) * 2 * e; y += (hash(BOIL.step * 5.7 + h) - .5) * 2 * e; }
@@ -94,7 +94,7 @@ function flick(t, set) {
     if (t > 11.9 && t < 12.3) b = (BOIL.step % 2) ? 0.2 : 1;
     if (t > 26.0 && t < 27.0) b = (t > 26.5) ? 0.06 : ((BOIL.step % 2) ? 0.15 : 0.9);
   }
-  if (set === 'lobby' && t > 42.7) b = 1 - ss(pr(t, 42.7, 43.2)) * 0.95;
+  if (set === 'lobby' && t > 43.7) b = 1 - ss(pr(t, 43.7, 44.2)) * 0.95;
   return b;
 }
 
@@ -118,12 +118,12 @@ function lampAt(x, y, rad, w) { return [sx(x) / W, 1 - sy(y) / H, rad, w]; }
 const DISPLAY = t => {
   if (t < 0.6) return '10'; if (t < 1.2) return '11'; if (t < 1.9) return '12';
   if (t >= 27.65 && t < 28.6) { const f = Math.max(0, 13 - Math.floor((t - 27.65) / 0.075)); return f <= 0 ? 'G' : String(f); }
-  if (t >= 28.6 && t < 43.3) return 'G';
+  if (t >= 28.6 && t < 44.3) return 'G';
   return '13';
 };
 const BTN = []; for (let r = 0; r < 6; r++) for (let c = 0; c < 2; c++) BTN.push({ n: 12 - r * 2 - (1 - c), x: 720 + c * 360, y: 1360 + r * 230 });
 const CLOSE = [1080, 2760], OPEN = [720, 2760];
-const PRESSES = [18.0, 18.55, 19.0, 19.35, 19.65, 19.9, 20.15];
+const PRESSES = [18.2, 18.75, 19.2, 19.55, 19.85, 20.1, 20.4];
 function drawPanel(t) {
   const B = BG;
   poly(B.f, rect(300, 300, 1500, 3200), K.steelD, 0.9, { gap: 7, w: 9, ang: 1.57, seed: 10 });
@@ -245,7 +245,7 @@ function drawLobby(t) {
   for (let i = 0; i < 9; i++) line(B.l, [[6850 + (i - 4) * 120, 2720], [6850 + (i - 4) * 420, 3400]], { w: 3, col: K.grey, p: 0.28, seed: 610 + i });
   for (let i = 0; i < 3; i++) { const y = 2720 + [60, 190, 400][i]; line(B.l, [[L0, y], [R0, y]], { w: 3, col: K.grey, p: 0.28, seed: 620 + i }); }
   poly(B.f, rect(LDOOR[0] - 60, LDOOR[1] - 140, LDOOR[2] + 60, LDOOR[3]), K.steelD, 0.85, { ang: 1.57, seed: 630 });
-  const open = t >= 41 ? 1 : ss(pr(t, 28.62, 29.0));
+  const open = t >= 42 ? 1 : ss(pr(t, 28.62, 29.0));
   poly(B.f, rect(...LDOOR), K.steel, 0.5, { ang: 1.57, seed: 631 });
   poly(B.f, rect(LMIR[0] - 30, LMIR[1] - 30, LMIR[2] + 30, LMIR[3] + 30), K.steelD, 0.7, { seed: 632 });
   poly(B.f, rect(...LMIR), '#2b3036', 0.85, { seed: 633 });
@@ -451,7 +451,7 @@ function riyaLobby(t) {
   const hy = gy - AH * k + breath;
   const exp = { eyes: 'pop', brows: 'worried', mouth: 'open' }; const look = [1, 0];
   if (t > 31) exp.mouth = 'small';
-  if (t > 32.2 && t < 33.4) exp.mouth = 'o';
+  if (t > 32.0 && t < 33.3) exp.mouth = 'o';
   if (t > 33.8) exp.mouth = 'o';
   const hands = { L: [x - 70 * k, hy + 320 * k], R: [x + 30 * k, hy + 170 * k] };
   return { kind: 'riya', t, x, gy, k, fx: 1, hy, hands, feet: { L: [x - 34 * k, gy], R: [x + 34 * k, gy] }, exp, look, items: [{ type: 'tiffin', side: 'L', hang: true, tk: 0.5 }], buds: 'R' };
@@ -467,7 +467,7 @@ function amma(t) {
   const exp = { eyes: 'closed', brows: 'flat', mouth: 'smile' };
   if (t > 9.8 && t < 13.8) exp.mouth = (BOIL.step % 3) ? 'small' : 'smile';
   if (t >= 21.2) exp.eyes = 'glint';
-  if (t > 23.2 && t < 26.6) exp.mouth = (BOIL.step % 3) ? 'small' : 'smile';
+  if (t > 22.6 && t < 26.7) exp.mouth = (BOIL.step % 3) ? 'small' : 'smile';
   let hands = { L: [x - 30 * k, hy + 290 * k], R: [x + 30 * k, hy + 290 * k] };
   if (t > 22.7) { const u = eo(pr(t, 22.7, 23.3)); hands = { L: [x - 70 * k, hy + lerp(290, 250, u) * k], R: [x + 70 * k, hy + lerp(290, 250, u) * k] }; }
   return { kind: 'amma', t, x, gy, k, fx: 1, hy, hands, feet: {}, exp, look: [0, 0], items: [{ type: 'tiffin', side: 'both', tk: 0.4 }] };
@@ -476,8 +476,8 @@ function guard(t) {
   const tq = q2(t), x = 7480, gy = 2900, k = 0.98, hy = gy - AH * k + 120;
   const exp = { eyes: 'half', brows: 'flat', mouth: 'flat' }; let look = [0, 0.5];
   if (t > 29.2) { exp.eyes = 'open'; look = [-1, 0]; }
-  if (t > 29.6 && t < 32.0) exp.mouth = (BOIL.step % 3) ? 'small' : 'open';
-  if (t > 33.4) { exp.eyes = 'pop'; exp.brows = 'up'; look = [-1, 0]; exp.mouth = (t > 33.8 && t < 37.4 && BOIL.step % 3) ? 'open' : 'o'; }
+  if (t > 29.5 && t < 31.7) exp.mouth = (BOIL.step % 3) ? 'small' : 'open';
+  if (t > 33.4) { exp.eyes = 'pop'; exp.brows = 'up'; look = [-1, 0]; exp.mouth = (t > 33.5 && t < 38.9 && BOIL.step % 3) ? 'open' : 'o'; }
   const tr = t > 34.5 ? 5 * Math.sin(tq * 55) : 0;
   const hands = { L: [x - 90, hy + 300], R: [x + 70 + tr, hy + 210] };
   return { kind: 'guard', t, x, gy, k, fx: 1, hy, hands, feet: { L: [x - 34, gy], R: [x + 34, gy] }, exp, look, items: t < 36.6 ? [{ type: 'glass', side: 'R' }] : [] };
@@ -508,12 +508,12 @@ function title(t) {
   wtext(SUBT, 'भाग 1', 540, 1775, { screen: true, size: 54, weight: 700, col: K.red, reveal: pr(t, 3.7, 4.2), seed: 32, p });
 }
 function endCard(t) {
-  if (t < 43.3) return;
+  if (t < 44.3) return;
   const g = SUBK.g; g.save(); g.fillStyle = '#000'; g.fillRect(0, 1180, W, 740); g.restore();
-  wtext(SUBT, 'भाग 2', 540, 1330, { screen: true, size: 120, weight: 700, col: K.bone, reveal: pr(t, 43.35, 43.75), seed: 41, stroke: 2 });
-  wtext(SUBT, 'कल शाम 7:30 बजे', 540, 1460, { screen: true, size: 90, weight: 700, col: K.amber, reveal: pr(t, 43.6, 44.0), seed: 42, stroke: 1.5 });
-  wtext(SUBT, 'Follow करो — छूट न जाए', 540, 1580, { screen: true, size: 62, weight: 700, col: K.bone, reveal: pr(t, 43.9, 44.3), seed: 43 });
-  wtext(SUBT, '@pannapalatkahani', 540, 1690, { screen: true, size: 58, weight: 700, col: K.chalk, reveal: pr(t, 44.1, 44.5), seed: 44 });
+  wtext(SUBT, 'भाग 2', 540, 1330, { screen: true, size: 120, weight: 700, col: K.bone, reveal: pr(t, 44.35, 43.75), seed: 41, stroke: 2 });
+  wtext(SUBT, 'कल शाम 7:30 बजे', 540, 1460, { screen: true, size: 90, weight: 700, col: K.amber, reveal: pr(t, 44.6, 45.0), seed: 42, stroke: 1.5 });
+  wtext(SUBT, 'Follow करो — छूट न जाए', 540, 1580, { screen: true, size: 62, weight: 700, col: K.bone, reveal: pr(t, 44.9, 45.3), seed: 43 });
+  wtext(SUBT, '@pannapalatkahani', 540, 1690, { screen: true, size: 58, weight: 700, col: K.chalk, reveal: pr(t, 45.1, 45.5), seed: 44 });
 }
 
 // ——— events for the mixer ———
@@ -526,9 +526,9 @@ ev(8.6, 'roomtone', { dur: 18.4 }); ev(11.9, 'buzz', { dur: 0.4 }); ev(14.2, 'he
 PRESSES.forEach(p => ev(p, 'click'));
 ev(21.2, 'heart', { dur: 5.8, bpm: 120 }); ev(26.0, 'buzz', { dur: 0.5 }); ev(26.5, 'pop');
 ev(27.0, 'doors', { dur: 0.35 }); ev(27.35, 'slam'); ev(27.65, 'drop', { dur: 0.95 }); ev(28.55, 'thud');
-ev(28.62, 'ding'); ev(28.62, 'doors', { dur: 0.4 }); ev(28.6, 'lobby', { dur: 12.4 }); ev(36.6, 'clink');
-ev(37.6, 'steam', { dur: 3.4 }); ev(41.9, 'sting'); ev(42.7, 'buzz', { dur: 0.5 }); ev(43.3, 'chalk', { dur: 1.2 });
-[['A', 0], ['B', 3.0], ['C', 8.6], ['D', 14.2], ['E', 21.2], ['F', 27.0], ['G', 28.6], ['H', 33.4], ['I', 37.6], ['J', 41.0], ['Z', 43.3]].forEach(([id, t]) => ev(t, 'cue', { id }));
+ev(28.62, 'ding'); ev(28.62, 'doors', { dur: 0.4 }); ev(28.6, 'lobby', { dur: 13.4 }); ev(36.6, 'clink');
+ev(39.0, 'steam', { dur: 3.0 }); ev(42.9, 'sting'); ev(43.7, 'buzz', { dur: 0.5 }); ev(44.3, 'chalk', { dur: 1.2 });
+[['A', 0], ['B', 3.0], ['C', 8.6], ['D', 14.2], ['E', 21.2], ['F', 27.0], ['G', 28.6], ['H', 33.4], ['I', 39.0], ['J', 42.0], ['Z', 44.3]].forEach(([id, t]) => ev(t, 'cue', { id }));
 
 // ——— one frame ———
 export function frame(comp, t) {
@@ -562,7 +562,7 @@ export function frame(comp, t) {
     lamp = lampAt(4900, 1050, t >= 21.2 ? 0.55 : 0.42, 0.75 * b + 0.15);
   } else if (set === 'lobby') {
     drawLobby(t);
-    if (t < 41.0) {
+    if (t < 42.0) {
       person(GU, guard(t), 4000);
       drawDesk(PROP);
       if (t > 36.6 && t < 37.3) { const f = pr(t, 36.6, 37.1), dy = 150 * f * f; part(PROP, [[7560, 2560 + dy], [7590, 2560 + dy], [7586, 2620 + dy], [7564, 2620 + dy]], { col: K.amber, p: 0.7, gap: 3, w: 5, seed: 4500 }, { w: 3, col: K.ink, seed: 4501 }); }
@@ -571,10 +571,10 @@ export function frame(comp, t) {
     } else {
       const mx = 6858, mk = 0.4;
       const ak = mk * 0.94;
-      const am = { kind: 'amma', t, x: mx + 70, gy: 2475, k: ak, fx: 1, hy: 2475 - AH * ak + 30 * ak, hands: { L: [mx + 70 - 30 * ak, 2475 - 380 * ak], R: [mx + 70 + 30 * ak, 2475 - 380 * ak] }, feet: {}, exp: { eyes: t > 41.9 ? 'glint' : 'closed', brows: 'flat', mouth: 'smile' }, look: [0, 0], items: [] };
+      const am = { kind: 'amma', t, x: mx + 70, gy: 2475, k: ak, fx: 1, hy: 2475 - AH * ak + 30 * ak, hands: { L: [mx + 70 - 30 * ak, 2475 - 380 * ak], R: [mx + 70 + 30 * ak, 2475 - 380 * ak] }, feet: {}, exp: { eyes: t > 42.9 ? 'glint' : 'closed', brows: 'flat', mouth: 'smile' }, look: [0, 0], items: [] };
       person(MR, am, 5000);
       const rx = mx - 30;
-      const rr = { kind: 'riya', t, x: rx, gy: 2500, k: mk, fx: 1, hands: { L: [rx - 90 * mk, 2500 - 360 * mk], R: [rx + 90 * mk, 2500 - 380 * mk] }, feet: { L: [rx - 14, 2500], R: [rx + 14, 2500] }, exp: { eyes: t > 41.9 ? 'pop' : 'open', brows: 'worried', mouth: 'o' }, look: [0, 0], items: [], buds: 'R' };
+      const rr = { kind: 'riya', t, x: rx, gy: 2500, k: mk, fx: 1, hands: { L: [rx - 90 * mk, 2500 - 360 * mk], R: [rx + 90 * mk, 2500 - 380 * mk] }, feet: { L: [rx - 14, 2500], R: [rx + 14, 2500] }, exp: { eyes: t > 42.9 ? 'pop' : 'open', brows: 'worried', mouth: 'o' }, look: [0, 0], items: [], buds: 'R' };
       person(MR, rr, 5200);
       clipTo(MR, LMIR);
       person(RI, riyaBack(t), 2000);
