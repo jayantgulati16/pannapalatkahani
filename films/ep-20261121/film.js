@@ -510,7 +510,7 @@ function title(t) {
 function endCard(t) {
   if (t < 44.3) return;
   const g = SUBK.g; g.save(); g.fillStyle = '#000'; g.fillRect(0, 1180, W, 740); g.restore();
-  wtext(SUBT, 'भाग 2', 540, 1330, { screen: true, size: 120, weight: 700, col: K.bone, reveal: pr(t, 44.35, 43.75), seed: 41, stroke: 2 });
+  wtext(SUBT, 'भाग 2', 540, 1330, { screen: true, size: 120, weight: 700, col: K.bone, reveal: pr(t, 44.35, 44.75), seed: 41, stroke: 2 });
   wtext(SUBT, 'कल शाम 7:30 बजे', 540, 1460, { screen: true, size: 90, weight: 700, col: K.amber, reveal: pr(t, 44.6, 45.0), seed: 42, stroke: 1.5 });
   wtext(SUBT, 'Follow करो — छूट न जाए', 540, 1580, { screen: true, size: 62, weight: 700, col: K.bone, reveal: pr(t, 44.9, 45.3), seed: 43 });
   wtext(SUBT, '@pannapalatkahani', 540, 1690, { screen: true, size: 58, weight: 700, col: K.chalk, reveal: pr(t, 45.1, 45.5), seed: 44 });
