@@ -1,0 +1,15 @@
+{
+ "series": "पन्ना पलट",
+ "ep": "6",
+ "title": "टिफ़िन चोर",
+ "panels": [
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261123/look/c_2.0.jpg", "text": "मीरा: “तीसरी बार… ऑफिस के फ्रिज से मेरा टिफ़िन फिर गायब!”", "note": "Hook: खाली टिफ़िन + चिट “हाथ मत लगाना!” · आवाज़: Meera"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261123/look/c_7.5.jpg", "text": "संदिग्ध 1: पिंटो — हमेशा भूखा। दाँत में आलू फँसा है… 🤔", "note": "Suspect"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261123/look/c_10.0.jpg", "text": "संदिग्ध 2: स्वीटी — डाइट पर…? मेज़ के नीचे पराठे का काग़ज़!", "note": "Suspect"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261123/look/c_12.5.jpg", "text": "संदिग्ध 3: शर्मा सर — सबसे सख़्त। मूँछ पे घी चमक रहा है…", "note": "Suspect"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261123/look/c_19.8.jpg", "text": "रात को मीरा ने सबसे तीखी मिर्च वाले पराठे बनाए… ऊपर चिट: “बिल्कुल कम मिर्च!”", "note": "The trap · आवाज़: Meera"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261123/look/c_26.5.jpg", "text": "अगले दिन मीटिंग में — शर्मा सर लाल, कानों से धुआँ, पूरा जग पानी गटक गए! “सी… सी… सी…!”", "note": "Twist 1: बॉस ही चोर!"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261123/look/c_35.jpg", "text": "शर्मा सर (शरमाते हुए): “बीवी मायके गई है… और तुम्हारे पराठे… बिल्कुल माँ जैसे हैं।”", "note": "Twist 2 · आवाज़: Sharma sir"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261123/look/c_43.jpg", "text": "अगली सुबह फ्रिज में दो टिफ़िन: “मीरा का” और “शर्मा सर का — कम मिर्च!”", "note": "Payoff + loop → अगला पन्ना कल"}
+ ]
+}
