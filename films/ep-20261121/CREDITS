@@ -1,0 +1,10 @@
+अर्जुन का डांस (Arjun's Dance) — credits for third-party material
+
+Picture: drawn entirely in code (no image or video generator, no stock footage).
+  Crayon/watercolour compositor and stroke engine adapted from Lemo-Opuscar's crayon-book style (MIT licence).
+Font: Kalam by Indian Type Foundry — SIL Open Font License 1.1 (fonts/OFL-Kalam.txt), via @fontsource/kalam.
+Music: original score in code (a sangeet groove in D, 120 bpm).
+  Accordion, world percussion (darbuka) — FreePats (CC0 1.0). Flute, clarinet, oboe, tambourine — VSCO 2 Community Edition (CC0 1.0).
+  Glockenspiel, frame drum, claps — VCSL (CC0 1.0). Music box — Lemo-Opuscar pluck.py modal synthesis (MIT).
+Sound effects and ambience: synthesised in code.
+Voice: Google Gemini text-to-speech (gemini-3.8-flash-tts; voices Sulafat, Achird, Leda), generated with Jayant's API key.

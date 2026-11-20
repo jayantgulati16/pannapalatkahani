@@ -1,0 +1,15 @@
+{
+ "series": "पन्ना पलट",
+ "ep": "4 · भाग 1",
+ "title": "13वाँ फ्लोर",
+ "panels": [
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261121/look/c_2.3.jpg", "text": "बिल्डिंग में सिर्फ 12 फ्लोर हैं… तो लिफ्ट 13 पे क्यों रुकी?", "note": "Hook: पहले सेकंड में लाल 13 · आवाज़: narrator"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261121/look/c_5.5.jpg", "text": "रात 11:40… रिया लिफ्ट में अकेली थी। ऊपर देखा — 13।", "note": "Setup · गले में ID कार्ड (Part 2 का clue)"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261121/look/c_12.5.jpg", "text": "दरवाज़ा खुला: अंधेरा गलियारा, टिमटिमाता बल्ब। एक अम्मा: “रिया… आ गई बेटा?”", "note": "Clue · आवाज़: amma"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261121/look/c_16.0.jpg", "text": "रिया ने यहाँ किसी को अपना नाम नहीं बताया था। वो “close” दबाती रही… दरवाज़ा बंद ही नहीं हुआ।", "note": "Tension · आवाज़: Riya “बंद हो जा… प्लीज़!”"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261121/look/c_24.5.jpg", "text": "अम्मा बिना आवाज़ के पास आ गईं: “तेरे लिए आलू के पराठे बनाए हैं…”", "note": "Turn · फिर बल्ब बुझा, सिर्फ चश्मे की चमक"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261121/look/c_35.0.jpg", "text": "लिफ्ट धड़ाम से नीचे। चौकीदार: “तेरहवाँ फ्लोर? वो तो 1996 की आग के बाद से बंद है…”", "note": "Twist · आवाज़: watchman"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261121/look/c_39.5.jpg", "text": "तो ये टिफ़िन… रिया के हाथ में कैसे आया? और अब तक गरम क्यों है?", "note": "Twist 2"},
+  {"img": "/home/claude/ext/lemo-opuscar/films/ep-20261121/look/c_42.4.jpg", "text": "रिया ने लिफ्ट के शीशे में देखा… अम्मा ठीक उसके पीछे खड़ी थीं।", "note": "Cliffhanger → “भाग 2 कल शाम 7:30 — follow करो”"}
+ ]
+}

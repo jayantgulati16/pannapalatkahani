@@ -2,7 +2,7 @@
 Key from /root/.gemini_key (never committed). Writes 24 kHz mono 16-bit WAV."""
 import sys, json, base64, wave, urllib.request, urllib.error, os
 out, voice, model, text = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
-key = open('/root/.gemini_key').read().strip()
+key = (os.environ.get('GEMINI_API_KEY') or open('/root/.gemini_key').read()).strip()
 body = {"contents": [{"parts": [{"text": text}]}],
         "generationConfig": {"responseModalities": ["AUDIO"],
                              "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}}}

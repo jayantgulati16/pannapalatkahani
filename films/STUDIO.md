@@ -47,6 +47,12 @@ Runs in the CLOUD: every daily run is a fresh session. Set up first (see "Cloud 
 Library: /home/claude/ext/lemo-opuscar (after bootstrap: node deps, .venv, music tier, instruments freepats/vcsl/vsco2ce).
 Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pulley clothesline, crayon-book style).
 
+## Jayant's taste (20 Nov) — read before pitching
+- Soft/cute topics get rejected ("maja nhi aya"). Pitch BOLD one-line hooks by genre (horror / thriller / jasoosi / microdrama), each with the Part-1 cliffhanger.
+- 2-PART format: Part 1 ends on a cliffhanger + end card "भाग 2 · कल शाम 7:30 · Follow करो"; Part 2 next day (recap hook 0–3 s, twist, payoff, loop). A Part-2 day needs no topic research: build it from the previous TREATMENT.md.
+- No crayon-magic plot device ("cryon seh bahr neklo"). Look can change per story; Ep 4 introduced "night pastel on black paper" (ep-20261121).
+- Gemini key: read GEMINI_API_KEY env var if present, else /root/.gemini_key; ask Jayant only if neither exists.
+
 ## Each morning (run starts ~09:05 IST; topic options reach Jayant ~09:30 — he sleeps till then)
 1. **Trend research (WebSearch, 4–6 searches):** what India is talking about today — festivals/observances, cricket/sports results,
    weather (monsoon, fog, heatwave, winter), viral harmless moments, big cultural days. Never: real people, politicians, politics,
