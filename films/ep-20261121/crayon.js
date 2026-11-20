@@ -5,7 +5,8 @@ import { clamp, lerp, hash, vnoise } from '/core/lib.js';
 export const W = 1080, H = 1920;
 export const CAM = { x: 960, y: 540, s: 1 };
 export const BOIL = { step: 0, amp: 1 };
-export const WMUL = { k: 1 };        // global line-width multiplier (adjustable for big close-ups on the model sheet)
+export const WMUL = { k: 1 };
+export const STYLE = { clean: false };   // clean flat cartoon: solid fills, smooth ink lines, no paper tooth        // global line-width multiplier (adjustable for big close-ups on the model sheet)
 
 export function layer() { const c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d'); g.lineCap = 'round'; g.lineJoin = 'round'; return { c, g }; }
 export function clear(L) { L.g.setTransform(1, 0, 0, 1, 0, 0); L.g.clearRect(0, 0, W, H); }
@@ -37,6 +38,11 @@ export function line(L, pts, o = {}) {
   const col = o.col || "#2d3263", w = ws(o.w ?? 6), p = o.p ?? 0.8, seed = o.seed ?? 1, wob = o.wob ?? 1, boil = o.boil ?? 1;
   const draw = o.draw ?? 1; if (draw <= 0) return;
   const sp = toScreen(pts); const R = resample(sp, 3, o.closed);
+  if (STYLE.clean) {
+    const lim0 = R.total * draw; let acc = 0; g.beginPath();
+    for (let i = 0; i < R.p.length; i++) { if (R.L[i] > lim0) break; i ? g.lineTo(R.p[i][0], R.p[i][1]) : g.moveTo(R.p[i][0], R.p[i][1]); }
+    g.strokeStyle = col; g.lineWidth = w * 0.78; g.lineCap = 'round'; g.lineJoin = 'round'; g.globalAlpha = Math.min(1, p * 1.25); g.stroke(); g.globalAlpha = 1; return;
+  }
   let n = R.p.length; if (n < 2) return;
   const lim = R.total * draw;
   const st = BOIL.step, ba = BOIL.amp * boil;
@@ -80,6 +86,11 @@ function ribbon(g, P, Wd, k) {
 export function fill(L, poly, o = {}) {
   const g = L.g;
   const col = o.col || '#f6c945', p = o.p ?? 0.62, seed = o.seed ?? 1, boil = o.boil ?? 1;
+  if (STYLE.clean) {
+    if ((o.draw ?? 1) <= 0) return;
+    const sp = toScreen(poly); g.beginPath(); sp.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath();
+    g.fillStyle = col; g.globalAlpha = Math.min(1, p * 1.08) * (o.draw ?? 1); g.fill(); g.globalAlpha = 1; return;
+  }
   const st = BOIL.step, ba = BOIL.amp * boil;
   const ang = (o.ang ?? 0.62) + (hash(seed + st * 1.9) - .5) * 0.035 * ba;
   const gap = ws(o.gap ?? 10.5), w = ws(o.w ?? 11), over = ws(o.over ?? 7);

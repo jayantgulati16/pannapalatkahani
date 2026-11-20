@@ -3,7 +3,9 @@
 // A 12-floor building. 11:40 pm, Riya alone in the lift. It stops at 13. An old amma in a shawl calls her by name, offers a tiffin.
 // Ground floor: the watchman says the 13th floor has been shut since the 1996 fire. The tiffin in her hand is still warm.
 // In the lift mirror: amma, right behind her. Part 2 tomorrow.
-import { layer, clear, line, fill, dab, handCircle, smooth, CAM, BOIL, WMUL, W, H, sx, sy } from './crayon.js';
+import { layer, clear, line, fill, dab, handCircle, smooth, CAM, BOIL, WMUL, STYLE, W, H, sx, sy } from './crayon.js';
+const CLEAN = new URLSearchParams(location.search).get('look') !== 'pastel';   // default: clean cartoon (Jayant, 20 Nov)
+STYLE.clean = CLEAN;
 import { group, clearGroup, part, tube } from './rig.js';
 import { clamp, lerp, hash, ss, eio, eo, ei } from '/core/lib.js';
 
@@ -534,7 +536,7 @@ export function frame(comp, t) {
   const e = ss((t - S[0]) / (S[1] - S[0]));
   CAM.x = lerp(S[3][0], S[4][0], e); CAM.y = lerp(S[3][1], S[4][1], e); CAM.s = lerp(S[3][2], S[4][2], e);
   const [shx, shy] = shake(t); CAM.x += shx / CAM.s; CAM.y += shy / CAM.s;
-  BOIL.amp = 1;
+  BOIL.amp = CLEAN ? 0 : 1;
   [RI, AM, GU, MR, PROP, FG].forEach(clearGroup);
   [BG.f, BG.l, GLOW, FX, SUBK, SUBT].forEach(clear);
   let lamp = [0.5, 0.5, 1, 0], lampCol = [1.07, 1.0, 0.9], bright = 1;
@@ -597,6 +599,7 @@ export function frame(comp, t) {
   endCard(t);
   const go = [hash(BOIL.step) * 300, hash(BOIL.step + 7) * 300];
   comp.paperCam(CAM.x * 0.6, CAM.y * 0.6, CAM.s / 0.6);
+  comp.clean = CLEAN;
   comp.begin(PAPER);
   comp.crayon(BG.f.c); comp.crayon(BG.l.c);
   comp.crayon(GLOW.c, { goff: go, gain: 1.15 });
@@ -606,6 +609,6 @@ export function frame(comp, t) {
   comp.group(FG, { goff: go });
   comp.crayon(FX.c, { goff: go });
   comp.knock(SUBK.c); comp.crayon(SUBT.c);
-  comp.finish({ vig: 0.55, emb: 0.45, lamp, lampCol, bright });
+  comp.finish({ vig: CLEAN ? 0.45 : 0.55, emb: CLEAN ? 0 : 0.45, lamp, lampCol, bright });
 }
 export function testFrame(comp, t) { frame(comp, t); }

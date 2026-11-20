@@ -64,11 +64,12 @@ void main(){
 // Crayon layer
 const FS_CRAYON = `#version 300 es
 precision highp float; in vec2 uv; out vec4 o;
-uniform sampler2D uL; uniform vec2 uRes; uniform vec2 uGoff; uniform float uGain; uniform float uSoft;
+uniform sampler2D uL; uniform vec2 uRes; uniform vec2 uGoff; uniform float uGain; uniform float uSoft; uniform float uClean;
 ${TOOTH}
 void main(){
   vec4 L = texture(uL, uv);
   if (L.a < .003) { o = vec4(0); return; }
+  if (uClean > .5) { o = L; return; }
   float t = toothAt(uv, uRes, uGoff);
   float a = clamp(L.a*uGain, 0., 1.);
   // the harder the pressure, the deeper it gets into the paper-tooth pits
@@ -192,13 +193,14 @@ export function makeComp(canvas, w = W, h = H) {
       gl.bindFramebuffer(gl.FRAMEBUFFER, T[cur].f); gl.disable(gl.BLEND);
       use(P.knock, { uPaper: paper, uPoff: poff }); gl.uniform1i(P.knock.u.uL, 0); draw();
     },
+    clean: false,
     group(C, o = {}) { this.knock(C.k.c); this.crayon(C.f.c, o); this.crayon(C.l.c, o); },
-    crayon(cv, { goff = [0, 0], gain = 1, soft = 0.07 } = {}) {
+    crayon(cv, { goff = [0, 0], gain = 1, soft = 0.07 } = {}) { const clean = this.clean ? 1 : 0;
       gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, layerTex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, cv);
       gl.bindFramebuffer(gl.FRAMEBUFFER, T[cur].f);
       gl.enable(gl.BLEND); gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-      use(P.crayon, { uGoff: goff, uGain: gain, uSoft: soft }); gl.uniform1i(P.crayon.u.uL, 0); draw();
+      use(P.crayon, { uGoff: goff, uGain: gain, uSoft: soft, uClean: clean }); gl.uniform1i(P.crayon.u.uL, 0); draw();
       gl.disable(gl.BLEND);
     },
     wash(cv, { color = [0.16, 0.2, 0.46], goff = [0, 0], resist = 0.93, edge = 1.6, gran = 0.6 } = {}) {
