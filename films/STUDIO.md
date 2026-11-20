@@ -102,8 +102,8 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
 
 If a run fails (render error etc.), fix and retry; if it can't finish, notify him honestly with what happened.
 
-## Schedule page (Jayant, 20 Nov) — "Panna Palat Schedule"
-Artifact https://claude.ai/artifact/JZYtM49kjwGfKFzjU6zeeH (Data type), two tabs Instagram / YouTube. Rows live in its store:
+## Posting schedule (Jayant, 20 Nov) — section "Posting schedule" in the STUDIO dashboard (tabs Instagram / YouTube)
+Rows live in the studio dashboard store (datasets sched_ig, sched_yt):
 `data/schedule/instagram/epNN` and `data/schedule/youtube/epNN` = {date "YYYY-MM-DD", time "HH:MM" IST, ep, title, status: posted|scheduled|planned, link, note}.
 Every run: mark rows posted (+ link) for what went live, add/update the row whenever a post is scheduled or moved (ArtifactData update/set).
 YouTube cadence (Jayant, 20 Nov): one Short per day at 18:30 IST, ONE DAY AFTER the Instagram post (Ep 3 → 21 Nov, Ep 4 → 22, Ep 5 → 23, Ep 6 → 24 …). Channel bio says "Roz shaam 6:30 baje".
