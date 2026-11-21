@@ -104,6 +104,9 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
      Schedule with send_later at 19:30 on that day.
      Dashboard: Posting schedule has a Facebook tab (dataset sched_fb = data/schedule/facebook/epNN {date, ep, time, title, status: planned|scheduled|posted, link, note});
      add the row when scheduling and set status posted + link https://www.facebook.com/<video id> after the upload.
+   - YouTube comments: Windsor's YouTube connection is read-only for comments. Read with Zapier youtube_make_api_get_request GET youtube/v3/commentThreads
+     (allThreadsRelatedToChannelId UCoPzQqbSDwKJQOhpyxKGbMA), reply with youtube_make_api_mutating_request POST youtube/v3/comments?part=snippet
+     body {"snippet":{"parentId":"<comment id>","textOriginal":"…"}}. Reply to every comment with totalReplyCount 0.
    - Next morning: read comments (get_data on instagram) and reply warmly as the page to a few (reply_to_comment); never claim to be a person.
 
 If a run fails (render error etc.), fix and retry; if it can't finish, notify him honestly with what happened.
