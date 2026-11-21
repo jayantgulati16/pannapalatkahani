@@ -98,6 +98,10 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
      (video = the reel-epNN raw URL; title '<title> <emoji> <hook> | Hindi Crayon Kahani #shorts'; Hinglish description with the comment question,
      the 'पन्ना पलट — हर दिन एक नई crayon कहानी · Roz shaam 7:30 baje' line and 4 hashtags; 8 tags; category_id 1 Film & Animation; language hi;
      made_for_kids false; public). Schedule it with a second send_later at 18:30. Facebook Page upload (Zapier Facebook Pages page_video) once a Page is connected.
+   - FACEBOOK (Jayant, 21 Nov): every episode also to the Facebook Page "Panna Palat Kahani" at 19:30 IST, ONE per day in episode order
+     (Facebook runs behind Instagram; see the last FB queue entry in LOG.md and take the next free day). Zapier Facebook Pages page_video:
+     page "1383869598152663", source = reel-epNN raw URL, title = Devanagari title + emoji, description = caption-style Hinglish + 4 hashtags.
+     Schedule with send_later at 19:30 on that day.
    - Next morning: read comments (get_data on instagram) and reply warmly as the page to a few (reply_to_comment); never claim to be a person.
 
 If a run fails (render error etc.), fix and retry; if it can't finish, notify him honestly with what happened.
