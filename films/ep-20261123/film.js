@@ -22,11 +22,11 @@ const AH = 680;
 // ——— printed words / voice script (N narrator, M Meera, S Sharma sir) — '|' breaks a line ———
 export const SUBS = [
   { t0: 0.0, t1: 4.5, text: '“तीसरी बार… ऑफिस के फ्रिज से|मेरा टिफ़िन फिर गायब!”', who: 'M', vo: 'm1', vt: 0.15 },
-  { t0: 4.6, t1: 6.6, text: 'शक तीन लोगों पर था…', who: 'N', vo: 'n1', vt: 4.7 },
-  { t0: 14.6, t1: 18.2, text: '“अब देखती हूँ…|कौन खाता है मेरा टिफ़िन!”', who: 'M', vo: 'm2', vt: 14.6 },
+  { t0: 4.6, t1: 6.8, text: 'शक तीन लोगों पर था…', who: 'N', vo: 'n1', vt: 4.7 },
+  { t0: 14.6, t1: 19.0, text: '“अब देखती हूँ…|कौन खाता है मेरा टिफ़िन!”', who: 'M', vo: 'm2', vt: 14.6 },
   { t0: 21.1, t1: 23.8, text: 'अगले दिन… मीटिंग में।', who: 'N', vo: 'n2', vt: 21.1 },
   { t0: 28.6, t1: 31.4, text: 'टिफ़िन चोर… बॉस निकले!', who: 'N', vo: 'n3', vt: 28.6 },
-  { t0: 31.8, t1: 38.4, text: '“बीवी मायके गई है… और तुम्हारे पराठे…|बिल्कुल माँ जैसे हैं।”', who: 'S', vo: 's1', vt: 31.8 },
+  { t0: 31.9, t1: 40.0, text: '“बीवी मायके गई है… और तुम्हारे पराठे…|बिल्कुल माँ जैसे हैं।”', who: 'S', vo: 's1', vt: 31.95 },
   { t0: 41.2, t1: 44.6, text: '“कल से… दो टिफ़िन!”', who: 'M', vo: 'm3', vt: 41.3 },
 ];
 
@@ -388,7 +388,7 @@ export function frame(comp, t) {
     if (t > 6.6 && t < 9.0 && p) { dab(FX, DESKS[0] + 4, 2010 + 24, 7, { col: K.yellow, p: 1, seed: 600 }); }   // aloo stuck in his teeth
   } else if (set === 'kitchen') {
     drawKitchen(t);
-    const grin = t > 14.6 && t < 18.2 ? talking(t, 14.6, 18.2) : 'smile';
+    const grin = t > 14.6 && t < 19.0 ? talking(t, 14.6, 19.0) : 'smile';
     person2(PE, seat('meera', 4900, t, { hy: 2000, exp: { eyes: t > 18.2 && t < 21 ? 'half' : 'open', brows: 'down', mouth: grin }, look: t > 18.3 ? [1, 0.4] : [-0.4, 0.8], hands: { L: [4760, 2290 + 10 * Math.sin(q2(t) * 9)], R: [5010, 2370] } }), 3000);
     drawCounter(PROP, t);
     vig = 0.3;
@@ -401,7 +401,7 @@ export function frame(comp, t) {
     let sh = { eyes: 'open', brows: 'flat', mouth: 'small' }, hands, look = [0, 0.3];
     if (t > 24.4 && t < 31.6) { sh = { eyes: t > 25 ? 'closed' : 'pop', brows: 'up', mouth: 'open' }; }
     if (t > 26.2 && t < 28.6) hands = { L: [SEATS.sharma + 30, 2250], R: [SEATS.sharma + 130, 2240] };
-    if (t >= 31.6) { sh = { eyes: 'half', brows: 'worried', mouth: talking(t, 31.8, 38.4) }; look = [0.4, 1]; }
+    if (t >= 31.6) { sh = { eyes: 'half', brows: 'worried', mouth: talking(t, 31.95, 39.8) }; look = [0.4, 1]; }
     const sp = seat('sharma', SEATS.sharma, t, { hy: 2090, exp: sh, look, skinCol: cool, hands });
     person2(PE, sp, 3400);
     person2(PE, seat('meera', SEATS.meera, t, { hy: 2090, exp: t >= 38.6 ? { eyes: 'closed', brows: 'up', mouth: 'smile' } : { eyes: turned ? 'open' : 'open', brows: turned ? 'down' : 'flat', mouth: turned && t < 31.6 ? 'smile' : 'small' }, look: turned && t < 38.6 ? [-1, 0] : [0, 0], hands: t >= 38.6 ? { L: [SEATS.meera - 90, 2400], R: [SEATS.meera + 10, 2270] } : undefined }), 3600);
