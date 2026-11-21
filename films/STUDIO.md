@@ -102,6 +102,8 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
      (Facebook runs behind Instagram; see the last FB queue entry in LOG.md and take the next free day). Zapier Facebook Pages page_video:
      page "1383869598152663", source = reel-epNN raw URL, title = Devanagari title + emoji, description = caption-style Hinglish + 4 hashtags.
      Schedule with send_later at 19:30 on that day.
+     Dashboard: Posting schedule has a Facebook tab (dataset sched_fb = data/schedule/facebook/epNN {date, ep, time, title, status: planned|scheduled|posted, link, note});
+     add the row when scheduling and set status posted + link https://www.facebook.com/<video id> after the upload.
    - Next morning: read comments (get_data on instagram) and reply warmly as the page to a few (reply_to_comment); never claim to be a person.
 
 If a run fails (render error etc.), fix and retry; if it can't finish, notify him honestly with what happened.
