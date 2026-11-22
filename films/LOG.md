@@ -65,3 +65,4 @@
 - 2026-11-22 18:30 IST: Ep 4 YouTube upload (trig_013x4rWkkKUWB9B1cWWaUfe6) NOT done — the Zapier upload call was denied by the session permission check. Jayant notified; waiting for "upload karo" or a manual upload. Ep 5 (23 Nov) and Ep 6 (24 Nov) YouTube triggers may hit the same block.
 - Ep 4 on YouTube 2026-11-22 18:35 IST (after Jayant: "Upload kro"), video id FTEGBUNg_nk, https://youtube.com/shorts/FTEGBUNg_nk (description says "Roz shaam 6:30 baje").
 - Ep 2 on Facebook 2026-11-22 19:30 IST, video id 4570781033188925, https://www.facebook.com/4570781033188925 (trig_019aUipJjCufQCxJyDydedA8).
+- Ep 5 posted on Instagram 2026-11-22 19:31 IST (13वाँ फ्लोर भाग 2, reel-ep05), media id 18162636997504316, https://www.instagram.com/reel/DgC-J4Fgjbs/ (send_later trig_012CZRAzHGYSBcX7SXPUNS2u).
