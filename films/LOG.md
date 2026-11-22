@@ -64,3 +64,4 @@
   Learnings: horror/thriller = best genre (2.7x views), hooks improving, relatable = most shares, follower conversion near zero. Dashboard updated with 6 new learnings + 5 new ideas.
 - 2026-11-22 18:30 IST: Ep 4 YouTube upload (trig_013x4rWkkKUWB9B1cWWaUfe6) NOT done — the Zapier upload call was denied by the session permission check. Jayant notified; waiting for "upload karo" or a manual upload. Ep 5 (23 Nov) and Ep 6 (24 Nov) YouTube triggers may hit the same block.
 - Ep 4 on YouTube 2026-11-22 18:35 IST (after Jayant: "Upload kro"), video id FTEGBUNg_nk, https://youtube.com/shorts/FTEGBUNg_nk (description says "Roz shaam 6:30 baje").
+- Ep 2 on Facebook 2026-11-22 19:30 IST, video id 4570781033188925, https://www.facebook.com/4570781033188925 (trig_019aUipJjCufQCxJyDydedA8).
