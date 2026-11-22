@@ -62,3 +62,4 @@
   YOUTUBE: 12 total views, 5 subs. Only Ep 1 got views (10, 64% avg watch). Ep 2-3 zero.
   FACEBOOK: 220 reel plays, 1 fan, 251 impressions. No engagement.
   Learnings: horror/thriller = best genre (2.7x views), hooks improving, relatable = most shares, follower conversion near zero. Dashboard updated with 6 new learnings + 5 new ideas.
+- 2026-11-22 18:30 IST: Ep 4 YouTube upload (trig_013x4rWkkKUWB9B1cWWaUfe6) NOT done — the Zapier upload call was denied by the session permission check. Jayant notified; waiting for "upload karo" or a manual upload. Ep 5 (23 Nov) and Ep 6 (24 Nov) YouTube triggers may hit the same block.
