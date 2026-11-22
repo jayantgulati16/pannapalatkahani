@@ -57,3 +57,8 @@
 - Ep 7 rendered (1,476 frames, 45 min), sci-fi thriller score in D minor (robot "machine" motif D–F–A–C# on celesta/vibes, stabs on twists, tam-tam on "तुम कौन हो?", heartbeat end), −14.0 LUFS, 61.58 s, hosted at branch reel-ep07 (200 OK). Instagram 2026-11-24 19:30 IST (send_later trig_01TXRg2RnagBrswUPBgn2b4p, thumb_offset 1600); YouTube 2026-11-25 18:30 (trig_01J6FUtiaLKyhBtfQ3UmLGPt); Facebook 2026-11-27 19:30 (trig_011yYHA8LDppv76x3hxs31V1; FB next free slot after this = 28 Nov for Ep 8). Video sent to Jayant (he can say "ruko").
 - => 23 Nov run: Ep 7 (24 Nov) is scheduled → comments only. 24 Nov run: topic options for Ep 8 (25 Nov) + the week-1 recap is due 25 Nov.
 - Learning: Jayant writes his own scripts now; he wants logic that holds up (a digital clone can't steal a physical ID — a robot can), no confusing endings, big clear subtitles, and every character clearly visible.
+- 2026-11-22 cross-platform performance check (Jayant asked):
+  INSTAGRAM: 999 total views, 776 reach across 4 eps. Ep 4 (horror) = standout at 441 views, 38.8% skip. Skip rate trend: 65→48→45→39%. Followers: 5. 90-97% views from non-followers.
+  YOUTUBE: 12 total views, 5 subs. Only Ep 1 got views (10, 64% avg watch). Ep 2-3 zero.
+  FACEBOOK: 220 reel plays, 1 fan, 251 impressions. No engagement.
+  Learnings: horror/thriller = best genre (2.7x views), hooks improving, relatable = most shares, follower conversion near zero. Dashboard updated with 6 new learnings + 5 new ideas.
