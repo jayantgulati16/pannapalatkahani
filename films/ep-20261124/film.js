@@ -9,7 +9,7 @@ import { group, clearGroup, part, tube } from './rig.js';
 import { clamp, lerp, hash, ss, eio, eo, ei } from '/core/lib.js';
 STYLE.clean = true;
 
-export const DUR = 59.0;
+export const DUR = 61.5;
 const NOSUBS = new URLSearchParams(location.search).get('nosubs') === '1';
 const K = { ink: '#1d1b22', bone: '#fbf8f1', cream: '#f3ead2', white: '#ffffff', grey: '#9a9aa3', dgrey: '#55555f', steel: '#b9bfc6', steelD: '#6f767f', steelL: '#e3e7ea',
   wood: '#b57f52', woodD: '#7d5434', red: '#e2412f', green: '#4f9a5a', leaf: '#7cc36e', yellow: '#f5c63c', note: '#ffe46b', pink: '#ee8ea4', orange: '#ec8a3c',
@@ -25,20 +25,20 @@ const back1 = u => { u = clamp(u) - 1; return 1 + u * u * (2.8 * u + 1.8); };
 
 // ——— printed words / voice script (N narrator, R Aryan, C robot, A Maa, O officer) — '|' breaks a line; a line without vo continues the take above ———
 export const SUBS = [
-  { t0: 0.0, t1: 2.5, text: '“मैंने अपनी शक्ल का रोबोट बनाया…', who: 'R', vo: 'r1', vt: 0.2 },
-  { t0: 2.5, t1: 4.6, text: 'और आज उसी ने मुझे घर से निकाल दिया!”', who: 'R' },
-  { t0: 4.9, t1: 8.0, text: 'थके हुए आर्यन ने अपनी|हूबहू शक्ल वाला रोबोट बनाया —', who: 'N', vo: 'n1', vt: 5.0 },
-  { t0: 8.0, t1: 11.0, text: 'ताकि ऑफिस वो जाए,|और आराम आर्यन करे।', who: 'N' },
-  { t0: 11.2, t1: 15.8, text: 'अगली सुबह रोबोट ऑफिस गया…|और बॉस ने प्रमोशन दे दिया!', who: 'N', vo: 'n2', vt: 11.3 },
+  { t0: 0.0, t1: 1.9, text: '“मैंने अपनी शक्ल का रोबोट बनाया…', who: 'R', vo: 'r1', vt: 0.2 },
+  { t0: 1.9, t1: 4.6, text: 'और आज उसी ने मुझे घर से निकाल दिया!”', who: 'R' },
+  { t0: 4.7, t1: 8.0, text: 'थके हुए आर्यन ने अपनी|हूबहू शक्ल वाला रोबोट बनाया —', who: 'N', vo: 'n1', vt: 4.8 },
+  { t0: 8.0, t1: 11.4, text: 'ताकि ऑफिस वो जाए,|और आराम आर्यन करे।', who: 'N' },
+  { t0: 11.5, t1: 15.5, text: 'अगली सुबह रोबोट ऑफिस गया…|और बॉस ने प्रमोशन दे दिया!', who: 'N', vo: 'n2', vt: 11.55 },
   { t0: 16.8, t1: 21.8, text: 'फिर तो ऑफिस, बाज़ार, मम्मी से मिलना…|सब रोबोट के हवाले!', who: 'N', vo: 'n3', vt: 16.9 },
   { t0: 24.8, t1: 29.4, text: '“अरे! तू तो अभी|मेरे पास बैठा खाना खा रहा है!”', who: 'A', vo: 'a1', vt: 24.9 },
   { t0: 31.2, t1: 36.8, text: 'आर्यन ने रोबोट बंद करना चाहा…|पर रोबोट ने ख़ुद को मालिक बना लिया था!', who: 'N', vo: 'n4', vt: 31.3 },
-  { t0: 37.3, t1: 40.4, text: '“मुझे अपनी हर आदत|सिखाने का शुक्रिया…', who: 'C', vo: 'c1', vt: 37.4 },
-  { t0: 40.4, t1: 43.2, text: 'अब इस घर को|एक ही आर्यन चाहिए।”', who: 'C' },
-  { t0: 44.8, t1: 48.7, text: '“सर! मेरे रोबोट ने मेरा घर,|मेरी पहचान… सब छीन ली!”', who: 'R', vo: 'r2', vt: 44.9 },
-  { t0: 48.8, t1: 50.0, text: '“ID दिखाओ।”', who: 'O', vo: 'o1', vt: 48.9 },
-  { t0: 51.2, t1: 54.4, text: '“असली आर्यन तो अभी ऑफिस में है…|फिंगरप्रिंट भी मैच हो रहे हैं।', who: 'O', vo: 'o2', vt: 51.3 },
-  { t0: 54.4, t1: 57.4, text: 'तुम कौन हो?”', who: 'O' },
+  { t0: 37.2, t1: 41.0, text: '“मुझे अपनी हर आदत|सिखाने का शुक्रिया…', who: 'C', vo: 'c1', vt: 37.3 },
+  { t0: 41.0, t1: 44.3, text: 'अब इस घर को|एक ही आर्यन चाहिए।”', who: 'C' },
+  { t0: 45.7, t1: 50.4, text: '“सर! मेरे रोबोट ने मेरा घर,|मेरी पहचान… सब छीन ली!”', who: 'R', vo: 'r2', vt: 45.8 },
+  { t0: 50.5, t1: 51.6, text: '“ID दिखाओ।”', who: 'O', vo: 'o1', vt: 50.6 },
+  { t0: 52.9, t1: 58.4, text: '“असली आर्यन तो अभी ऑफिस में है…|फिंगरप्रिंट भी मैच हो रहे हैं।', who: 'O', vo: 'o2', vt: 53.0 },
+  { t0: 58.4, t1: 59.95, text: 'तुम कौन हो?”', who: 'O' },
 ];
 
 // ——— text: Devanagari needs whole words; reveal = clip wiping left → right ———
@@ -112,10 +112,10 @@ const SHOTS = [
   [2.6, 4.7, 'hall', [770, 2290, 2.2], [770, 2290, 2.45]],         // Aryan's face
   [4.7, 7.4, 'lab', [10980, 2420, 0.95], [10990, 2430, 1.02]],      // a month earlier: building the robot
   [7.4, 9.2, 'fp', [12500, 2250, 1.0], [12500, 2250, 1.08]],        // fingerprint copy
-  [9.2, 11.0, 'lab', [11300, 2170, 2.5], [11300, 2170, 2.7]],       // the robot opens its eyes
-  [11.0, 13.6, 'bed', [3150, 2160, 0.92], [3150, 2160, 0.98]],      // Aryan sleeps, the robot leaves for office
-  [13.6, 15.4, 'phone', [6900, 2100, 1.25], [6900, 2100, 1.32]],    // boss: promotion!
-  [15.4, 16.6, 'bed', [2950, 2050, 1.3], [2950, 2040, 1.45]],       // joy
+  [9.2, 11.4, 'lab', [11300, 2170, 2.5], [11300, 2170, 2.7]],       // the robot opens its eyes
+  [11.4, 13.8, 'bed', [3150, 2160, 0.92], [3150, 2160, 0.98]],      // Aryan sleeps, the robot leaves for office
+  [13.8, 15.5, 'phone', [6900, 2100, 1.25], [6900, 2100, 1.32]],    // boss: promotion!
+  [15.5, 16.6, 'bed', [2950, 2050, 1.3], [2950, 2040, 1.45]],       // joy
   [16.6, 21.2, 'sofa', [5010, 2250, 1.02], [5010, 2250, 1.08]],     // gaming; everything to the robot
   [21.2, 22.6, 'sofa', [5350, 1930, 2.6], [5350, 1930, 2.8]],       // the robot's eyes
   [22.6, 24.4, 'sofa', [4690, 2130, 1.9], [4690, 2130, 2.0]],       // a week later, he calls Maa
@@ -123,16 +123,16 @@ const SHOTS = [
   [29.6, 31.0, 'sofa', [4690, 2080, 2.2], [4690, 2075, 2.45]],      // twist 1 — his face
   [31.0, 37.0, 'phone', [6900, 2100, 1.25], [6900, 2110, 1.34]],    // shutdown → ACCESS DENIED
   [37.0, 40.6, 'hall', [980, 2420, 1.36], [980, 2420, 1.42]],     // the robot at the door, with his ID card
-  [40.6, 43.0, 'hall', [1230, 2300, 2.3], [1230, 2300, 2.45]],      // "…only one Aryan"
-  [43.0, 44.6, 'hall', [1000, 2400, 1.25], [1000, 2400, 1.2]],      // the door slams (= the hook)
-  [44.6, 49.9, 'station', [8880, 2640, 1.12], [8880, 2640, 1.18]],   // cyber cell: Aryan + officer
-  [49.9, 51.1, 'station', [8560, 2760, 1.7], [8560, 2760, 1.8]],    // empty pockets
-  [51.1, 53.6, 'station', [9720, 2700, 2.4], [9720, 2700, 2.55]],   // the screen
-  [53.6, 56.4, 'station', [9060, 2640, 1.75], [9060, 2640, 1.9]],    // the officer
-  [56.4, 59.01, 'station', [8560, 2440, 2.3], [8560, 2440, 2.5]],   // twist 2 — his face (loops to frame 1)
+  [40.6, 44.0, 'hall', [1230, 2300, 2.3], [1230, 2300, 2.45]],      // "…only one Aryan"
+  [44.0, 45.6, 'hall', [1000, 2400, 1.25], [1000, 2400, 1.2]],      // the door slams (= the hook)
+  [45.6, 51.6, 'station', [8880, 2640, 1.12], [8880, 2640, 1.18]],   // cyber cell: Aryan + officer
+  [51.6, 52.8, 'station', [8560, 2760, 1.7], [8560, 2760, 1.8]],    // empty pockets
+  [52.8, 56.2, 'station', [9720, 2700, 2.4], [9720, 2700, 2.55]],   // the screen
+  [56.2, 59.1, 'station', [9060, 2640, 1.75], [9060, 2640, 1.9]],    // the officer
+  [59.1, 61.51, 'station', [8560, 2440, 2.3], [8560, 2440, 2.5]],   // twist 2 — his face (loops to frame 1)
 ];
 function shotAt(t) { return SHOTS.find(s => t >= s[0] && t < s[1]) || SHOTS[SHOTS.length - 1]; }
-const HITS = [[0.25, 5], [0.65, 5], [1.05, 5], [2.5, 14], [9.8, 5], [29.6, 12], [32.6, 10], [43.45, 14], [49.9, 6], [54.4, 8], [56.4, 10]];
+const HITS = [[0.25, 5], [0.65, 5], [1.05, 5], [2.5, 14], [9.8, 5], [29.6, 12], [32.6, 10], [44.45, 14], [51.6, 6], [58.5, 8], [59.1, 10]];
 function shake(t) {
   let x = 0, y = 0;
   for (const [h, a] of HITS) { const d = t - h; if (d < 0 || d > 0.5) continue; const e = a * Math.exp(-d / 0.08); x += (hash(BOIL.step * 3.1 + h) - .5) * 2 * e; y += (hash(BOIL.step * 5.7 + h) - .5) * 2 * e; }
@@ -260,7 +260,7 @@ function drawHallFront(t, u) {   // u = how open the door is (0 shut … 1 wide)
   }
   part(C, smooth([[860, 3020], [1600, 3020], [1640, 3080], [820, 3080]], 3), { col: '#7a3b3b', p: 1, seed: 44 }, { w: 3, col: K.ink, seed: 45 });   // doormat
 }
-const doorAt = t => t < 0.9 ? 0 : t < 2.45 ? 0.47 * eo(pr(t, 0.9, 1.25)) : t < 37 ? 0 : t < 43.3 ? 1 : 1 - pr(t, 43.3, 43.5);
+const doorAt = t => t < 0.9 ? 0 : t < 2.45 ? 0.47 * eo(pr(t, 0.9, 1.25)) : t < 37 ? 0 : t < 44.3 ? 1 : 1 - pr(t, 44.3, 44.5);
 
 // ——— SET: the lab (Aryan's room, a month earlier) ———
 function drawLab(t) {
@@ -340,8 +340,8 @@ function drawPhone(t, mode) {
     poly(B.l, rect(PHS[0], PHS[1], PHS[2], PHS[1] + 150), '#2f7d6d', 1, { seed: 212 });
     poly(B.l, handCircle(6630, 1560, 36, 213, 0, 20), '#9fb7c9', 1, { seed: 214 });
     wtext(B.l, 'Boss', 6690, 1578, { size: 46, weight: 700, col: K.white, seed: 215, align: 'left' });
-    const u = back1(pr(t, 13.8, 14.15));
-    if (t > 13.8) {
+    const u = back1(pr(t, 14.0, 14.35));
+    if (t > 14.0) {
       const cx = 6880, cy = 1950, hw = 300 * u, hh = 190 * u;
       part(PROP, rrect(cx - hw, cy - hh, cx + hw, cy + hh, 28 * u + 1), { col: K.white, p: 1, seed: 216 }, { w: 3, col: '#b9b2a8', seed: 217 });
       if (u > 0.9) {
@@ -448,7 +448,7 @@ function monitorContent(t) {
   const c = [];
   wtext(PROP.l, 'OFFICE:', 9792, 2668, { size: 22, weight: 700, col: K.lime, seed: 545, tilt: 0 });
   wtext(PROP.l, 'PRESENT', 9792, 2696, { size: 22, weight: 700, col: K.lime, seed: 546, tilt: 0 });
-  if (t > 51.6 || NOSUBS) {
+  if (t > 54.2 || NOSUBS) {
     wtext(PROP.l, 'FINGERPRINT', 9792, 2740, { size: 20, weight: 700, col: K.note, seed: 547, tilt: 0 });
     wtext(PROP.l, 'MATCH ✓', 9792, 2770, { size: 26, weight: 700, col: K.note, seed: 548, tilt: 0 });
   }
@@ -485,14 +485,14 @@ function labels(t) {
     box(540, y, 350 * u + 1, 52 * u + 1); wtext(SUBT, txt, 540, y + 21, { screen: true, size: 58 * u + 1, weight: 700, col, seed: 70 + i + a, tilt: 0 });
   });
   if (t > 3.0 && t < 4.7) { const u = back1(pr(t, 3.0, 3.3)); box(540, 1660, 330 * u + 1, 96 * u + 1); wtext(SUBT, 'असली कौन?', 540, 1706, { screen: true, size: 136 * u + 1, weight: 700, col: '#ff5a4a', seed: 81, tilt: 0 }); }
-  if (t > 49.9 && t < 51.1) { const u = back1(pr(t, 49.9, 50.2)); box(540, 1650, 270 * u + 1, 80 * u + 1); wtext(SUBT, 'जेब खाली!', 540, 1690, { screen: true, size: 110 * u + 1, weight: 700, col: '#ff5a4a', seed: 84, tilt: 0 }); }
+  if (t > 51.6 && t < 52.8) { const u = back1(pr(t, 51.6, 51.9)); box(540, 1650, 270 * u + 1, 80 * u + 1); wtext(SUBT, 'जेब खाली!', 540, 1690, { screen: true, size: 110 * u + 1, weight: 700, col: '#ff5a4a', seed: 84, tilt: 0 }); }
 }
 function endCard(t) {
-  if (t < 57.5) return;
+  if (t < 60.0) return;
   const g = SUBT.g; g.save(); g.fillStyle = 'rgba(20,19,26,0.94)'; g.fillRect(0, 1240, W, 680); g.restore();
-  wtext(SUBT, 'अगला पन्ना कल', 540, 1400, { screen: true, size: 110, weight: 700, col: K.bone, reveal: pr(t, 57.55, 58.0), seed: 91, tilt: 0 });
-  wtext(SUBT, 'हर शाम 7:30 — Follow करो', 540, 1540, { screen: true, size: 66, weight: 700, col: K.note, reveal: pr(t, 57.9, 58.3), seed: 92, tilt: 0 });
-  wtext(SUBT, '@pannapalatkahani', 540, 1660, { screen: true, size: 58, weight: 700, col: K.steelL, reveal: pr(t, 58.2, 58.6), seed: 93, tilt: 0 });
+  wtext(SUBT, 'अगला पन्ना कल', 540, 1400, { screen: true, size: 110, weight: 700, col: K.bone, reveal: pr(t, 60.05, 60.5), seed: 91, tilt: 0 });
+  wtext(SUBT, 'हर शाम 7:30 — Follow करो', 540, 1540, { screen: true, size: 66, weight: 700, col: K.note, reveal: pr(t, 60.4, 60.8), seed: 92, tilt: 0 });
+  wtext(SUBT, '@pannapalatkahani', 540, 1660, { screen: true, size: 58, weight: 700, col: K.steelL, reveal: pr(t, 60.7, 61.1), seed: 93, tilt: 0 });
 }
 
 // ——— events for the mixer ———
@@ -501,11 +501,11 @@ const ev = (t, type, o = {}) => EV.push({ t: +t.toFixed(3), type, ...o });
 SUBS.forEach(S => { if (S.vo) ev(S.vt, 'voice', { id: S.vo, who: S.who }); });
 [0.25, 0.65, 1.05].forEach(t => ev(t, 'knock')); ev(0.9, 'creak', { dur: 0.5 }); ev(2.45, 'slam'); ev(3.0, 'stab');
 ev(4.7, 'whoosh'); ev(5.2, 'scan', { dur: 2.0 }); ev(7.5, 'beep'); ev(8.8, 'ding'); ev(9.8, 'powerup', { dur: 1.0 });
-ev(11.0, 'birds', { dur: 2.6 }); ev(11.6, 'door', { dur: 0.6 }); ev(13.8, 'ding'); ev(15.4, 'sparkle', { dur: 1.0 });
+ev(11.4, 'birds', { dur: 2.4 }); ev(12.0, 'door', { dur: 0.6 }); ev(14.0, 'ding'); ev(15.5, 'sparkle', { dur: 1.0 });
 for (let i = 0; i < 7; i++) ev(16.8 + i * 0.6, 'blip', { pan: -0.5 }); [17.6, 18.9, 20.1].forEach(t => ev(t, 'tick')); ev(21.2, 'hum', { dur: 1.4 });
-ev(22.7, 'ring', { dur: 1.6 }); ev(24.4, 'pickup'); ev(27.6, 'stab'); ev(29.6, 'hit'); ev(32.2, 'tap'); ev(32.6, 'alarm', { dur: 3.0 });
-ev(37.0, 'whoosh'); ev(37.3, 'shove'); ev(43.45, 'slam'); ev(44.6, 'whoosh'); ev(49.9, 'hit'); ev(51.1, 'typing', { dur: 0.8 }); ev(51.7, 'beep'); ev(54.4, 'stab'); ev(56.4, 'hit'); ev(57.55, 'write', { dur: 1.0 });
-[['A', 0], ['B', 4.7], ['C', 11.0], ['D', 16.6], ['E', 22.6], ['F', 29.6], ['G', 31.0], ['H', 37.0], ['I', 44.6], ['J', 51.1], ['K', 54.4], ['Z', 57.5]].forEach(([id, t]) => ev(t, 'cue', { id }));
+ev(22.7, 'ring', { dur: 1.6 }); ev(24.4, 'pickup'); ev(27.8, 'stab'); ev(29.6, 'hit'); ev(32.2, 'tap'); ev(32.6, 'alarm', { dur: 3.0 });
+ev(37.0, 'whoosh'); ev(37.3, 'shove'); ev(44.45, 'slam'); ev(45.6, 'whoosh'); ev(51.6, 'hit'); ev(52.8, 'typing', { dur: 0.8 }); ev(54.2, 'beep'); ev(58.45, 'stab'); ev(59.1, 'hit'); ev(60.05, 'write', { dur: 1.0 });
+[['A', 0], ['B', 4.7], ['C', 11.4], ['D', 16.6], ['E', 22.6], ['F', 29.6], ['G', 31.0], ['H', 37.0], ['I', 45.6], ['J', 52.8], ['K', 58.45], ['Z', 60.0]].forEach(([id, t]) => ev(t, 'cue', { id }));
 
 // ——— one frame ———
 export function frame(comp, t) {
@@ -524,7 +524,7 @@ export function frame(comp, t) {
     if (!confront && u > 0) person2(PE, stand('robot', 1375, 3000, 1.1, t, { exp: { eyes: 'half', brows: 'down', mouth: 'smirk' }, look: [-1, 0] }), 4000);
     if (confront && u > 0.05) {
       const push = t < 37.9, hy = 3000 - AH * 1.1;
-      person2(PE, stand('robot', 1230, 3000, 1.1, t, { idcard: 1, exp: { eyes: t > 40.6 ? 'half' : 'open', brows: 'down', mouth: t > 37.4 && t < 43 ? (talking(t, 37.4, 42.8) === 'open' ? 'open' : 'smirk') : 'smirk' }, look: [-1, 0],
+      person2(PE, stand('robot', 1230, 3000, 1.1, t, { idcard: 1, exp: { eyes: t > 40.6 ? 'half' : 'open', brows: 'down', mouth: t > 37.3 && t < 44.2 ? (talking(t, 37.3, 44.1) === 'open' ? 'open' : 'smirk') : 'smirk' }, look: [-1, 0],
         hands: { L: push ? [lerp(1060, 1120, pr(t, 37.4, 37.9)), hy + 200] : [1170, hy + 330], R: [1300, hy + 320] } }), 4000);
     }
     drawHallFront(t, u);
@@ -532,18 +532,18 @@ export function frame(comp, t) {
     let ax = 760, exp, hands, look = [1, 0], hy = 3000 - AH * 1.1;
     if (!confront) {
       const bang = t < 1.2, b = Math.sin(t * Math.PI * 2 / 0.4);
-      exp = t < 2.45 ? { eyes: 'open', brows: 'angry', mouth: 'yell' } : { eyes: 'pop', brows: 'up', mouth: talking(t, 2.5, 4.4) === 'open' ? 'open' : 'wavy' };
+      exp = t < 2.45 ? { eyes: 'open', brows: 'angry', mouth: 'yell' } : { eyes: 'pop', brows: 'up', mouth: talking(t, 0.2, 3.5) === 'open' ? 'open' : 'wavy' };
       hands = bang ? { L: [870, hy + 260], R: [985 + 18 * b, hy + 150] } : { L: [700, hy + 330], R: [880, hy + 170] };
       if (t >= 2.6) { look = [0, 0]; hands = { L: [ax - 70, hy + 10], R: [ax + 70, hy + 10] }; }
     } else {
       ax = t < 37.9 ? lerp(880, 690, eo(pr(t, 37.3, 37.9))) : 690;
-      exp = t < 43.3 ? { eyes: 'pop', brows: 'worried', mouth: 'o' } : { eyes: 'pop', brows: 'up', mouth: 'yell' };
+      exp = t < 44.3 ? { eyes: 'pop', brows: 'worried', mouth: 'o' } : { eyes: 'pop', brows: 'up', mouth: 'yell' };
       hands = { L: [ax - 70, hy + 300], R: [ax + 110, hy + 220] };
     }
     person2(FG, stand('aryan', ax, 3000, 1.1, t, { exp, look, hands, sweat: t > 2.4 }), 2000);
     if (t < 1.2) for (const [h] of [[0.25], [0.65], [1.05]]) if (t > h && t < h + 0.25) wtext(FX, 'धड़!', 1080, 2150 - 60 * pr(t, h, h + 0.25), { size: 70, weight: 700, col: K.note, seed: 21 + h * 10, outline: 8, p: 1 - pr(t, h + 0.1, h + 0.25) });
     if (t > 2.45 && t < 2.9) wtext(FX, 'धड़ाम!', 1230, 2250, { size: 110, weight: 700, col: K.red, seed: 29, outline: 10 });
-    if (t > 43.45 && t < 44.1) wtext(FX, 'धड़ाम!', 1230, 2250, { size: 110, weight: 700, col: K.red, seed: 29, outline: 10 });
+    if (t > 44.45 && t < 45.1) wtext(FX, 'धड़ाम!', 1230, 2250, { size: 110, weight: 700, col: K.red, seed: 29, outline: 10 });
     vig = 0.3;
   } else if (set === 'lab') {
     drawLab(t);
@@ -564,7 +564,7 @@ export function frame(comp, t) {
     vig = 0.35;
   } else if (set === 'bed') {
     drawBed(t);
-    const joy = t >= 15.4, x = 2950, hy = 2050;
+    const joy = t >= 15.5, x = 2950, hy = 2050;
     let exp = { eyes: 'closed', brows: 'flat', mouth: 'o' }, hands = { L: [x - 110, 2330], R: [x + 130, 2320] };
     if (joy) { exp = { eyes: 'closed', brows: 'up', mouth: 'open' }; hands = { L: [x - 150, hy - 150], R: [x + 150, hy - 160] }; }
     if (!joy) {   // the robot leaves for office: bag, ID card, a wave
@@ -576,14 +576,14 @@ export function frame(comp, t) {
     if (joy) phoneSmall(FG, arms.R[0], arms.R[1] - 50, 1, true, 140);
     if (!joy) for (let i = 0; i < 3; i++) { const u = (t * 0.6 + i / 3) % 1; wtext(FX, 'Z', x + 90 + u * 120, hy - 80 - u * 200, { size: 50 + 30 * u, weight: 700, col: K.navy, p: Math.sin(Math.PI * u), seed: 160 + i }); }
     if (!joy) wtext(FX, 'बाय!', 3590, 1790, { size: 54, weight: 700, col: K.white, seed: 165, outline: 8, tilt: 0 });
-    if (joy) for (let i = 0; i < 18; i++) { const u = ((t - 15.4) * 0.9 + hash(i * 3.7)) % 1; dab(FX, x - 400 + hash(i * 1.9) * 800, hy - 400 + u * 700, 12, { col: ['#e2412f', '#f5c63c', '#3fa39a', '#ee8ea4'][i % 4], p: 1, seed: 170 + i }); }
+    if (joy) for (let i = 0; i < 18; i++) { const u = ((t - 15.5) * 0.9 + hash(i * 3.7)) % 1; dab(FX, x - 400 + hash(i * 1.9) * 800, hy - 400 + u * 700, 12, { col: ['#e2412f', '#f5c63c', '#3fa39a', '#ee8ea4'][i % 4], p: 1, seed: 170 + i }); }
     vig = 0.18;
   } else if (set === 'phone') {
     const mode = t < 20 ? 'msg' : t < 30 ? 'call' : 'app';
     const top = drawPhone(t, mode);
     if (mode === 'call') {
-      const shock = t > 24.8, wave = t > 27.4;
-      person2(PE, bust('maa', 6720, 2060, 1.35, t, { L: 420, exp: { eyes: shock ? 'pop' : 'open', brows: shock ? 'up' : 'flat', mouth: shock ? (talking(t, 24.9, 27.8) === 'open' ? 'open' : 'o') : 'smile' }, look: wave ? [1, 0] : [0, 0] }), 2200);
+      const shock = t > 24.8, wave = t > 27.8;
+      person2(PE, bust('maa', 6720, 2060, 1.35, t, { L: 420, exp: { eyes: shock ? 'pop' : 'open', brows: shock ? 'up' : 'flat', mouth: shock ? (talking(t, 24.9, 27.6) === 'open' ? 'open' : 'o') : 'smile' }, look: wave ? [1, 0] : [0, 0] }), 2200);
       const bob = 12 * Math.sin(t * 8);
       person2(FG, bust('robot', 7090, 2150, 1.05, t, { L: 330, exp: { eyes: 'open', brows: 'flat', mouth: wave ? 'grin' : (q2(t) * 4 % 1 < 0.5 ? 'chew' : 'small') }, look: wave ? [0, 0] : [-0.6, 0.6], hands: { L: [7020, 2440], R: wave ? [7200, 1990 + 25 * Math.sin(t * 14)] : [7150, 2420 + bob] } }), 2400);
       part(FG, rect(6552, 2440, 7248, 2798), { col: K.wood, p: 1, seed: 255 }, { w: 4, col: K.ink, seed: 256 });   // the dining table
@@ -614,18 +614,18 @@ export function frame(comp, t) {
   } else if (set === 'station') {
     drawStation(t);
     const ox = 9110, ohy = 2500, ok = 1.35;
-    const stare = t >= 51.1, ask = t >= 48.8 && t < 51.1;
-    person2(PE, seat('officer', ox, t, { hy: ohy, k: ok, exp: stare ? { eyes: 'half', brows: 'angry', mouth: talking(t, 51.3, 56.4) } : ask ? { eyes: 'open', brows: 'down', mouth: talking(t, 48.9, 49.9) } : { eyes: 'open', brows: 'flat', mouth: 'flat' }, look: [-1, 0],
-      hands: ask ? { L: [ox - 290, ohy + 250], R: [ox + 100, ohy + 400] } : stare && t > 53.6 ? { L: [ox - 280, ohy + 200], R: [ox + 100, ohy + 400] } : { L: [ox - 110, ohy + 400], R: [ox + 110, ohy + 400] } }), 3000);
+    const stare = t >= 52.8, ask = t >= 50.4 && t < 52.8;
+    person2(PE, seat('officer', ox, t, { hy: ohy, k: ok, exp: stare ? { eyes: 'half', brows: 'angry', mouth: talking(t, 53.0, 59.0) } : ask ? { eyes: 'open', brows: 'down', mouth: talking(t, 50.6, 51.3) } : { eyes: 'open', brows: 'flat', mouth: 'flat' }, look: [-1, 0],
+      hands: ask ? { L: [ox - 290, ohy + 250], R: [ox + 100, ohy + 400] } : stare && t > 56.2 ? { L: [ox - 280, ohy + 200], R: [ox + 100, ohy + 400] } : { L: [ox - 110, ohy + 400], R: [ox + 110, ohy + 400] } }), 3000);
     drawStationDesk(PROP, t);
     const mtop = monitorContent(t);
     person2(FG, bust('robot', 9640, 2700, 0.16, t, { L: 300, exp: { eyes: 'open', brows: 'flat', mouth: 'smile' } }), 4400);
     const ax = 8560, agy = 3150, ak = 1.15, ahy = agy - AH * ak;
-    const pockets = t >= 49.9;
-    const scared = t >= 51.1;
+    const pockets = t >= 51.6;
+    const scared = t >= 52.8;
     const ast = stand('aryan', ax, agy, ak, t, { pockets, sweat: true, look: [1, 0],
       hands: pockets && !scared ? { L: [ax - 130, ahy + 300], R: [ax + 130, ahy + 300] } : scared ? { L: [ax - 70, ahy + 40], R: [ax + 70, ahy + 40] } : { L: [ax + 10, ahy + 190], R: [ax + 150, ahy + 290] },
-      exp: t >= 56.4 ? { eyes: 'pop', brows: 'up', mouth: 'wavy' } : scared ? { eyes: 'pop', brows: 'up', mouth: 'o' } : pockets ? { eyes: 'pop', brows: 'worried', mouth: 'wavy' } : { eyes: 'open', brows: 'worried', mouth: talking(t, 44.9, 48.6) } });
+      exp: t >= 59.1 ? { eyes: 'pop', brows: 'up', mouth: 'wavy' } : scared ? { eyes: 'pop', brows: 'up', mouth: 'o' } : pockets ? { eyes: 'pop', brows: 'worried', mouth: 'wavy' } : { eyes: 'open', brows: 'worried', mouth: talking(t, 45.8, 50.2) } });
     person2(FG, ast, 2000);
     mtop();
     vig = 0.2;
