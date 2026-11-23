@@ -10,7 +10,7 @@ import { group, clearGroup, part, tube } from './rig.js';
 import { clamp, lerp, hash, ss, eio, eo, ei } from '/core/lib.js';
 STYLE.clean = true;
 
-export const DUR = 60.5;
+export const DUR = 81.0;
 const NOSUBS = new URLSearchParams(location.search).get('nosubs') === '1';
 const K = { ink: '#1d1b22', bone: '#fbf8f1', cream: '#f3ead2', white: '#ffffff', grey: '#9a9aa3', dgrey: '#55555f',
   wood: '#b57f52', woodD: '#7d5434', red: '#e2412f', green: '#4f9a5a', leaf: '#7cc36e', yellow: '#f5c63c', note: '#ffe46b', pink: '#f29ab8', pinkL: '#fbd3e0', orange: '#ec8a3c',
@@ -25,18 +25,21 @@ const oval = (cx, cy, rx, ry, n = 32) => Array.from({ length: n }, (_, i) => { c
 
 // ——— printed words / voice script (N narrator, R Raghav, A Maa, V vaidya, B merchant, P the voice from the temple = SAME voice as B) ———
 export const SUBS = [
-  { t0: 0.0, t1: 2.5, text: '“प्रभु… आज मैंने|आपका फूल बेच दिया!”', who: 'R', vo: 'r1', vt: 0.2 },
-  { t0: 4.7, t1: 9.9, text: 'राघव रोज़ अपना सबसे सुंदर कमल|भगवान विष्णु के चरणों में चढ़ाता था।', who: 'N', vo: 'n1', vt: 4.8 },
-  { t0: 10.1, t1: 13.7, text: '“प्रभु, मुझे कुछ नहीं चाहिए…|बस मेरी माँ ठीक रहे।”', who: 'R', vo: 'r2', vt: 10.2 },
-  { t0: 13.9, t1: 18.5, text: '“बुखार बहुत तेज़ है। ये दवा चाहिए…|दस सोने के सिक्के की।”', who: 'V', vo: 'v1', vt: 14.0 },
-  { t0: 18.7, t1: 23.7, text: 'राघव के पास बस चार ताँबे के सिक्के थे।|वो पूरी रात रोता रहा।', who: 'N', vo: 'n2', vt: 18.8 },
-  { t0: 24.0, t1: 29.5, text: 'अगली सुबह तालाब में सिर्फ़ एक कमल खिला…|तभी एक अमीर व्यापारी ने उसे रोका।', who: 'N', vo: 'n3', vt: 24.1 },
-  { t0: 29.7, t1: 33.9, text: '“ये कमल मुझे दे दो।|बदले में… दस सोने के सिक्के।”', who: 'B', vo: 'b1', vt: 29.8 },
-  { t0: 35.5, t1: 40.0, text: 'एक तरफ़ भगवान की पूजा…|दूसरी तरफ़ माँ की जान।', who: 'N', vo: 'n4', vt: 35.6 },
-  { t0: 45.9, t1: 48.4, text: '“राघव…”', who: 'A', vo: 'a1', vt: 46.0 },
-  { t0: 48.9, t1: 53.4, text: '“प्रभु…|क्या आप मुझे माफ़ करेंगे?”', who: 'R', vo: 'r3', vt: 49.0 },
-  { t0: 54.7, t1: 56.6, text: '“राघव…”', who: 'P', vo: 'p1', vt: 54.8 },
-  { t0: 56.8, t1: 60.5, text: 'आगे क्या हुआ… देखिए भाग 2 में,|कल शाम 7:30 बजे!', who: 'N', vo: 'n5', vt: 56.9 },
+  { t0: 0.0, t1: 3.6, text: '“प्रभु… आज मैंने|आपका फूल बेच दिया!”', who: 'R', vo: 'r1', vt: 0.2 },
+  { t0: 7.2, t1: 12.4, text: 'राघव रोज़ अपना सबसे सुंदर कमल|भगवान विष्णु के चरणों में चढ़ाता था।', who: 'N', vo: 'n1', vt: 7.3 },
+  { t0: 15.7, t1: 19.9, text: '“प्रभु, मुझे कुछ नहीं चाहिए…|बस मेरी माँ ठीक रहे।”', who: 'R', vo: 'r2', vt: 15.8 },
+  { t0: 20.1, t1: 23.0, text: 'पर उसी रात…|माँ को तेज़ बुख़ार चढ़ गया।', who: 'N', vo: 'n6', vt: 20.2 },
+  { t0: 23.2, t1: 28.4, text: '“बुख़ार बहुत तेज़ है। ये दवा चाहिए…|दस सोने के सिक्के की।”', who: 'V', vo: 'v1', vt: 23.3 },
+  { t0: 32.7, t1: 36.9, text: 'राघव के पास|बस चार ताँबे के सिक्के थे।', who: 'N', vo: 'n2', vt: 32.8 },
+  { t0: 37.2, t1: 41.8, text: 'वो पूरी रात|माँ का हाथ पकड़कर रोता रहा।', who: 'N', vo: 'n7', vt: 37.3 },
+  { t0: 42.2, t1: 46.8, text: 'अगली सुबह तालाब में|सिर्फ़ एक कमल खिला…', who: 'N', vo: 'n3', vt: 42.3 },
+  { t0: 47.1, t1: 50.3, text: 'तभी एक अमीर व्यापारी|ने उसे रोका।', who: 'N', vo: 'n8', vt: 47.2 },
+  { t0: 50.6, t1: 55.4, text: '“ये कमल मुझे दे दो।|बदले में… दस सोने के सिक्के।”', who: 'B', vo: 'b1', vt: 50.7 },
+  { t0: 57.7, t1: 62.8, text: 'एक तरफ़ भगवान की पूजा…|दूसरी तरफ़ माँ की जान।', who: 'N', vo: 'n4', vt: 57.8 },
+  { t0: 68.1, t1: 70.4, text: '“राघव…”', who: 'A', vo: 'a1', vt: 68.2 },
+  { t0: 70.7, t1: 74.9, text: '“प्रभु…|क्या आप मुझे माफ़ करेंगे?”', who: 'R', vo: 'r3', vt: 70.8 },
+  { t0: 75.3, t1: 77.5, text: '“राघव…”', who: 'P', vo: 'p1', vt: 75.4 },
+  { t0: 77.7, t1: 81.0, text: 'आगे क्या हुआ… देखिए भाग 2 में,|कल शाम 7:30 बजे!', who: 'N', vo: 'n5', vt: 77.8 },
 ];
 
 // ——— text: Devanagari needs whole words; reveal = clip wiping left → right ———
@@ -74,30 +77,71 @@ function ik(sh, hd, L1, L2, side) {
   const score = e => side * e[0];
   return [score(e1) > score(e2) ? e1 : e2, tgt];
 }
+// Expressive face (23 Nov, Jayant: "cartoon mein emotions ho"): almond eyes with iris + highlights, lids that droop, thick brows,
+// filled mouths, blush, real tear streams. eyes: open | sad | teary | half | calm (closed, peaceful) | closed | squeeze (crying hard) | happy | pop | shut(=squeeze)
+// brows: flat | worried | sad | angry | up | calm. mouth: small | smile | grin | open | o | sad | cry | flat | wavy | knowing | yell
 function face(C, tp, s, sd) {
-  const e = s.exp, lk = s.look || [0, 0], eyeY = -2;
+  const e = s.exp, lk = s.look || [0, 0], ey = -2, skinC = s.skinC || K.skin, ink = K.ink, lidCol = s.lidCol || ink;
+  const eyes = e.eyes === 'shut' ? 'squeeze' : e.eyes, fem = s.fem;
+  const W = 13, Hh = 9.5;
   for (const sg of [-1, 1]) {
-    const ex = sg * 18 + lk[0] * 5, ey = eyeY + lk[1] * 4, cx = sg * 18;
-    const pupil = (c, r) => { dab(C.l, c[0], c[1], r, { col: K.ink, p: 1, gap: 3, w: 5, seed: sd + 32 + sg }); dab(C.l, c[0] + 2, c[1] - 2.5, 2, { col: K.white, p: 1, gap: 1.5, w: 3, seed: sd + 34 + sg }); };
-    if (e.eyes === 'closed') line(C.l, tp([[cx - 9, eyeY + 1], [cx, eyeY + 5], [cx + 9, eyeY + 1]]), { w: 4.5, col: K.ink, seed: sd + 30 + sg });
-    else if (e.eyes === 'shut') line(C.l, tp([[cx - 10, eyeY + 3], [cx, eyeY - 2], [cx + 10, eyeY + 3]]), { w: 4.5, col: K.ink, seed: sd + 30 + sg });
-    else if (e.eyes === 'half') { line(C.l, tp([[cx - 11, eyeY - 2], [cx + 11, eyeY - 2]]), { w: 4.5, col: K.ink, seed: sd + 30 + sg }); pupil(tp([[ex, ey + 2]])[0], 5); }
-    else if (e.eyes === 'pop') { const c = tp([[ex, ey]])[0]; fill(C.f, tp(handCircle(cx, eyeY, 12, sd + 27 + sg, 0, 18)), { col: K.white, p: 0.9, gap: 3, w: 5, seed: sd + 26 + sg, over: 1 }); line(C.l, tp(handCircle(cx, eyeY, 12, sd + 28 + sg, 0.1, 20)), { w: 3.5, col: K.ink, seed: sd + 28 + sg }); dab(C.l, c[0], c[1], 3.5, { col: K.ink, p: 1, seed: sd + 32 + sg }); }
-    else pupil(tp([[ex, ey]])[0], 6);
-    const b = e.brows === 'up' ? [-26, -24] : e.brows === 'down' ? [-17, -22] : e.brows === 'worried' ? [-25, -17] : e.brows === 'angry' ? [-15, -25] : [-20, -20];
-    line(C.l, tp([[sg * 8, b[0]], [sg * 26, b[1]]]), { w: 4.5, col: s.browCol || K.ink, seed: sd + 36 + sg });
+    const cx = sg * 20, X = u => cx + sg * u;   // u > 0 = outer side
+    const alm = [[X(-W), ey + 1], [X(-W * 0.45), ey - Hh], [X(W * 0.35), ey - Hh * 1.05], [X(W), ey - Hh * 0.15], [X(W * 0.55), ey + Hh * 0.75], [X(-W * 0.4), ey + Hh * 0.8]];
+    if (eyes === 'calm' || eyes === 'closed') {
+      line(C.l, tp(smooth([[X(-W), ey], [cx, ey + 5], [X(W), ey]], 5, false)), { w: 5, col: lidCol, seed: sd + 30 + sg });
+      if (fem) line(C.l, tp([[X(W - 1), ey], [X(W + 6), ey - 3]]), { w: 3.5, col: lidCol, seed: sd + 31 + sg });
+    } else if (eyes === 'happy') {
+      line(C.l, tp(smooth([[X(-W), ey + 3], [cx, ey - 7], [X(W), ey + 3]], 5, false)), { w: 5.5, col: lidCol, seed: sd + 30 + sg });
+    } else if (eyes === 'squeeze') {
+      line(C.l, tp([[X(-W), ey - 6], [X(W * 0.6), ey + 1], [X(-W * 0.9), ey + 7]]), { w: 5.5, col: lidCol, seed: sd + 30 + sg });
+    } else if (eyes === 'pop') {
+      part(C, tp(handCircle(cx, ey, 14, sd + 26 + sg, 0, 18)), { col: K.white, p: 1, gap: 3, w: 5, seed: sd + 27 + sg }, { w: 4, col: ink, seed: sd + 28 + sg });
+      dab(C.l, ...tp([[cx + lk[0] * 4, ey + lk[1] * 4]])[0], 4.5, { col: ink, p: 1, seed: sd + 32 + sg });
+    } else {
+      part(C, tp(smooth(alm, 4)), { col: K.white, p: 1, gap: 3, w: 5, seed: sd + 26 + sg }, null);
+      const ic = tp([[cx + lk[0] * 5, ey + 1 + lk[1] * 3]])[0], kk = Math.abs(tp([[1, 0]])[0][0] - tp([[0, 0]])[0][0]);
+      dab(C.l, ic[0], ic[1], 8.2 * kk, { col: s.iris || '#4a2c18', p: 1, gap: 2.5, w: 4, seed: sd + 32 + sg });
+      dab(C.l, ic[0], ic[1], 4.6 * kk, { col: '#140b07', p: 1, gap: 2, w: 3, seed: sd + 33 + sg });
+      dab(C.l, ic[0] + 2.6 * kk, ic[1] - 3.2 * kk, 2.6 * kk, { col: K.white, p: 1, gap: 1.2, w: 2.5, seed: sd + 34 + sg });
+      dab(C.l, ic[0] - 2.4 * kk, ic[1] + 2.6 * kk, 1.3 * kk, { col: K.white, p: 1, gap: 1, w: 2, seed: sd + 35 + sg });
+      // lids: sad = outer side droops, half = flat heavy lid, teary = sad + wet line
+      let lid = null;
+      if (eyes === 'sad' || eyes === 'teary') lid = [[X(-W - 2), ey - Hh * 1.0], [X(W + 2), ey - Hh * 0.4]];
+      if (eyes === 'half') lid = [[X(-W - 2), ey - Hh * 0.15], [X(W + 2), ey - Hh * 0.15]];
+      if (lid) {
+        part(C, tp([[X(-W - 4), ey - Hh - 8], [X(W + 4), ey - Hh - 8], lid[1], lid[0]]), { col: skinC, p: 1, gap: 6, w: 8, seed: sd + 36 + sg }, null);
+        line(C.l, tp(lid), { w: 5.5, col: lidCol, seed: sd + 37 + sg });
+      } else line(C.l, tp(smooth(alm.slice(0, 4), 4, false)), { w: 5.5, col: lidCol, seed: sd + 37 + sg });
+      if (eyes === 'teary') { line(C.l, tp(smooth([[X(-W * 0.6), ey + Hh * 0.55], [cx, ey + Hh * 0.8], [X(W * 0.5), ey + Hh * 0.6]], 4, false)), { w: 4, col: '#bfe6ff', seed: sd + 38 + sg }); dab(C.l, ic[0] - 2 * kk, ic[1] - 1 * kk, 1.8 * kk, { col: K.white, p: 1, seed: sd + 39 + sg }); }
+      if (fem) line(C.l, tp([[X(W - 1), ey - Hh * 0.2], [X(W + 7), ey - Hh * 0.8]]), { w: 3.5, col: lidCol, seed: sd + 31 + sg });
+    }
+    // brows: [inner y, outer y]
+    const bw = { flat: [-25, -25], worried: [-33, -22], sad: [-33, -21], angry: [-19, -30], up: [-35, -33], calm: [-27, -26], down: [-20, -26] }[e.brows || 'flat'] || [-25, -25];
+    part(C, tp(smooth([[sg * 7, bw[0] + 2], [sg * 18, (bw[0] + bw[1]) / 2 - 3], [sg * 31, bw[1] + 1], [sg * 30, bw[1] + 4], [sg * 18, (bw[0] + bw[1]) / 2 + 2], [sg * 7, bw[0] + 6]], 3)), { col: s.browCol || '#2a1d18', p: 1, gap: 3, w: 4, seed: sd + 40 + sg }, null);
   }
-  const m = e.mouth;
-  if (m === 'open') part(C, tp([[-13, 18], [13, 18], [9, 30], [0, 33], [-9, 30]]), { col: '#5a1f22', p: 0.9, gap: 4, w: 6, seed: sd + 50 }, { w: 4, col: K.ink, seed: sd + 51 });
-  else if (m === 'yell') part(C, tp(smooth([[-16, 16], [16, 16], [12, 36], [0, 40], [-12, 36]], 3)), { col: '#5a1f22', p: 0.9, gap: 4, w: 6, seed: sd + 50 }, { w: 4, col: K.ink, seed: sd + 51 });
-  else if (m === 'o') line(C.l, tp(handCircle(0, 25, 7, sd + 52, 0.1, 14)), { w: 4, col: K.ink, seed: sd + 52 });
-  else if (m === 'flat') line(C.l, tp([[-9, 25], [9, 24]]), { w: 4, col: K.ink, seed: sd + 53 });
-  else if (m === 'wavy') line(C.l, tp([[-12, 25], [-6, 21], [0, 26], [6, 21], [12, 25]]), { w: 4, col: K.ink, seed: sd + 53 });
-  else if (m === 'sad') line(C.l, tp(smooth([[-12, 28], [0, 21], [12, 28]], 5, false)), { w: 4.5, col: K.ink, seed: sd + 57 });
-  else if (m === 'smile') line(C.l, tp(smooth([[-12, 19], [0, 28], [12, 19]], 5, false)), { w: 4.5, col: K.ink, seed: sd + 58 });
-  else if (m === 'grin') part(C, tp(smooth([[-15, 18], [15, 18], [0, 32]], 3)), { col: K.white, p: 1, gap: 4, w: 6, seed: sd + 59 }, { w: 4, col: K.ink, seed: sd + 60 });
-  else if (m === 'knowing') line(C.l, tp(smooth([[-13, 21], [0, 27], [15, 18]], 5, false)), { w: 4.5, col: K.ink, seed: sd + 58 });
-  else line(C.l, tp(smooth([[-6, 23], [0, 26], [6, 23]], 5, false)), { w: 4, col: K.ink, seed: sd + 56 });
+  line(C.l, tp(smooth([[-2, 6], [3, 13], [-3, 15]], 4, false)), { w: 3, col: '#9a5f45', seed: sd + 44 });   // nose
+  if (['happy', 'squeeze', 'teary'].includes(eyes) || ['grin', 'cry'].includes(e.mouth) || s.blush) for (const sg of [-1, 1]) dab(C.l, ...tp([[sg * 31, 15]])[0], 8 * Math.abs(tp([[1, 0]])[0][0] - tp([[0, 0]])[0][0]), { col: '#ef8a8a', p: 0.45, seed: sd + 45 + sg, sq: 0.6 });
+  const m = e.mouth, MO = { col: '#6b2323', p: 1, gap: 3, w: 5, seed: sd + 50 }, ML = { w: 4, col: ink, seed: sd + 51 };
+  if (m === 'open') part(C, tp(smooth([[-11, 24], [11, 24], [8, 33], [0, 35], [-8, 33]], 3)), MO, ML);
+  else if (m === 'yell') part(C, tp(smooth([[-15, 20], [15, 20], [12, 37], [0, 41], [-12, 37]], 3)), MO, ML);
+  else if (m === 'cry') { part(C, tp(smooth([[-17, 31], [-9, 23], [0, 25], [9, 23], [17, 31], [11, 39], [0, 41], [-11, 39]], 3)), MO, ML); part(C, tp(smooth([[-8, 37], [0, 34], [8, 37], [0, 40]], 3)), { col: '#e0767a', p: 1, seed: sd + 52 }, null); line(C.l, tp([[-8, 25.5], [8, 25.5]]), { w: 3.5, col: K.white, seed: sd + 53 }); }
+  else if (m === 'grin') { part(C, tp(smooth([[-15, 21], [15, 21], [9, 32], [0, 35], [-9, 32]], 3)), MO, ML); line(C.l, tp([[-11, 23.5], [11, 23.5]]), { w: 4, col: K.white, seed: sd + 54 }); dab(C.l, ...tp([[0, 31]])[0], 4, { col: '#e0767a', p: 1, seed: sd + 55 }); }
+  else if (m === 'o') part(C, tp(handCircle(0, 28, 6.5, sd + 56, 0, 14)), MO, ML);
+  else if (m === 'flat') line(C.l, tp([[-9, 27], [9, 27]]), { w: 4, col: ink, seed: sd + 57 });
+  else if (m === 'wavy') line(C.l, tp([[-12, 28], [-6, 24], [0, 29], [6, 24], [12, 28]]), { w: 4, col: ink, seed: sd + 57 });
+  else if (m === 'sad') { line(C.l, tp(smooth([[-12, 31], [0, 25], [12, 31]], 5, false)), { w: 4.5, col: ink, seed: sd + 58 }); line(C.l, tp([[-4, 34], [4, 34]]), { w: 2.5, col: '#9a5f45', seed: sd + 59 }); }
+  else if (m === 'smile') line(C.l, tp(smooth([[-13, 22], [0, 31], [13, 22]], 5, false)), { w: 4.5, col: ink, seed: sd + 58 });
+  else if (m === 'knowing') line(C.l, tp(smooth([[-12, 25], [2, 30], [14, 21]], 5, false)), { w: 4.5, col: ink, seed: sd + 58 });
+  else line(C.l, tp(smooth([[-6, 26], [0, 29], [6, 26]], 5, false)), { w: 4, col: ink, seed: sd + 58 });
+  if (s.tears) {   // tear streams down both cheeks + falling drops
+    const sq = eyes === 'squeeze';
+    for (const sg of [-1, 1]) {
+      const x0 = sg * (sq ? 22 : 24), y0 = ey + 8;
+      line(C.l, tp(smooth([[x0, y0], [x0 + sg * 3, y0 + 18], [x0 + sg * 1, y0 + 34], [x0 + sg * 4, y0 + 46]], 4, false)), { w: 5, col: '#9fd8ff', p: 0.95, seed: sd + 60 + sg });
+      const u = ((s.t || 0) * 1.3 + (sg > 0 ? 0.45 : 0)) % 1;
+      dab(C.l, ...tp([[x0 + sg * 4, y0 + 48 + 40 * u]])[0], 4.5 * Math.abs(tp([[1, 0]])[0][0] - tp([[0, 0]])[0][0]), { col: '#9fd8ff', p: 1 - u, seed: sd + 62 + sg });
+    }
+  }
 }
 
 // ——— layers ———
@@ -105,28 +149,31 @@ const BG = { f: layer(), l: layer() }, GLOW = layer(), PE = group(), PROP = grou
 
 // ——— shots: [t0, t1, set, cam0, cam1] ———
 const SHOTS = [
-  [0.0, 2.5, 'steps', [1000, 2470, 1.3], [1000, 2470, 1.42]],      // HOOK: night, temple steps, empty hands, tears
-  [2.5, 4.6, 'steps', [1000, 2280, 0.82], [1000, 2280, 0.88]],     // wide: the closed temple — title card + भाग 1
-  [4.6, 7.6, 'pond', [3000, 2480, 1.05], [3020, 2470, 1.12]],      // a day earlier: the pond, his best lotus
-  [7.6, 13.8, 'mandir', [5620, 2560, 1.15], [5620, 2560, 1.27]],   // offering at the feet; prayer for Maa
-  [13.8, 18.6, 'hut', [8150, 2470, 1.0], [8150, 2470, 1.06]],      // vaidya: 10 gold coins
-  [18.6, 21.4, 'coins', [10000, 2420, 1.0], [10000, 2420, 1.08]],  // 4 copper coins
-  [21.4, 23.9, 'hut', [8440, 2380, 1.45], [8440, 2380, 1.55]],       // he cries all night
-  [23.9, 26.8, 'pond', [3000, 2480, 1.05], [3000, 2480, 1.1]],     // next morning: only one lotus
-  [26.8, 29.6, 'pond', [3700, 2460, 0.9], [3740, 2460, 0.95]],     // the merchant + his chariot (conch flag)
-  [29.6, 32.2, 'pond', [3960, 2340, 1.55], [3960, 2340, 1.65]],    // "give me this lotus"
-  [32.2, 34.0, 'gold', [10000, 2420, 1.0], [10000, 2420, 1.08]],   // 10 gold coins
-  [34.0, 35.4, 'pond', [3380, 2300, 2.1], [3380, 2300, 2.3]],      // Raghav: दस?!
-  [35.4, 40.0, 'dilemma', [11600, 2470, 1.0], [11600, 2470, 1.07]],// puja or Maa?
-  [40.0, 42.9, 'pond', [3680, 2420, 1.3], [3680, 2420, 1.36]],     // he gives the lotus — the merchant's knowing smile
-  [42.9, 45.6, 'hutday', [8330, 2420, 1.3], [8330, 2420, 1.36]],   // the medicine
-  [45.6, 48.6, 'hutday', [8330, 2260, 1.9], [8330, 2260, 2.0]],    // Maa opens her eyes
-  [48.6, 54.2, 'steps', [1000, 2470, 1.3], [1000, 2470, 1.42]],    // night again (= the hook)
-  [54.2, 56.8, 'steps', [1000, 2330, 0.95], [1000, 2330, 1.0]],    // the doors glow gold: "राघव…"
-  [56.8, 60.51, 'steps', [1000, 2400, 1.05], [1000, 2400, 1.1]],   // his face in the light → भाग 2 कल
+  [0.0, 4.0, 'steps', [1000, 2420, 1.5], [1000, 2400, 1.62]],      // HOOK: night, temple steps, kneeling, crying, empty hands
+  [4.0, 7.0, 'steps', [1000, 2250, 0.82], [1000, 2250, 0.87]],     // wide: the closed temple — title + भाग 1
+  [7.0, 12.5, 'pond', [3000, 2480, 1.02], [3020, 2470, 1.12]],     // a day earlier: dawn pond, his best lotus
+  [12.5, 15.6, 'mandir', [5640, 2420, 0.9], [5640, 2420, 0.95]],   // the brass murti; he offers the lotus
+  [15.6, 20.0, 'mandir', [5420, 2560, 1.45], [5420, 2540, 1.58]],  // prayer close-up
+  [20.0, 23.0, 'hut', [8250, 2470, 0.95], [8250, 2470, 1.0]],      // that night: Maa's fever
+  [23.0, 28.5, 'hut', [8150, 2470, 1.0], [8150, 2470, 1.05]],      // vaidya: 10 gold coins
+  [28.5, 32.5, 'hut', [8600, 2430, 2.2], [8600, 2430, 2.4]],       // Raghav's face
+  [32.5, 37.0, 'coins', [10000, 2420, 1.0], [10000, 2420, 1.08]],  // 4 copper coins
+  [37.0, 42.0, 'hut', [8440, 2420, 1.45], [8440, 2420, 1.58]],     // crying all night, holding her hand
+  [42.0, 47.0, 'pond', [3000, 2480, 1.05], [3000, 2480, 1.12]],    // next morning: only one lotus
+  [47.0, 50.5, 'pond', [3480, 2460, 0.9], [3760, 2460, 0.92]],     // the merchant + his chariot (conch flag)
+  [50.5, 53.2, 'pond', [3960, 2340, 1.55], [3960, 2340, 1.65]],    // "give me this lotus"
+  [53.2, 55.5, 'gold', [10000, 2420, 1.0], [10000, 2420, 1.08]],   // 10 gold coins
+  [55.5, 57.5, 'pond', [3380, 2300, 2.1], [3380, 2300, 2.3]],      // Raghav: दस?!
+  [57.5, 63.0, 'dilemma', [11600, 2470, 1.0], [11600, 2470, 1.07]],// puja or Maa?
+  [63.0, 66.5, 'pond', [3680, 2420, 1.3], [3680, 2420, 1.38]],     // he gives the lotus — the merchant's knowing smile
+  [66.5, 68.0, 'hutday', [8330, 2420, 1.3], [8330, 2420, 1.34]],   // the medicine
+  [68.0, 70.5, 'hutday', [8330, 2260, 1.9], [8330, 2260, 2.0]],    // Maa opens her eyes
+  [70.5, 75.0, 'steps', [1000, 2420, 1.5], [1000, 2400, 1.62]],    // night again (= the hook)
+  [75.0, 77.5, 'steps', [1000, 2300, 0.95], [1000, 2300, 1.0]],    // the doors glow gold: "राघव…"
+  [77.5, 81.01, 'steps', [1000, 2380, 1.2], [1000, 2380, 1.28]],   // his face in the light → भाग 2 कल
 ];
 function shotAt(t) { return SHOTS.find(s => t >= s[0] && t < s[1]) || SHOTS[SHOTS.length - 1]; }
-const HITS = [[2.5, 8], [18.6, 5], [32.2, 6], [34.0, 10], [36.0, 3], [37.0, 3], [38.0, 3], [39.0, 3], [54.2, 8], [54.8, 6]];
+const HITS = [[4.2, 8], [28.5, 6], [32.6, 4], [53.2, 6], [55.5, 10], [75.0, 8], [75.4, 6]];
 function shake(t) {
   let x = 0, y = 0;
   for (const [h, a] of HITS) { const d = t - h; if (d < 0 || d > 0.5) continue; const e = a * Math.exp(-d / 0.08); x += (hash(BOIL.step * 3.1 + h) - .5) * 2 * e; y += (hash(BOIL.step * 5.7 + h) - .5) * 2 * e; }
@@ -136,7 +183,7 @@ function shake(t) {
 // ——— characters ———
 const SPEC = {
   raghav: { top: K.saffron, len: 330, bottom: '#efe6d0', shoe: K.skinO, hair: 'short', skin: K.skinO, gamchha: '#c9483a' },
-  amma: { top: '#e6dcc6', trim: '#5f86b0', len: 430, bottom: '#e6dcc6', shoe: K.woodD, hair: 'bun', hairCol: '#b9b4ae', bindi: 1, skin: K.skinM, pallu: '#d4c7aa' },
+  amma: { fem: 1, top: '#e6dcc6', trim: '#5f86b0', len: 430, bottom: '#e6dcc6', shoe: K.woodD, hair: 'bun', hairCol: '#b9b4ae', bindi: 1, skin: K.skinM, pallu: '#d4c7aa' },
   vaidya: { top: '#f6f1e4', len: 420, bottom: '#f6f1e4', shoe: K.woodD, hair: 'short', hairCol: '#dcd8d2', beard: '#efebe5', moustache: '#efebe5', turban: '#e39a3a', glasses: 1, tilak: 'dot', skin: K.skinM, browCol: '#cfcac3' },
   vyapari: { top: K.pitambar, trim: K.gold, len: 420, bottom: K.pitambar, shoe: '#8a3b2a', hair: 'short', turban: '#c7362f', jewel: 1, mala: 1, tilak: 'v', skin: K.skin, angavastra: K.maroon },
 };
@@ -174,7 +221,7 @@ function person2(C, s, sd) {
     for (let i = 0; i < 2; i++) line(C.l, tp(smooth([[-54, -30 - i * 24], [0, -56 - i * 26], [56, -34 - i * 22]], 5, false)), { w: 3.5, col: K.ink, p: 0.6, seed: sd + 58 + i });
     if (P0.jewel) { dab(C.l, ...P(0, -58), 10 * k, { col: K.goldL, p: 1, seed: sd + 61 }); dab(C.l, ...P(0, -58), 5 * k, { col: '#3fa39a', p: 1, seed: sd + 62 }); line(C.l, tp(smooth([[4, -66], [16, -104], [30, -124]], 4, false)), { w: 6, col: K.gold, seed: sd + 63 }); }
   }
-  face(C, tp, { ...s, look: s.look || [0, 0], browCol: P0.browCol }, sd);
+  face(C, tp, { ...s, look: s.look || [0, 0], browCol: P0.browCol, skinC, fem: P0.fem, iris: P0.iris }, sd);
   if (P0.beard) part(C, tp(smooth([[-50, 0], [-46, 38], [-26, 70], [0, 82], [26, 70], [46, 38], [50, 0], [38, 22], [14, 34], [0, 36], [-14, 34], [-38, 22]], 4)), { col: P0.beard, p: 1, seed: sd + 64 }, O(3, sd + 65));
   if (P0.moustache) part(C, tp(smooth([[-28, 14], [0, 6], [28, 14], [22, 22], [0, 16], [-22, 22]], 4)), { col: P0.moustache, p: 1, seed: sd + 66 }, O(3, sd + 67));
   if (P0.glasses) { for (const sg of [-1, 1]) line(C.l, tp(handCircle(sg * 19, -2, 15, sd + 68 + sg, 0.08, 22)), { w: 3.5, col: K.ink, seed: sd + 69 + sg }); line(C.l, tp([[-4, -3], [4, -3]]), { w: 3, col: K.ink, seed: sd + 71 }); }
@@ -183,7 +230,6 @@ function person2(C, s, sd) {
   if (P0.tilak === 'v') { for (const sg of [-1, 1]) line(C.l, tp([[sg * 4, -18], [sg * 10, -42]]), { w: 4, col: K.white, seed: sd + 74 + sg }); line(C.l, tp([[0, -20], [0, -40]]), { w: 4, col: K.red, seed: sd + 76 }); }
   if (s.patti) part(C, tp(rrect(-34, -44, 34, -26, 6)), { col: K.white, p: 1, seed: sd + 77 }, O(3, sd + 78));
   if (s.sweat) dab(C.l, ...P(58, -24 + 18 * ((s.t * 1.4) % 1)), 7 * k, { col: K.water, p: 1, seed: sd + 79 });
-  if (s.tears) for (const sg of [-1, 1]) for (let i = 0; i < 2; i++) { const u = (s.t * 1.1 + i * 0.5 + (sg > 0 ? 0.25 : 0)) % 1; dab(C.l, ...P(sg * 20 + sg * 3 * u, 10 + 46 * u), 5.5 * k, { col: K.water, p: Math.sin(Math.PI * u), seed: sd + 80 + i + sg }); }
   const arms = {};
   if (!s.bust || s.hands) {
     for (const [side, sg] of [['L', -1], ['R', 1]]) {
@@ -203,9 +249,9 @@ function stand(kind, x, gy, k, t, o = {}) {
 }
 function seat(kind, x, t, o = {}) {   // sitting: feet hidden below (or shins with squat), hands in front
   const k = o.k ?? 1, hy = o.hy ?? 2010, gy = hy + 600;
-  return { kind, t, x, gy, k, hy, seated: 1, squat: o.squat, kneel: o.kneel, feet: { L: [x - 40, gy], R: [x + 40, gy] }, hands: o.hands || { L: [x - 90 * k, hy + 300 * k], R: [x + 90 * k, hy + 300 * k] }, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, patti: o.patti };
+  return { kind, t, x, gy, k, hy, seated: 1, squat: o.squat, kneel: o.kneel, feet: { L: [x - 40, gy], R: [x + 40, gy] }, hands: o.hands || { L: [x - 90 * k, hy + 300 * k], R: [x + 90 * k, hy + 300 * k] }, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, patti: o.patti, blush: o.blush };
 }
-function bust(kind, x, hy, k, t, o = {}) { return { kind, t, x, hy, k, bust: 1, bustL: o.L || 300, hands: o.hands, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: o.look || [0, 0], patti: o.patti, sweat: o.sweat }; }
+function bust(kind, x, hy, k, t, o = {}) { return { kind, t, x, hy, k, bust: 1, bustL: o.L || 300, hands: o.hands, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: o.look || [0, 0], patti: o.patti, sweat: o.sweat, tears: o.tears }; }
 function talking(t, a, b) { return t > a && t < b && BOIL.step % 3 ? 'open' : 'small'; }
 
 // ——— props ———
@@ -241,6 +287,115 @@ function diya(C, x, y, s, sd) {
 }
 function marigold(L, x0, x1, y, sag, sd) { for (let i = 0; i <= 14; i++) { const u = i / 14, x = lerp(x0, x1, u), yy = y + Math.sin(Math.PI * u) * sag; dab(L, x, yy, 13, { col: i % 2 ? K.orange : K.yellow, p: 1, seed: sd + i }); } }
 function bell(L, x, y, sd) { line(L, [[x, y - 120], [x, y - 10]], { w: 4, col: K.dgrey, seed: sd }); const b = smooth([[x - 24, y + 40], [x - 18, y], [x, y - 14], [x + 18, y], [x + 24, y + 40]], 4); poly(L, b, K.gold, 1, { seed: sd + 1 }); edge(L, b, K.ink, 3, 0.9, sd + 2); }
+
+// ——— Bhagwan Vishnu: mode 'deva' (living, blue, golden aura) | 'murti' (black-stone idol, silver eyes, real cloth + garlands) ———
+// Four arms: upper L shankh, upper R Sudarshan chakra, lower L gada, lower R padma (the lotus = the story's lotus). Calm, kind, no comedy.
+function vishnu(C, x, hy, k, mode, t, o = {}) {
+  const P = (dx, dy) => [x + dx * k, hy + dy * k], tp = pts => pts.map(([a, b]) => P(a, b));
+  const murti = mode !== 'deva';
+  const SK = { murti: ['#2c2f3e', '#22242f'], marble: ['#f2ede3', '#cfc6b6'], brass: ['#c99a3a', '#9f7522'], deva: ['#5b8fd8', '#477ac2'] }[mode];
+  const skin = SK[0], skinD = SK[1], gold = K.gold, goldL = K.goldL;
+  const O = (w, q) => ({ w, col: K.ink, seed: q, p: 0.95 }), F = (col, q) => ({ col, p: 1, gap: 6, w: 8, seed: q });
+  WMUL.k = clamp(Math.sqrt(k), 0.45, 1.4);
+  if (o.shesh) {   // Sheshnaag: five hooded heads fanning over the crown
+    const hc = [0, -70];
+    part(C, tp(smooth([[-150, 160], [-205, 10], [-200, -150], [-120, -270], [0, -300], [120, -270], [200, -150], [205, 10], [150, 160]], 5)), F('#3d6b4b', 860), O(5, 861));
+    part(C, tp(smooth([[-110, 140], [-150, 0], [-140, -130], [-80, -220], [0, -240], [80, -220], [140, -130], [150, 0], [110, 140]], 5)), F('#d8cf8c', 862), null);
+    for (let i = 0; i < 5; i++) { const a = Math.PI * (-0.92 + 0.21 * i), hx = Math.cos(a) * 190, hy2 = hc[1] + Math.sin(a) * 210;
+      part(C, tp(smooth([[hx - 34, hy2 + 10], [hx - 28, hy2 - 22], [hx, hy2 - 34], [hx + 28, hy2 - 22], [hx + 34, hy2 + 10], [hx, hy2 + 26]], 4)), F('#4f8a5f', 863 + i), O(4, 870 + i));
+      for (const sg of [-1, 1]) dab(C.l, ...P(hx + sg * 13, hy2 - 6), 5 * k, { col: '#ffd23a', p: 1, seed: 880 + i * 2 + sg }); }
+    for (let i = 0; i < 6; i++) line(C.l, tp(smooth([[-120 + i * 48, 120], [-110 + i * 44, -60], [-70 + i * 28, -200]], 4, false)), { w: 3, col: '#a89a56', p: 0.7, seed: 890 + i });
+  }
+  if (!murti && o.aura !== 0) {   // golden aura + halo ring
+    sglow(x, hy + 160 * k, 520 * k, '#ffe08a', 0.75 * (o.aura ?? 1), 900);
+    line(C.l, tp(handCircle(0, -40, 150, 901, 0, 48)), { w: 7, col: goldL, seed: 901 });
+    for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2 + t * 0.15; line(C.l, tp([[Math.cos(a) * 160, -40 + Math.sin(a) * 160], [Math.cos(a) * 196, -40 + Math.sin(a) * 196]]), { w: 5, col: goldL, p: 0.8, seed: 902 + i }); }
+  }
+  // hair falling behind the shoulders
+  part(C, tp(smooth([[-56, -24], [-74, 40], [-86, 140], [-58, 160], [-44, 70], [44, 70], [58, 160], [86, 140], [74, 40], [56, -24]], 4)), F('#1c1820', 910), O(4, 911));
+  // upper arms (raised): shankh (L), chakra (R)
+  const armU = (sg) => { const sh = P(sg * 64, 92), el = P(sg * 150, 70), hd = P(sg * 158, -20);
+    part(C, tube([sh, el], 34 * k, 28 * k), F(skin, 912 + sg), O(4, 914 + sg)); part(C, tube([el, hd], 28 * k, 24 * k), F(skin, 916 + sg), O(4, 918 + sg));
+    line(C.l, [P(sg * 118, 66), P(sg * 124, 98)], { w: 9 * k, col: gold, seed: 920 + sg }); line(C.l, [P(sg * 150, 10), P(sg * 168, 14)], { w: 8 * k, col: gold, seed: 922 + sg });
+    part(C, handCircle(...hd, 17 * k, 924 + sg, 0, 18), F(skin, 925 + sg), O(4, 926 + sg)); return hd; };
+  const hl = armU(-1), hr = armU(1);
+  // shankh
+  const sp = (dx, dy) => [hl[0] + dx * k, hl[1] + dy * k];
+  part(C, smooth([sp(-36, -6), sp(-22, -40), sp(6, -52), sp(30, -30), sp(26, 2), sp(-6, 14)], 5), F('#fbf6ea', 930), O(4, 931));
+  line(C.l, smooth([sp(-18, -14), sp(-6, -34), sp(14, -36), sp(16, -18), sp(2, -12)], 4, false), { w: 3, col: '#b9a98a', seed: 932 });
+  // Sudarshan chakra, spinning
+  const cc = [hr[0] + 6 * k, hr[1] - 48 * k], R = 44 * k;
+  part(C, handCircle(cc[0], cc[1], R, 933, 0, 30), F(goldL, 934), O(4, 935));
+  for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2 + t * 3; line(C.l, [[cc[0] + Math.cos(a) * R * 0.3, cc[1] + Math.sin(a) * R * 0.3], [cc[0] + Math.cos(a) * R * 0.92, cc[1] + Math.sin(a) * R * 0.92]], { w: 3.5, col: '#c98f22', seed: 936 + i }); }
+  for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2 + t * 3; line(C.l, [[cc[0] + Math.cos(a) * R, cc[1] + Math.sin(a) * R], [cc[0] + Math.cos(a + 0.12) * R * 1.22, cc[1] + Math.sin(a + 0.12) * R * 1.22]], { w: 4, col: murti ? gold : K.orange, seed: 950 + i }); }
+  dab(C.l, cc[0], cc[1], 9 * k, { col: K.red, p: 1, seed: 970 });
+  // pitambar dhoti, gold border + belt
+  part(C, tp(smooth([[-70, 250], [70, 250], [90, 400], [82, 560], [22, 570], [0, 470], [-22, 570], [-82, 560], [-90, 400]], 3)), F(K.pitambar, 971), O(5, 972));
+  for (const dx of [-30, 0, 30]) line(C.l, tp(smooth([[dx, 280], [dx + 6, 420], [dx * 0.6, 540]], 4, false)), { w: 3, col: '#c98f22', seed: 973 + dx });
+  line(C.l, tp([[-84, 548], [-22, 556]]), { w: 7, col: K.red, seed: 976 }); line(C.l, tp([[22, 556], [84, 548]]), { w: 7, col: K.red, seed: 977 });
+  for (const sg of [-1, 1]) part(C, tp(smooth([[sg * 14, 566], [sg * 58, 566], [sg * 64, 590], [sg * 10, 592]], 3)), F(skin, 978 + sg), O(4, 980 + sg));
+  for (const sg of [-1, 1]) line(C.l, tp([[sg * 16, 562], [sg * 56, 562]]), { w: 6, col: gold, seed: 982 + sg });
+  // torso, janeu, necklaces, kaustubha
+  part(C, tp(smooth([[-20, 46], [20, 46], [66, 82], [74, 160], [66, 256], [-66, 256], [-74, 160], [-66, 82]], 3)), F(skin, 984), O(5, 985));
+  part(C, tp(rect(-72, 244, 72, 270)), F(gold, 986), O(3, 987)); dab(C.l, ...P(0, 257), 10 * k, { col: K.red, p: 1, seed: 988 });
+  line(C.l, tp(smooth([[-50, 76], [0, 170], [56, 250]], 4, false)), { w: 3.5, col: '#fffbe8', seed: 989 });
+  line(C.l, tp(smooth([[-36, 64], [0, 108], [36, 64]], 5, false)), { w: 8, col: gold, seed: 990 });
+  line(C.l, tp(smooth([[-46, 70], [0, 146], [46, 70]], 5, false)), { w: 6, col: gold, seed: 991 });
+  dab(C.l, ...P(0, 150), 11 * k, { col: K.red, p: 1, seed: 992 }); dab(C.l, ...P(0, 150), 5 * k, { col: K.white, p: 1, seed: 993 });
+  // vanamala: a long garland of leaves and flowers to the knees
+  for (let i = 0; i <= 26; i++) { const u = i / 26, a = Math.PI * (0.06 + 0.88 * u), px = Math.cos(a) * 74, py = 70 + Math.sin(a) * 360; dab(C.l, ...P(px, py), (i % 3 === 1 ? 9 : 7) * k, { col: i % 3 === 1 ? (i % 2 ? K.red : '#fff3e0') : '#3f8f4a', p: 1, seed: 994 + i }); }
+  // lower arms: gada (L), padma (R)
+  const armL = (sg, hd) => { const sh = P(sg * 66, 100), el = P(sg * 98, 186); const H = P(...hd);
+    part(C, tube([sh, el], 32 * k, 28 * k), F(skin, 1030 + sg), O(4, 1032 + sg)); part(C, tube([el, H], 28 * k, 24 * k), F(skin, 1034 + sg), O(4, 1036 + sg));
+    line(C.l, [P(sg * 84, 140), P(sg * 98, 150)], { w: 9 * k, col: gold, seed: 1038 + sg }); line(C.l, [P(sg * 104, 236), P(sg * 118, 244)], { w: 8 * k, col: gold, seed: 1040 + sg }); return H; };
+  part(C, tube([P(-122, 300), P(-128, 590)], 14 * k, 14 * k), F(gold, 1042), O(3, 1043));   // gada shaft
+  part(C, tp(handCircle(-120, 280, 34, 1044, 0, 22)), F(goldL, 1045), O(4, 1046)); for (let i = 0; i < 3; i++) line(C.l, tp([[-150 + i * 30, 262], [-146 + i * 28, 300]]), { w: 3, col: '#c98f22', seed: 1047 + i });
+  const gl = armL(-1, [-118, 246]);
+  part(C, handCircle(...gl, 17 * k, 1050, 0, 18), F(skin, 1051), O(4, 1052));
+  const pr_ = armL(1, o.lotusHand || [120, 250]);
+  part(C, handCircle(...pr_, 17 * k, 1053, 0, 18), F(skin, 1054), O(4, 1055));
+  if (o.lotus !== 0) lotus(C, pr_[0] + 4 * k, pr_[1] - 10 * k, 0.75 * k, 1056, murti ? 0 : 0.8);
+  // neck, ears + kundal, head
+  part(C, tp([[-14, 26], [14, 26], [15, 56], [-15, 56]]), F(skin, 1080), O(4, 1081));
+  for (const sg of [-1, 1]) { part(C, tp(handCircle(sg * 54, 8, 12, 1082 + sg, 0, 16)), F(skin, 1084 + sg), O(4, 1086 + sg)); part(C, tp(smooth([[sg * 54, 18], [sg * 66, 34], [sg * 58, 56], [sg * 46, 34]], 4)), F(gold, 1088 + sg), O(3, 1090 + sg)); }
+  part(C, tp(smooth([[-52, -10], [-50, 30], [-30, 54], [0, 60], [30, 54], [50, 30], [52, -10], [40, -44], [0, -56], [-40, -44]], 4)), F(skin, 1092), O(5, 1093));
+  if (murti) for (const sg of [-1, 1]) { part(C, tp(smooth([[sg * 8, 0], [sg * 20, -10], [sg * 34, -4], [sg * 38, 4], [sg * 22, 10]], 4)), F(K.white, 1094 + sg), O(3, 1096 + sg)); dab(C.l, ...P(sg * 23, 0), 6.5 * k, { col: '#111', p: 1, seed: 1098 + sg }); dab(C.l, ...P(sg * 21, -2), 2.2 * k, { col: K.white, p: 1, seed: 1100 + sg }); }
+  else for (const sg of [-1, 1]) {   // lotus-shaped eyes, half-lidded, gentle
+    part(C, tp(smooth([[sg * 6, 2], [sg * 18, -6], [sg * 32, -4], [sg * 40, 0], [sg * 24, 7]], 4)), F(K.white, 1094 + sg), null);
+    dab(C.l, ...P(sg * 21, 2 + (o.look || 0)), 6 * k, { col: '#2a1a14', p: 1, seed: 1098 + sg }); dab(C.l, ...P(sg * 19, 0), 2 * k, { col: K.white, p: 1, seed: 1100 + sg });
+    part(C, tp([[sg * 4, -12], [sg * 42, -10], [sg * 40, -1], [sg * 6, -2]]), F(skin, 1102 + sg), null);
+    line(C.l, tp(smooth([[sg * 6, -1], [sg * 22, -4], [sg * 41, 0]], 4, false)), { w: 4.5, col: K.ink, seed: 1104 + sg });
+    line(C.l, tp([[sg * 39, 0], [sg * 46, -4]]), { w: 3, col: K.ink, seed: 1106 + sg });
+  }
+  for (const sg of [-1, 1]) line(C.l, tp(smooth([[sg * 8, -20], [sg * 22, -26], [sg * 40, -20]], 4, false)), { w: 4.5, col: murti ? '#0f0f14' : '#1c1820', seed: 1108 + sg });
+  line(C.l, tp(smooth([[-2, 6], [3, 18], [-3, 21]], 4, false)), { w: 3, col: skinD, seed: 1110 });
+  line(C.l, tp(smooth([[-12, 32], [0, 38], [12, 32]], 5, false)), { w: 4.5, col: murti ? '#9b1f2a' : '#7a2330', seed: 1111 });
+  for (const sg of [-1, 1]) line(C.l, tp([[sg * 3, -14], [sg * 9, -48]]), { w: 5, col: K.white, seed: 1112 + sg }); line(C.l, tp([[0, -16], [0, -46]]), { w: 4.5, col: K.red, seed: 1114 });
+  // kirita mukut (tall crown)
+  line(C.l, tp(smooth([[-50, -40], [0, -50], [50, -40]], 4, false)), { w: 8, col: '#1c1820', seed: 1115 });
+  const crown = smooth([[-56, -40], [-60, -92], [-42, -150], [-20, -186], [0, -208], [20, -186], [42, -150], [60, -92], [56, -40], [0, -52]], 4);
+  part(C, tp(crown), F(gold, 1116), O(5, 1117));
+  for (const [y, w] of [[-60, 56], [-100, 52], [-140, 38]]) line(C.l, tp(smooth([[-w, y], [0, y - 8], [w, y]], 4, false)), { w: 4, col: '#b97d16', seed: 1118 + y });
+  for (const [dx, dy, c] of [[0, -78, K.red], [-30, -72, '#3fa39a'], [30, -72, '#3fa39a'], [0, -122, K.red], [0, -164, '#3fa39a']]) dab(C.l, ...P(dx, dy), 7 * k, { col: c, p: 1, seed: 1130 + dx + dy });
+  dab(C.l, ...P(0, -212), 9 * k, { col: goldL, p: 1, seed: 1140 });
+  WMUL.k = 1;
+}
+function lotusThrone(CB, C, x, y, w, sd = 1200) {   // a big open lotus seat: back petals, front petals
+  for (const [row, n, ry, col, sc] of [[0, 9, 0.30, K.pinkL, 1.0], [1, 8, 0.36, K.pink, 0.85]]) for (let i = 0; i < n; i++) {
+    const u = (i + 0.5) / n, a = Math.PI * (1 + u), bx = x + Math.cos(a) * w * 0.82 * (row ? 1.05 : 0.9), by = y + Math.sin(a) * w * ry * (row ? -1 : 1) * 0.5 + (row ? 30 : -10);
+    const h = w * 0.42 * sc * (row ? 1 : 1.1), dir = row ? -1 : -1, tilt = (u - 0.5) * 1.2;
+    const tip = [bx + Math.sin(tilt) * h, by + dir * Math.cos(tilt) * h], m = [(bx + tip[0]) / 2, (by + tip[1]) / 2], nx = Math.cos(tilt) * w * 0.11, ny = Math.sin(tilt) * w * 0.11;
+    part(row ? C : CB, smooth([[bx - nx, by - ny], [m[0] - nx * 1.3, m[1] - ny * 1.3], tip, [m[0] + nx * 1.3, m[1] + ny * 1.3], [bx + nx, by + ny]], 4), { col, p: 1, seed: sd + row * 20 + i }, { w: 3.5, col: '#9c3a5e', seed: sd + 40 + row * 20 + i });
+  }
+  part(CB, smooth(oval(x, y + 50, w * 0.95, w * 0.14, 24), 2), { col: '#6fae63', p: 1, seed: sd + 80 }, { w: 4, col: '#3e6e3a', seed: sd + 81 });
+}
+function prabhavali(L, x, hy, k) {   // the gold arch frame behind a murti
+  const P = (dx, dy) => [x + dx * k, hy + dy * k];
+  const arch = smooth([[-230, 620], [-240, 120], [-200, -120], [-120, -260], [0, -310], [120, -260], [200, -120], [240, 120], [230, 620]], 6, false);
+  line(L, arch.map(([a, b]) => P(a, b)), { w: 26 * k, col: K.gold, seed: 1150 });
+  line(L, arch.map(([a, b]) => P(a * 0.9, b * 0.94 + 30)), { w: 6 * k, col: K.goldL, seed: 1151 });
+  for (let i = 0; i < 22; i++) { const u = i / 21, p = arch[Math.floor(u * (arch.length - 1))]; dab(L, ...P(p[0] * 1.08, p[1] * 1.04 - 10), 12 * k, { col: i % 2 ? K.orange : K.goldL, p: 1, seed: 1152 + i }); }
+}
 
 // ——— SET: temple steps at night (hook + ending) ———
 const DOOR = [830, 1840, 1170, 2650];
@@ -286,7 +441,7 @@ function drawPond(t, day2) {
   for (let i = 0; i < 4; i++) line(B.l, [[2700 + i * 200, 2700 + (i % 2) * 60], [2800 + i * 200, 2700 + (i % 2) * 60]], { w: 3, col: '#e6f5fb', seed: 215 + i });
   const pads = [[2560, 2700, 70], [2760, 2620, 60], [2980, 2790, 80], [3200, 2640, 64], [3400, 2760, 74], [3560, 2660, 60], [2860, 2850, 56], [3300, 2860, 60]];
   pads.forEach(([x, y, r], i) => lilyPad(B.f, x, y, r, 220 + i * 2));
-  const taken = day2 && t > 25.4;
+  const taken = day2 && t > 45.0;
   const spots = day2 ? (taken ? [] : [[3200, 2640]]) : [[2560, 2700], [2760, 2620], [3200, 2640], [3400, 2760], [3560, 2660], [2860, 2850]];
   spots.forEach(([x, y], i) => lotus(PROP, x, y - 4, day2 ? 0.9 : 0.75, 240 + i * 30, day2 ? 0.6 : 0));
   poly(B.f, rect(3820, 2900, 4900, 3700), '#d9c08f', 1, { seed: 280 });
@@ -309,22 +464,20 @@ function drawPond(t, day2) {
 }
 
 // ——— SET: inside the temple (day) — only the feet of the murti are seen ———
-function drawMandir(t) {
+function drawMandir(t) {   // inside the temple: the brass Vishnu murti in its niche (Jayant 23 Nov: a real murti, not an empty space)
   const B = BG;
-  poly(B.f, rect(4700, 600, 6700, 3000), '#ead3a6', 1, { seed: 400 });
+  poly(B.f, rect(4700, 600, 6700, 3000), '#e3c99a', 1, { seed: 400 });
   poly(B.f, rect(4700, 3000, 6700, 3700), '#c9a878', 1, { seed: 401 });
-  for (const x of [4900, 6420]) { poly(B.f, rect(x, 600, x + 140, 3000), '#d8bb8a', 1, { seed: 402 + x }); edge(B.l, rect(x, 600, x + 140, 3000), '#a8865a', 4, 0.8, 403 + x); }
-  for (let i = 0; i < 4; i++) poly(B.f, handCircle(5710, 2250, 640 - i * 120, 405 + i, 0, 36), ['#eed9ae', '#f2dfb6', '#f5e5bf', '#f8ebc8'][i], 1, { seed: 406 + i });
-  poly(B.f, smooth([[5520, 1500], [5900, 1500], [5930, 2480], [5880, 2540], [5540, 2540], [5490, 2480]], 4), K.pitambar, 1, { seed: 410 });
-  edge(B.l, [[5490, 2480], [5540, 2540], [5880, 2540], [5930, 2480]], K.ink, 4, 0.9, 411, false);
-  line(B.l, [[5500, 2500], [5920, 2500]], { w: 10, col: K.gold, seed: 412 });
-  for (let i = 0; i < 4; i++) line(B.l, smooth([[5590 + i * 80, 1600], [5600 + i * 80, 2100], [5590 + i * 80, 2460]], 4, false), { w: 3, col: '#c98f22', seed: 413 + i });
-  marigold(B.l, 5500, 5920, 1620, 260, 420);
-  for (const x of [5640, 5780]) { const ft = smooth([[x - 44, 2540], [x + 44, 2540], [x + 54, 2610], [x - 50, 2614]], 4); poly(B.f, ft, K.stone, 1, { seed: 440 + x }); edge(B.l, ft, K.ink, 4, 0.9, 441 + x); line(B.l, [[x - 44, 2552], [x + 44, 2552]], { w: 6, col: '#dfe3e8', seed: 442 + x }); }
-  for (let i = 0; i < 7; i++) { const x = 5520 + i * 64, pt = smooth([[x - 38, 2660], [x, 2610], [x + 38, 2660]], 4); poly(B.f, pt, K.pink, 1, { seed: 450 + i }); edge(B.l, pt, '#9c3a5e', 3, 0.9, 457 + i); }
-  poly(B.f, rect(5440, 2660, 5980, 2940), '#8e7a66', 1, { seed: 470 }); edge(B.l, rect(5440, 2660, 5980, 2940), K.ink, 5, 0.9, 471);
-  line(B.l, [[5440, 2700], [5980, 2700]], { w: 6, col: K.gold, seed: 472 });
-  bell(B.l, 5120, 1700, 480); bell(B.l, 6300, 1720, 484);
+  for (const x of [4880, 6440]) { poly(B.f, rect(x, 600, x + 140, 3000), '#d4b484', 1, { seed: 402 + x }); edge(B.l, rect(x, 600, x + 140, 3000), '#a8865a', 4, 0.8, 403 + x); }
+  poly(B.f, smooth([[5340, 3000], [5340, 1720], [5450, 1500], [5750, 1380], [6050, 1500], [6160, 1720], [6160, 3000]], 5), '#3a2a24', 1, { seed: 404 });   // the niche
+  sglow(5750, 2350, 620, '#ffcf6a', 0.5, 405);
+  prabhavali(PROP.l, 5750, 2140, 0.92);
+  vishnu(PE, 5750, 2140, 0.92, 'brass', t);
+  marigold(FG.l, 5560, 5940, 2240, 220, 420);
+  part(FG, rect(5420, 2700, 6080, 3000), { col: '#7b6450', p: 1, seed: 470 }, { w: 5, col: K.ink, seed: 471 });
+  for (let i = 0; i < 8; i++) { const x = 5470 + i * 80; part(FG, smooth([[x - 44, 2716], [x, 2656], [x + 44, 2716]], 4), { col: K.pink, p: 1, seed: 450 + i }, { w: 3, col: '#9c3a5e', seed: 460 + i }); }
+  line(FG.l, [[5420, 2750], [6080, 2750]], { w: 8, col: K.gold, seed: 472 });
+  bell(B.l, 5130, 1600, 480); bell(B.l, 6370, 1620, 484);
 }
 
 // ——— SET: the hut (night / morning) ———
@@ -379,11 +532,10 @@ function drawDilemma(t) {
   poly(B.f, [[10600, 1000], [11760, 1000], [11440, 3700], [10600, 3700]], look < 0 ? '#f5cf7a' : '#c9a35a', 1, { seed: 800 });
   poly(B.f, [[11760, 1000], [12600, 1000], [12600, 3700], [11440, 3700]], look > 0 ? '#34406a' : '#262e4c', 1, { seed: 801 });
   line(B.l, [[11760, 1000], [11440, 3700]], { w: 10, col: K.ink, seed: 802 });
-  poly(B.f, smooth([[11170, 1900], [11410, 1900], [11430, 2330], [11150, 2330]], 4), K.pitambar, 1, { seed: 803 });
-  for (const x of [11240, 11340]) poly(B.f, smooth([[x - 34, 2330], [x + 34, 2330], [x + 40, 2380], [x - 38, 2384]], 4), K.stone, 1, { seed: 804 + x });
-  for (let i = 0; i < 5; i++) poly(B.f, smooth([[11150 + i * 70 - 34, 2440], [11150 + i * 70, 2390], [11150 + i * 70 + 34, 2440]], 4), K.pink, 1, { seed: 806 + i });
-  poly(B.f, rect(11110, 2440, 11470, 2640), '#8e7a66', 1, { seed: 812 }); edge(B.l, rect(11110, 2440, 11470, 2640), K.ink, 4, 0.9, 813);
-  bell(B.l, 11140, 1700, 814); diya(PROP, 11140, 2430, 1.1, 818);
+  sglow(11260, 2200, 330, '#ffcf6a', 0.6, 811);
+  prabhavali(PROP.l, 11260, 1990, 0.45); vishnu(PROP, 11260, 1990, 0.45, 'brass', t);
+  poly(B.f, rect(11080, 2250, 11440, 2440), '#7b6450', 1, { seed: 812 }); edge(B.l, rect(11080, 2250, 11440, 2440), K.ink, 4, 0.9, 813);
+  bell(B.l, 11140, 1640, 814); diya(PROP, 11120, 2240, 1.0, 818); diya(PROP, 11400, 2240, 1.0, 819);
   person2(PE, bust('amma', 11960, 2240, 0.85, t, { L: 300, patti: 1, sweat: 1, exp: { eyes: 'closed', brows: 'worried', mouth: 'sad' } }), 3000);
   part(PE, smooth([[11750, 2470], [12180, 2460], [12220, 2620], [11720, 2630]], 4), { col: '#8f3f3a', p: 1, seed: 820 }, { w: 4, col: K.ink, seed: 821 });
   part(PE, rect(11700, 2620, 12240, 2660), { col: K.wood, p: 1, seed: 822 }, { w: 4, col: K.ink, seed: 823 });
@@ -410,10 +562,11 @@ function subTo(t) {
   lines.forEach((ln, i) => wtext(SUBT, ln, 540, SUBY + 24 + i * lh * sc, { screen: true, size, weight: 700, col: SUBCOL[S.who], reveal: pr(t, S.t0 + i * 0.3, S.t0 + i * 0.3 + 0.4), seed: 11 + S.t0 * 3 + i, tilt: 0.3 }));
 }
 export const TEXTS = t => { const S = SUBS.find(s => t >= s.t0 && t < s.t1); if (!S) return []; const n = S.text.split('|').length; return [{ id: 's' + S.t0, text: S.text.replace('|', ' '), x0: 20, y0: SUBY - 90, x1: 1060, y1: SUBY + 70 + (n - 1) * 90 }]; };
-const LABELS = [[4.7, 7.5, 'एक दिन पहले…'], [23.95, 26.6, 'अगली सुबह…']];
-const CHIPS = [[18.6, 21.4, [[19.3, 'दवा: 10 सोने के सिक्के', K.goldL], [20.3, 'पास में: 4 ताँबे के सिक्के', '#ffb38a']]]];
+const LABELS = [[7.1, 10.0, 'एक दिन पहले…'], [42.1, 45.0, 'अगली सुबह…']];
+const CHIPS = [[32.5, 37.0, [[33.6, 'दवा: 10 सोने के सिक्के', K.goldL], [35.0, 'पास में: 4 ताँबे के सिक्के', '#ffb38a']]]];
+const END = 78.6;
 function badge(t) {   // "भाग 1/2" — on screen the whole time (Jayant: people must know there are 2 parts)
-  if (t > 57.4) return;
+  if (t > END) return;
   const x = 905, y = 560; box(x, y, 118, 40, 'rgba(160,30,40,0.92)');
   wtext(SUBT, 'भाग 1/2', x, y + 16, { screen: true, size: 46, weight: 700, col: K.white, seed: 3, tilt: 0 });
 }
@@ -424,34 +577,35 @@ function labels(t) {
     if (t < t0) return; const u = back1(pr(t, t0, t0 + 0.3)), y = 1500 + i * 135;
     box(540, y, 420 * u + 1, 54 * u + 1); wtext(SUBT, txt, 540, y + 21, { screen: true, size: 60 * u + 1, weight: 700, col, seed: 70 + i + a, tilt: 0 });
   });
-  if (t > 2.6 && t < 4.6) {   // title + भाग 1
-    const u = back1(pr(t, 2.6, 2.9)); box(540, 1560, 470 * u + 1, 92 * u + 1);
+  if (t > 4.2 && t < 7.0) {   // title + भाग 1
+    const u = back1(pr(t, 4.2, 4.5)); box(540, 1560, 470 * u + 1, 92 * u + 1);
     wtext(SUBT, 'कर्तव्य या भक्ति?', 540, 1600, { screen: true, size: 118 * u + 1, weight: 700, col: K.goldL, seed: 81, tilt: 0 });
-    const v = back1(pr(t, 3.0, 3.3)); box(540, 1716, 150 * v + 1, 48 * v + 1, 'rgba(160,30,40,0.95)');
+    const v = back1(pr(t, 4.7, 5.0)); box(540, 1716, 150 * v + 1, 48 * v + 1, 'rgba(160,30,40,0.95)');
     wtext(SUBT, 'भाग 1', 540, 1738, { screen: true, size: 66 * v + 1, weight: 700, col: K.white, seed: 82, tilt: 0 });
   }
-  if (t > 34.05 && t < 35.4) { const u = back1(pr(t, 34.05, 34.35)); box(540, 1620, 200 * u + 1, 84 * u + 1); wtext(SUBT, 'दस?!', 540, 1664, { screen: true, size: 130 * u + 1, weight: 700, col: K.goldL, seed: 84, tilt: 0 }); }
+  if (t > 55.55 && t < 57.5) { const u = back1(pr(t, 55.55, 55.85)); box(540, 1620, 200 * u + 1, 84 * u + 1); wtext(SUBT, 'दस?!', 540, 1664, { screen: true, size: 130 * u + 1, weight: 700, col: K.goldL, seed: 84, tilt: 0 }); }
 }
 function endCard(t) {
-  if (t < 57.4) return;
+  if (t < END) return;
   const g = SUBT.g; g.save(); g.fillStyle = 'rgba(20,19,26,0.94)'; g.fillRect(0, 1200, W, 720); g.restore();
-  wtext(SUBT, 'भाग 1 यहीं तक…', 540, 1330, { screen: true, size: 70, weight: 700, col: K.bone, reveal: pr(t, 57.45, 57.8), seed: 90, tilt: 0 });
-  const u = back1(pr(t, 57.8, 58.1)); box(540, 1460, 420 * u + 1, 76 * u + 1, 'rgba(160,30,40,0.97)');
+  wtext(SUBT, 'भाग 1 यहीं तक…', 540, 1330, { screen: true, size: 70, weight: 700, col: K.bone, reveal: pr(t, END + 0.05, END + 0.4), seed: 90, tilt: 0 });
+  const u = back1(pr(t, END + 0.4, END + 0.7)); box(540, 1460, 420 * u + 1, 76 * u + 1, 'rgba(160,30,40,0.97)');
   wtext(SUBT, 'भाग 2 · कल शाम 7:30', 540, 1494, { screen: true, size: 92 * u + 1, weight: 700, col: K.goldL, seed: 91, tilt: 0 });
-  wtext(SUBT, 'Follow करो — छूट न जाए!', 540, 1620, { screen: true, size: 62, weight: 700, col: K.note, reveal: pr(t, 58.3, 58.7), seed: 92, tilt: 0 });
-  wtext(SUBT, '@pannapalatkahani', 540, 1730, { screen: true, size: 56, weight: 700, col: '#e3e7ea', reveal: pr(t, 58.6, 59.0), seed: 93, tilt: 0 });
+  wtext(SUBT, 'Follow करो — छूट न जाए!', 540, 1620, { screen: true, size: 62, weight: 700, col: K.note, reveal: pr(t, END + 0.9, END + 1.3), seed: 92, tilt: 0 });
+  wtext(SUBT, '@pannapalatkahani', 540, 1730, { screen: true, size: 56, weight: 700, col: '#e3e7ea', reveal: pr(t, END + 1.2, END + 1.6), seed: 93, tilt: 0 });
 }
 
 // ——— events for the mixer ———
 export const EV = [];
 const ev = (t, type, o = {}) => EV.push({ t: +t.toFixed(3), type, ...o });
 SUBS.forEach(S => { if (S.vo) ev(S.vt, 'voice', { id: S.vo, who: S.who }); });
-ev(0.0, 'crickets', { dur: 4.6 }); ev(2.5, 'stab'); ev(4.6, 'whoosh'); ev(4.7, 'birds', { dur: 3.0 }); ev(7.6, 'bell'); ev(9.0, 'chime');
-ev(13.8, 'whoosh'); ev(14.0, 'crickets', { dur: 4.6 }); ev(18.6, 'coins'); ev(19.3, 'tick'); ev(20.3, 'tick'); ev(21.4, 'crickets', { dur: 2.5 });
-ev(23.9, 'birds', { dur: 3.0 }); ev(26.8, 'hooves', { dur: 1.6 }); ev(32.2, 'coins', { gold: 1 }); ev(33.2, 'sparkle', { dur: 0.8 }); ev(34.0, 'hit');
-for (let i = 0; i < 5; i++) ev(35.5 + i * 1.0, 'heartbeat'); ev(41.6, 'glint'); ev(42.9, 'whoosh'); ev(45.9, 'sparkle', { dur: 1.0 });
-ev(48.6, 'crickets', { dur: 5.6 }); ev(54.2, 'swell', { dur: 2.6 }); ev(54.8, 'bell'); ev(57.4, 'write', { dur: 1.2 });
-[['A', 0], ['B', 4.6], ['C', 13.8], ['D', 23.9], ['E', 29.6], ['F', 35.4], ['G', 40.0], ['H', 45.6], ['I', 48.6], ['J', 54.2], ['Z', 56.8]].forEach(([id, t]) => ev(t, 'cue', { id }));
+ev(0.0, 'crickets', { dur: 7.0 }); ev(4.2, 'stab'); ev(7.0, 'whoosh'); ev(7.1, 'birds', { dur: 5.0 }); ev(12.5, 'bell'); ev(14.6, 'chime'); ev(15.6, 'bell');
+ev(20.0, 'crickets', { dur: 8.5 }); ev(20.6, 'cough'); ev(21.8, 'cough'); ev(28.5, 'heartbeat'); ev(29.5, 'heartbeat'); ev(30.5, 'heartbeat');
+ev(32.6, 'coins'); ev(33.6, 'tick'); ev(35.0, 'tick'); ev(37.0, 'crickets', { dur: 5.0 });
+ev(42.0, 'birds', { dur: 5.0 }); ev(47.0, 'hooves', { dur: 2.0 }); ev(53.2, 'coins', { gold: 1 }); ev(54.2, 'sparkle', { dur: 0.8 }); ev(55.5, 'hit');
+for (let i = 0; i < 6; i++) ev(57.6 + i * 0.9, 'heartbeat'); ev(65.3, 'glint'); ev(66.5, 'whoosh'); ev(68.0, 'sparkle', { dur: 1.2 });
+ev(70.5, 'crickets', { dur: 4.5 }); ev(75.0, 'swell', { dur: 2.6 }); ev(75.4, 'bell'); ev(END, 'write', { dur: 1.4 });
+[['A', 0], ['B', 4.2], ['C', 7.0], ['D', 12.5], ['E', 20.0], ['F', 28.5], ['G', 37.0], ['H', 42.0], ['I', 50.5], ['J', 57.5], ['K', 63.0], ['L', 66.5], ['M', 70.5], ['N', 75.0], ['Z', 77.5]].forEach(([id, t]) => ev(t, 'cue', { id }));
 
 // ——— one frame ———
 export function frame(comp, t) {
@@ -463,82 +617,89 @@ export function frame(comp, t) {
   [PE, PROP, FG].forEach(clearGroup);
   [BG.f, BG.l, GLOW, FX, SUBK, SUBT].forEach(clear);
   let vig = 0.22;
+  const spk = (a, b) => talking(t, a, b) === 'open';
   if (set === 'steps') {
-    const glowU = t < 54.2 ? 0 : pr(t, 54.2, 55.6);
+    const glowU = t < 75.0 ? 0 : pr(t, 75.0, 76.4);
     drawSteps(t, glowU);
     diya(PROP, 700, 2805, 1.2, 100);
-    const lit = glowU > 0, x = 1000, hy = 2470;
-    const look = lit ? [0, -1] : [0, 0.9];
-    const speak = talking(t, 0.2, 2.4) === 'open' || talking(t, 49.0, 53.2) === 'open';
-    const exp = lit ? { eyes: 'pop', brows: 'up', mouth: t > 56.8 ? 'o' : 'open' } : { eyes: 'shut', brows: 'worried', mouth: speak ? 'open' : 'sad' };
-    const gy = 2810, k = 1.0, shy = gy - AH * k;
-    const hands = lit ? { L: [x - 150, shy + 180], R: [x + 150, shy + 180] } : { L: [x - 120, shy + 250], R: [x + 120, shy + 250] };
-    person2(PE, stand('raghav', x, gy, k, t, { exp, look, hands, tears: !lit || t > 56.8 }), 2000);
-
+    const lit = glowU > 0, x = 1000, hy = 2300, k = 1.0;
+    const talkNow = spk(0.2, 3.2) || spk(70.8, 74.4);
+    const exp = lit ? { eyes: t > 77.5 ? 'teary' : 'pop', brows: 'up', mouth: t > 77.5 ? 'o' : 'open' }
+      : talkNow ? { eyes: 'squeeze', brows: 'sad', mouth: 'cry' } : { eyes: (t > 3.3 && t < 4.0) || t > 74.4 ? 'sad' : 'squeeze', brows: 'sad', mouth: (t > 3.3 && t < 4.0) || t > 74.4 ? 'sad' : 'cry' };
+    const hands = lit ? { L: [x - 140, hy + 150], R: [x + 140, hy + 150] } : { L: [x - 70, hy + 300], R: [x + 70, hy + 300] };
+    person2(PE, seat('raghav', x, t, { hy, k, kneel: 1, exp, look: lit ? [0, -1] : [0, 0.8], hands, tears: !lit || t > 77.5 }), 2000);
     vig = lit ? 0.18 : 0.34;
   } else if (set === 'pond') {
-    const day2 = t >= 23.9;
+    const day2 = t >= 42.0;
     drawPond(t, day2);
-    if (t < 7.6) {   // day 1: his best lotus
+    if (t < 12.5) {   // day 1: his best lotus, a smile
       const x = 3000, gy = 3020, k = 1.05, hy = gy - AH * k;
-      const arms = person2(FG, stand('raghav', x, gy, k, t, { exp: { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: [0.6, 0.4], hands: { L: [x - 20, hy + 250], R: [x + 40, hy + 245] } }), 2000);
-      lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.8, 150);
-    } else if (t < 26.8) {   // day 2: only one lotus — he takes it
-      const x = 3000, gy = 3020, k = 1.05, hy = gy - AH * k, got = t > 25.4;
-      const arms = person2(FG, stand('raghav', x, gy, k, t, { exp: { eyes: 'open', brows: 'worried', mouth: got ? 'small' : 'sad' }, look: got ? [0.4, 0.6] : [1, 0.3], hands: got ? { L: [x - 20, hy + 250], R: [x + 40, hy + 245] } : { L: [x - 80, hy + 320], R: [x + 80, hy + 320] } }), 2000);
-      if (got) lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.8, 150, 0.4);
+      const arms = person2(FG, stand('raghav', x, gy, k, t, { exp: { eyes: t < 9.5 ? 'open' : 'happy', brows: 'calm', mouth: 'smile' }, look: [0.3, 0.6], hands: { L: [x - 20, hy + 250], R: [x + 40, hy + 245] } }), 2000);
+      lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.85, 150, 0.3);
+    } else if (t < 47.0) {   // day 2: only one lotus — he takes it
+      const x = 3000, gy = 3020, k = 1.05, hy = gy - AH * k, got = t > 45.0;
+      const arms = person2(FG, stand('raghav', x, gy, k, t, { exp: { eyes: got ? 'teary' : 'sad', brows: 'sad', mouth: got ? 'small' : 'sad' }, look: got ? [0.3, 0.7] : [1, 0.3], hands: got ? { L: [x - 20, hy + 250], R: [x + 40, hy + 245] } : { L: [x - 80, hy + 320], R: [x + 80, hy + 320] } }), 2000);
+      if (got) lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.85, 150, 0.4);
     } else {   // the merchant
       const rx = 3380, mx = 3990, gy = 3020, rk = 1.05, mk = 1.1, rhy = gy - AH * rk, mhy = gy - AH * mk;
-      const give = t >= 40.0, handed = t > 41.2;
-      const talk = t > 29.8 && t < 33.9;
-      const mExp = give ? { eyes: t > 41.4 && t < 42.3 ? 'half' : 'open', brows: 'flat', mouth: 'knowing' } : talk ? { eyes: 'open', brows: 'flat', mouth: talking(t, 29.8, 33.8) === 'open' ? 'open' : 'smile' } : { eyes: 'open', brows: 'flat', mouth: 'smile' };
-      const mHands = give ? { L: [lerp(mx - 110, mx - 230, eo(pr(t, 40.3, 41.0))), mhy + 230], R: [mx + 80, mhy + 320] } : talk ? { L: [mx - 160, mhy + 190], R: [mx + 80, mhy + 320] } : { L: [mx - 80, mhy + 320], R: [mx + 80, mhy + 320] };
+      const give = t >= 63.0, handed = t > 64.8;
+      const talk = t > 50.7 && t < 53.2;
+      const mExp = give ? { eyes: t > 65.0 ? 'half' : 'open', brows: 'calm', mouth: 'knowing' } : talk ? { eyes: 'open', brows: 'calm', mouth: spk(50.7, 53.1) ? 'open' : 'smile' } : { eyes: 'open', brows: 'calm', mouth: 'smile' };
+      const mHands = give ? { L: [lerp(mx - 110, mx - 230, eo(pr(t, 63.8, 64.6))), mhy + 230], R: [mx + 80, mhy + 320] } : talk ? { L: [mx - 160, mhy + 190], R: [mx + 80, mhy + 320] } : { L: [mx - 80, mhy + 320], R: [mx + 80, mhy + 320] };
       const marms = person2(PE, stand('vyapari', mx, gy, mk, t, { exp: mExp, look: [-1, 0], hands: mHands }), 3000);
-      const rExp = t >= 34.0 && t < 35.4 ? { eyes: 'pop', brows: 'up', mouth: 'open' } : give ? { eyes: 'open', brows: 'worried', mouth: handed ? 'sad' : 'flat' } : { eyes: 'open', brows: 'flat', mouth: 'small' };
-      const rHands = give && !handed ? { L: [rx - 30, rhy + 260], R: [lerp(rx + 70, rx + 250, eo(pr(t, 40.1, 40.9))), rhy + 230] } : handed ? { L: [rx - 40, rhy + 250], R: [rx + 60, rhy + 250] } : { L: [rx - 10, rhy + 250], R: [rx + 50, rhy + 245] };
+      const shock = t >= 55.5 && t < 57.5;
+      const rExp = shock ? { eyes: 'pop', brows: 'up', mouth: 'yell' } : give ? { eyes: handed ? 'squeeze' : 'teary', brows: 'sad', mouth: handed ? 'cry' : 'wavy' } : t > 50.5 ? { eyes: 'open', brows: 'worried', mouth: 'small' } : { eyes: 'sad', brows: 'sad', mouth: 'small' };
+      const rHands = give && !handed ? { L: [rx - 30, rhy + 260], R: [lerp(rx + 50, rx + 250, eo(pr(t, 63.3, 64.6))), rhy + 230] } : handed ? { L: [rx - 40, rhy + 250], R: [rx + 60, rhy + 250] } : { L: [rx - 20, rhy + 250], R: [rx + 40, rhy + 245] };
       const rarms = person2(FG, stand('raghav', rx, gy, rk, t, { exp: rExp, look: [1, 0], hands: rHands, tears: handed }), 2000);
-      if (!handed) lotus(FG, give ? rarms.R[0] + 10 : (rarms.L[0] + rarms.R[0]) / 2, rarms.R[1] - 10, 0.8, 150, 0.4);
-      else { lotus(PE, marms.L[0], marms.L[1] - 6, 0.8, 150, 0.6);   // the merchant holds it; Raghav holds a red potli of gold
+      if (!handed) lotus(FG, give ? rarms.R[0] + 10 : (rarms.L[0] + rarms.R[0]) / 2, rarms.R[1] - 10, 0.85, 150, 0.4);
+      else { lotus(PE, marms.L[0], marms.L[1] - 6, 0.85, 150, 0.6);   // the merchant holds it; Raghav holds a red potli of gold
         const h = rarms.R;
         part(FG, smooth([[h[0] - 40, h[1] + 40], [h[0] - 30, h[1] - 20], [h[0], h[1] - 34], [h[0] + 30, h[1] - 20], [h[0] + 40, h[1] + 40]], 4), { col: '#c7362f', p: 1, seed: 170 }, { w: 3, col: K.ink, seed: 171 });
         dab(FG.l, h[0], h[1] - 34, 10, { col: K.gold, p: 1, seed: 172 }); }
-      if (t > 41.5 && t < 42.4) {   // a gold glint in the merchant's eye
-        const h = [mx + 22 * mk, mhy - 4 * mk], u = Math.sin(Math.PI * pr(t, 41.5, 42.4)) * 34;
+      if (t > 65.3 && t < 66.3) {   // a gold glint in the merchant's eye
+        const h = [mx + 22 * mk, mhy - 4 * mk], u = Math.sin(Math.PI * pr(t, 65.3, 66.3)) * 34;
         line(FX, [[h[0] - u, h[1]], [h[0] + u, h[1]]], { w: 5, col: K.goldL, seed: 180 }); line(FX, [[h[0], h[1] - u], [h[0], h[1] + u]], { w: 5, col: K.goldL, seed: 181 });
       }
     }
     vig = 0.16;
   } else if (set === 'mandir') {
     drawMandir(t);
-    diya(PROP, 5400, 2930, 1.3, 490); diya(PROP, 6040, 2930, 1.3, 495);
-    const x = 5330, hy = 2560, k = 1.05, placed = t > 9.0, pray = t > 10.0;
-    const hands = pray ? { L: [x + 6, hy + 180], R: [x + 30, hy + 176] } : { L: [lerp(x + 40, x + 200, eo(pr(t, 7.8, 8.9))), hy + 250], R: [lerp(x + 80, x + 250, eo(pr(t, 7.8, 8.9))), hy + 240] };
-    const arms = person2(FG, seat('raghav', x, t, { hy, k, kneel: 1, exp: pray ? { eyes: 'closed', brows: 'worried', mouth: talking(t, 10.2, 13.5) === 'open' ? 'open' : 'small' } : { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: [1, 0.4], hands }), 2000);
-    if (!placed) lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.8, 150, 0.3);
-    else lotus(PROP, 5710, 2612, 0.85, 150, 0.5);
-    vig = 0.2;
+    diya(FG, 5360, 3040, 1.4, 490); diya(FG, 6140, 3040, 1.4, 495);
+    const x = 5300, hy = 2560, k = 1.25, placed = t > 14.6, pray = t > 15.6;
+    const reach = eo(pr(t, 12.9, 14.4));
+    const hands = pray ? { L: [x + 8, hy + 210], R: [x + 38, hy + 205] } : placed ? { L: [x + 50, hy + 320], R: [x + 100, hy + 310] } : { L: [lerp(x + 20, x + 260, reach), lerp(hy + 300, hy + 160, reach)], R: [lerp(x + 70, x + 320, reach), lerp(hy + 290, hy + 150, reach)] };
+    const arms = person2(FG, seat('raghav', x, t, { hy, k, kneel: 1, exp: pray ? { eyes: 'calm', brows: 'sad', mouth: spk(15.8, 19.4) ? 'open' : 'small' } : { eyes: 'open', brows: 'calm', mouth: 'smile' }, look: [1, -0.6], hands }), 2000);
+    if (!placed) lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.85, 150, 0.3);
+    else lotus(FG, 5750, 2700, 0.9, 150, 0.6);
+    vig = 0.22;
   } else if (set === 'hut' || set === 'hutday') {
     const day = set === 'hutday';
     drawHut(t, day);
     cotBack(PE);
-    const better = day && t > 45.8;
-    person2(PE, seat('amma', 8290, t, { hy: 2300, k: 0.95, patti: !better, sweat: !day, exp: better ? { eyes: 'open', brows: 'flat', mouth: talking(t, 46.0, 47.4) === 'open' ? 'open' : 'smile' } : { eyes: 'closed', brows: 'worried', mouth: 'sad' }, look: [1, 0.2], hands: { L: [8220, 2590], R: [8360, 2590] } }), 3000);
+    const better = day && t > 68.1;
+    const cough = !day && ((t > 20.5 && t < 21.1) || (t > 21.7 && t < 22.3));
+    person2(PE, seat('amma', 8290, t, { hy: 2300, k: 0.95, patti: !better && (t > 23 || day), sweat: !day, blush: better, exp: better ? { eyes: 'open', brows: 'calm', mouth: spk(68.2, 69.2) ? 'open' : 'smile' } : cough ? { eyes: 'squeeze', brows: 'sad', mouth: 'o' } : { eyes: 'closed', brows: 'sad', mouth: 'sad' }, look: [1, 0.2], hands: { L: [8220, 2590], R: [8360, 2590] } }), 3000);
     cotFront(PE, day);
     if (!day) {
-      if (t < 18.6) {   // the vaidya writes the medicine
-        const vx = 7720, vhy = 2430;
-        person2(PROP, seat('vaidya', vx, t, { hy: vhy, k: 1.0, exp: { eyes: 'open', brows: 'down', mouth: talking(t, 14.0, 18.4) === 'open' ? 'open' : 'flat' }, look: [1, 0], hands: { L: [vx + 10, vhy + 300], R: [vx + 110, vhy + 280 + 6 * Math.sin(t * 9)] } }), 3500);
+      if (t >= 23.0 && t < 28.5) {   // the vaidya: pulse, then writes the medicine
+        const vx = 7720, vhy = 2430, pulse = t < 24.6;
+        person2(PROP, seat('vaidya', vx, t, { hy: vhy, k: 1.0, exp: { eyes: pulse ? 'half' : 'sad', brows: 'worried', mouth: spk(23.3, 27.9) ? 'open' : 'flat' }, look: [1, 0], hands: pulse ? { L: [vx + 10, vhy + 300], R: [8130, 2600] } : { L: [vx + 10, vhy + 300], R: [vx + 110, vhy + 280 + 6 * Math.sin(t * 9)] } }), 3500);
         stool(PROP, vx, vhy + 400);
-        part(PROP, rect(vx - 10, vhy + 250, vx + 120, vhy + 330), { col: '#f3ead2', p: 1, seed: 570 }, { w: 3, col: K.ink, seed: 571 });
-        for (let i = 0; i < 3; i++) line(PROP.l, [[vx + 10, vhy + 270 + i * 20], [vx + 10 + 90 * clamp((t - 14.2 - i) / 1.2), vhy + 270 + i * 20]], { w: 3, col: K.ink, seed: 572 + i });
+        if (!pulse) { part(PROP, rect(vx - 10, vhy + 250, vx + 120, vhy + 330), { col: '#f3ead2', p: 1, seed: 570 }, { w: 3, col: K.ink, seed: 571 });
+          for (let i = 0; i < 3; i++) line(PROP.l, [[vx + 10, vhy + 270 + i * 20], [vx + 10 + 90 * clamp((t - 24.8 - i * 0.9) / 0.9), vhy + 270 + i * 20]], { w: 3, col: K.ink, seed: 572 + i }); }
       }
-      const x = 8620, gy = 3060, k = 1.0, hy = gy - AH * k, cry = t >= 21.4;
-      person2(FG, stand('raghav', x, gy, k, t, { exp: cry ? { eyes: 'shut', brows: 'worried', mouth: 'sad' } : { eyes: 'open', brows: 'worried', mouth: 'flat' }, look: [-1, 0.3], hands: cry ? { L: [x - 80, hy + 320], R: [x + 26, hy + 14] } : { L: [x - 30, hy + 250], R: [x + 30, hy + 250] }, tears: cry }), 2000);
+      const x = 8600, hy = 2440, k = 1.0;
+      let exp, hands, tears = false;
+      if (t < 23.0) { exp = { eyes: 'pop', brows: 'worried', mouth: 'o' }; hands = { L: [8400, 2610], R: [8470, 2560] }; }
+      else if (t < 28.5) { exp = { eyes: 'sad', brows: 'worried', mouth: 'flat' }; hands = { L: [x - 40, hy + 250], R: [x + 10, hy + 240] }; }
+      else if (t < 37.0) { exp = t < 30.0 ? { eyes: 'pop', brows: 'up', mouth: 'o' } : { eyes: 'teary', brows: 'sad', mouth: 'wavy' }; hands = { L: [x - 40, hy + 250], R: [x + 10, hy + 240] }; tears = t > 30.8; }
+      else { exp = { eyes: 'squeeze', brows: 'sad', mouth: t > 39.5 ? 'sad' : 'cry' }; hands = { L: [8400, 2600], R: [8440, 2615] }; tears = true; }
+      person2(FG, seat('raghav', x, t, { hy, k, kneel: 1, exp, look: [-1, 0.2], hands, tears }), 2000);
       diya(PROP, 7480, 2950, 1.2, 580);
       vig = 0.34;
-    } else {   // morning: the medicine
+    } else {   // morning: the medicine, then Maa wakes
       const x = 8580, hy = 2420, k = 1.0;
-      const arms = person2(FG, seat('raghav', x, t, { hy, k, kneel: 1, exp: better ? { eyes: 'open', brows: 'up', mouth: 'grin' } : { eyes: 'open', brows: 'worried', mouth: 'small' }, look: [-1, -0.2], tears: better, hands: better ? { L: [x - 150, hy + 200], R: [x - 20, hy + 250] } : { L: [x - 180, hy + 140], R: [x - 60, hy + 200] } }), 2000);
+      const arms = person2(FG, seat('raghav', x, t, { hy, k, kneel: 1, exp: better ? { eyes: 'happy', brows: 'up', mouth: 'grin' } : { eyes: 'sad', brows: 'worried', mouth: 'small' }, look: [-1, -0.2], tears: better, hands: better ? { L: [8400, 2600], R: [x - 20, hy + 250] } : { L: [x - 180, hy + 140], R: [x - 60, hy + 200] } }), 2000);
       if (!better) part(FG, smooth([[arms.L[0] - 40, arms.L[1] - 10], [arms.L[0] + 40, arms.L[1] - 10], [arms.L[0] + 26, arms.L[1] + 24], [arms.L[0] - 26, arms.L[1] + 24]], 3), { col: '#b8693a', p: 1, seed: 590 }, { w: 3, col: K.ink, seed: 591 });
       vig = 0.16;
     }
@@ -548,9 +709,9 @@ export function frame(comp, t) {
   } else if (set === 'dilemma') {
     const look = drawDilemma(t);
     const x = 11560, gy = 3060, k = 1.15, hy = gy - AH * k;
-    const arms = person2(FG, stand('raghav', x, gy, k, t, { exp: { eyes: 'open', brows: 'worried', mouth: 'wavy' }, look: [look, -0.1], hands: { L: [x - 40, hy + 230], R: [x + 70, hy + 210] }, sweat: 1 }), 2000);
+    const arms = person2(FG, stand('raghav', x, gy, k, t, { exp: { eyes: 'open', brows: 'worried', mouth: 'wavy' }, look: [look, -0.1], hands: { L: [x - 20, hy + 250], R: [x + 40, hy + 245] }, sweat: 1 }), 2000);
     lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.85, 150, 0.4);
-    const beat = Math.exp(-((t - 35.5) % 1.0) / 0.12);
+    const beat = Math.exp(-((t - 57.6) % 0.9) / 0.12);
     vig = 0.25 + 0.15 * beat;
   }
   badge(t);
@@ -566,4 +727,61 @@ export function frame(comp, t) {
   comp.knock(SUBK.c); comp.crayon(SUBT.c);
   comp.finish({ vig, emb: 0, bright: 1, lamp: [0.5, 0.5, 1, 0] });
 }
-export function testFrame(comp, t) { frame(comp, t); }
+export function testFrame(comp, t, test) {
+  if (!['vishnu', 'murti', 'faces', 'reveal'].includes(test)) return frame(comp, t);
+  const QS = new URLSearchParams(location.search), style = QS.get('style') || '';
+  [PE, PROP, FG].forEach(clearGroup); [BG.f, BG.l, GLOW, FX, SUBK, SUBT].forEach(clear); BOIL.amp = 0;
+  CAM.x = 20000; CAM.y = 2400; CAM.s = 1.0;
+  const title = (a, b) => { box(540, 150, 500, 90); wtext(SUBT, a, 540, 160, { screen: true, size: 74, weight: 700, col: K.goldL, seed: 1, tilt: 0 }); wtext(SUBT, b, 540, 222, { screen: true, size: 40, weight: 700, col: K.white, seed: 2, tilt: 0 }); };
+  if (test === 'vishnu') {
+    poly(BG.f, rect(19000, 1000, 21000, 3800), '#f6e7c4', 1, { seed: 1 });
+    for (let i = 0; i < 6; i++) dab(BG.f, 19500 + hash(i * 2.3) * 1000, 2900 + hash(i * 1.7) * 300, 160, { col: '#fff7e6', p: 1, seed: 2 + i });
+    for (let i = 0; i < 9; i++) { const a = -Math.PI / 2 + (i - 4) * 0.33; poly(GLOW, [[20000, 2150], [20000 + Math.cos(a - 0.06) * 1400, 2150 + Math.sin(a - 0.06) * 1400], [20000 + Math.cos(a + 0.06) * 1400, 2150 + Math.sin(a + 0.06) * 1400]], '#ffe7a0', 0.4, { seed: 20 + i }); }
+    CAM.y = 2560; CAM.s = 1.45;
+    if (style === 'shesh') { CAM.y = 2520; CAM.s = 1.32; }
+    lotusThrone(PE, FG, 20000, 3110, 300);
+    vishnu(PROP, 20000, 2380, 1.12, 'deva', t, { shesh: style === 'shesh' });
+    if (style === 'shesh') title('रूप 2 — शेषनाग की छाया में', 'पाँच फन वाले शेषनाग · सुनहरी आभा'); else title('रूप 1 — भगवान विष्णु (कार्टून)', 'नीला रंग · कमल आसन · हाथ में वही कमल');
+  } else if (test === 'murti') {
+    CAM.y = 2520; CAM.s = 1.3;
+    poly(BG.f, rect(19000, 1000, 21000, 3800), '#3a2c2a', 1, { seed: 1 });
+    poly(BG.f, smooth([[19580, 3200], [19580, 1900], [19700, 1650], [20000, 1520], [20300, 1650], [20420, 1900], [20420, 3200]], 5), '#1d1618', 1, { seed: 2 });
+    sglow(20000, 2500, 650, '#ffcf6a', 0.45, 3);
+    prabhavali(PROP.l, 20000, 2330, 1.05);
+    vishnu(PE, 20000, 2330, 1.05, style || 'murti', t);
+    marigold(FG.l, 19770, 20230, 2440, 250, 60);
+    part(FG, rect(19700, 2950, 20300, 3240), { col: '#6d5a4a', p: 1, seed: 70 }, { w: 5, col: K.ink, seed: 71 });
+    for (let i = 0; i < 7; i++) { const x = 19760 + i * 80; part(FG, smooth([[x - 44, 2960], [x, 2900], [x + 44, 2960]], 4), { col: K.pink, p: 1, seed: 72 + i }, { w: 3, col: '#9c3a5e', seed: 80 + i }); }
+    line(FG.l, [[19700, 3000], [20300, 3000]], { w: 8, col: K.gold, seed: 90 });
+    diya(FG, 19640, 3260, 1.6, 91); diya(FG, 20360, 3260, 1.6, 96);
+    bell(BG.l, 19480, 1500, 100); bell(BG.l, 20520, 1500, 104);
+    title({ murti: 'मूर्ति A — काला पत्थर', marble: 'मूर्ति B — सफ़ेद संगमरमर', brass: 'मूर्ति C — पीतल / सुनहरी' }[style || 'murti'], 'पीतांबर + फूलों की माला · प्रभावली · कमल आसन');
+  } else if (test === 'reveal') {
+    CAM.y = 2470; CAM.x = 20090; CAM.s = 0.95;
+    poly(BG.f, rect(19000, 1000, 21000, 3800), '#f3e4c0', 1, { seed: 1 });
+    poly(BG.f, rect(19000, 3000, 21000, 3800), '#d9c08f', 1, { seed: 2 });
+    sglow(20330, 2450, 560, '#ffe08a', 0.8, 3);
+    person2(PE, stand('vyapari', 19640, 3020, 0.98, t, { exp: { eyes: 'half', brows: 'calm', mouth: 'knowing' }, look: [1, 0] }), 300);
+    for (let i = 0; i < 14; i++) { const u = i / 13, x = lerp(19800, 19960, u), y = 2500 + Math.sin(u * Math.PI * 3) * 40; dab(FX, x, y, 8 + 6 * Math.sin(u * Math.PI), { col: i % 2 ? K.goldL : K.white, p: 1, seed: 10 + i }); }
+    line(FX, [[19930, 2460], [19980, 2500], [19930, 2540]], { w: 8, col: K.gold, seed: 30 });
+    lotusThrone(PROP, FG, 20330, 3090, 230, 1300);
+    vishnu(FG, 20330, 2440, 0.98, 'deva', t, { aura: 0.7 });
+    title('रूप 3 — व्यापारी ही भगवान!', 'भाग 2 का twist: पीतांबर · तिलक · शंख · वही कमल');
+  } else {
+    poly(BG.f, rect(19000, 1000, 21000, 3800), '#efe3cf', 1, { seed: 1 });
+    const cells = [['raghav', { eyes: 'sad', brows: 'sad', mouth: 'sad' }, 'उदास'], ['raghav', { eyes: 'squeeze', brows: 'sad', mouth: 'cry' }, 'रोना', 1], ['raghav', { eyes: 'calm', brows: 'calm', mouth: 'small' }, 'प्रार्थना'],
+      ['raghav', { eyes: 'pop', brows: 'up', mouth: 'o' }, 'हैरान'], ['raghav', { eyes: 'teary', brows: 'worried', mouth: 'wavy' }, 'दुविधा'], ['raghav', { eyes: 'happy', brows: 'up', mouth: 'grin' }, 'ख़ुशी के आँसू', 1],
+      ['amma', { eyes: 'closed', brows: 'sad', mouth: 'sad' }, 'माँ — बुखार'], ['amma', { eyes: 'teary', brows: 'calm', mouth: 'smile' }, 'माँ — “राघव…”'], ['vyapari', { eyes: 'half', brows: 'calm', mouth: 'knowing' }, 'व्यापारी (राज़)']];
+    cells.forEach(([kind, exp, lab, tears], i) => {
+      const cx = 19640 + (i % 3) * 360, cy = 1830 + Math.floor(i / 3) * 520;
+      poly(BG.f, rrect(cx - 170, cy - 220, cx + 170, cy + 230, 30), '#fbf6ea', 1, { seed: 10 + i });
+      person2(i < 3 ? PE : i < 6 ? PROP : FG, bust(kind, cx, cy - 70, 1.5, t, { L: 260, exp, tears, patti: kind === 'amma' && i === 6 }), 200 + i * 50);
+      poly(FX, rrect(cx - 150, cy + 150, cx + 150, cy + 222, 20), '#2a2630', 1, { seed: 20 + i });
+      wtext(FX, lab, cx, cy + 202, { size: 44, weight: 700, col: K.goldL, seed: 30 + i, tilt: 0 });
+    });
+    title('चेहरे के भाव — नया स्टाइल', 'बड़ी आँखें · पलकें · भौहें · असली आँसू');
+  }
+  comp.paperCam(CAM.x * 0.6, CAM.y * 0.6, CAM.s / 0.6); comp.clean = true; comp.begin(PAPER);
+  comp.crayon(BG.f.c); comp.crayon(BG.l.c); comp.crayon(GLOW.c); comp.group(PE); comp.group(PROP); comp.group(FG); comp.crayon(FX.c); comp.knock(SUBK.c); comp.crayon(SUBT.c);
+  comp.finish({ vig: 0.15, emb: 0, bright: 1, lamp: [0.5, 0.5, 1, 0] });
+}
