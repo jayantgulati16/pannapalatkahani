@@ -53,11 +53,15 @@ def tabla(t0, t1, bpm=72, v=.16):
     b = 60 / bpm; i = 0
     while t0 + i * b < t1: hit('perc', 'world_perc', 'darbuka_doom' if i % 4 == 0 else 'darbuka_tak', t0 + i * b, v * (1 if i % 4 == 0 else .6), -.15); i += 1
 
-# A: the hook — the doors are open: a divine swell, bells, chimes
-A0 = CU['A']; pad(A0, 4.6, ['D3', 'A3', 'D4', 'F#4', 'A4'], .16); harmonium(A0, 4.6, ['D3', 'F#3', 'A3', 'D4'], .1)
-shimmer(A0, 7.2, v=.11); chimes(A0 + .3, ['D6', 'F#6', 'A6', 'D7'], .16, .14); bell(A0 + .1, 'D4', .3)
-# B: the title — a deep bell + gong
-bell(CU['B'], 'D3', .4); hit('perc', 'gong', None, CU['B'], .25)
+# A: the hook (continues भाग 1) — the doors glow, a voice from the light: hushed shimmer + drone, a rising tremolo
+A0 = CU['A']; shimmer(A0, CU['B'] + .3, ('D5', 'F#5', 'A5', 'C#6'), .12); drone(A0, CU['B'] + .5, .08)
+[samp('str', 'violins_trem', A0 + 1.6 + i * .03, p, 2.6, .1, (-.3, .3)[i], attack=1.2) for i, p in enumerate(('A4', 'D5'))]
+# B: प्रकट — conch-like horn, bells, gong, a full D-major bloom with chimes
+B0 = CU['B']; samp('mel', 'horn', B0, 'D3', 2.4, .42, 0, attack=.2); samp('mel', 'horn', B0 + .1, 'A3', 2.2, .3, 0, attack=.25)
+bell(B0, 'D4', .35); bell(B0 + .7, 'A4', .28); hit('perc', 'gong', None, B0, .35)
+pad(B0, CU['C'] - B0 + .3, ['D3', 'A3', 'D4', 'F#4', 'A4'], .15); chimes(B0 + .2, ['D6', 'E6', 'F#6', 'A6', 'B6', 'D7'], .18, .12)
+# B2: "ये फूल…" — harmonium under his line; the title
+harmonium(CU['B2'], CU['C'] - CU['B2'] + .3, ['D3', 'F#3', 'A3', 'D4'], .1); bell(CU['B2'] + 1.0, 'D3', .3)
 # C: पिछले भाग में — the sorrow returns: drone + the violin lament
 C0 = CU['C']; drone(C0, CU['D'] + .2, .11)
 violin(C0 + .4, [('A4', 2), ('Bb4', 1), ('A4', 1), ('G4', 2), ('F#4', 1), ('G4', 1), ('Eb4', 2), ('D4', 3)], .3)

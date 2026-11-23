@@ -9,7 +9,7 @@ import { group, clearGroup, part, tube } from './rig.js';
 import { clamp, lerp, hash, ss, eio, eo, ei } from '/core/lib.js';
 STYLE.clean = true;
 
-export const DUR = 71.0;
+export const DUR = 73.6;
 const NOSUBS = new URLSearchParams(location.search).get('nosubs') === '1';
 const K = { ink: '#1d1b22', bone: '#fbf8f1', cream: '#f3ead2', white: '#ffffff', grey: '#9a9aa3', dgrey: '#55555f',
   wood: '#b57f52', woodD: '#7d5434', red: '#e2412f', green: '#4f9a5a', leaf: '#7cc36e', yellow: '#f5c63c', note: '#ffe46b', pink: '#f29ab8', pinkL: '#fbd3e0', orange: '#ec8a3c',
@@ -24,15 +24,16 @@ const oval = (cx, cy, rx, ry, n = 32) => Array.from({ length: n }, (_, i) => { c
 
 // ——— printed words / voice script (N narrator, R Raghav, A Maa, V vaidya, B merchant, P the voice from the temple = SAME voice as B) ———
 export const SUBS = [
-  { t0: 0.0, t1: 4.3, text: '“ये फूल…|ये तो मैंने आज सुबह बेच दिया था!”', who: 'R', vo: 'r1', vt: 0.2 },
-  { t0: 7.6, t1: 15.2, text: 'माँ की जान बचाने के लिए|राघव ने भगवान का फूल|एक व्यापारी को बेच दिया था।', who: 'N', vo: 'n1', vt: 7.7 },
-  { t0: 15.5, t1: 18.5, text: '“प्रभु…|ये आपके हाथ में कैसे?”', who: 'R', vo: 'r2', vt: 15.6 },
-  { t0: 21.9, t1: 26.9, text: '“वो व्यापारी कोई और नहीं…|मैं ही था, राघव।”', who: 'P', vo: 'p1', vt: 22.0 },
-  { t0: 27.0, t1: 32.4, text: '“पर प्रभु, मैंने तो आपकी पूजा छोड़ दी…|आप नाराज़ नहीं?”', who: 'R', vo: 'r3', vt: 27.1 },
-  { t0: 32.5, t1: 40.8, text: '“माँ को तड़पता छोड़कर चढ़ाया फूल|मुझ तक नहीं पहुँचता…|माँ की सेवा भी मेरी ही पूजा है।”', who: 'P', vo: 'p2', vt: 32.6 },
-  { t0: 45.0, t1: 50.3, text: '“राघव, आ जा…|दिया जला दिया।”', who: 'A', vo: 'a1', vt: 45.1 },
-  { t0: 51.0, t1: 57.3, text: 'और अगली सुबह…|पूरा तालाब कमलों से भर गया।', who: 'N', vo: 'n2', vt: 51.1 },
-  { t0: 59.5, t1: 65.3, text: 'सेवा ही|सबसे बड़ी पूजा है।', who: 'N', vo: 'n3', vt: 59.6 },
+  { t0: 0.0, t1: 2.4, text: '“राघव…”', who: 'P', vo: 'p0', vt: 0.2 },
+  { t0: 6.1, t1: 9.9, text: '“ये फूल…|ये तो मैंने आज सुबह बेच दिया था!”', who: 'R', vo: 'r1', vt: 6.2 },
+  { t0: 10.2, t1: 17.8, text: 'माँ की जान बचाने के लिए|राघव ने भगवान का फूल|एक व्यापारी को बेच दिया था।', who: 'N', vo: 'n1', vt: 10.3 },
+  { t0: 18.1, t1: 21.1, text: '“प्रभु…|ये आपके हाथ में कैसे?”', who: 'R', vo: 'r2', vt: 18.2 },
+  { t0: 24.5, t1: 29.5, text: '“वो व्यापारी कोई और नहीं…|मैं ही था, राघव।”', who: 'P', vo: 'p1', vt: 24.6 },
+  { t0: 29.6, t1: 35.0, text: '“पर प्रभु, मैंने तो आपकी पूजा छोड़ दी…|आप नाराज़ नहीं?”', who: 'R', vo: 'r3', vt: 29.7 },
+  { t0: 35.1, t1: 43.4, text: '“माँ को तड़पता छोड़कर चढ़ाया फूल|मुझ तक नहीं पहुँचता…|माँ की सेवा भी मेरी ही पूजा है।”', who: 'P', vo: 'p2', vt: 35.2 },
+  { t0: 47.6, t1: 52.9, text: '“राघव, आ जा…|दिया जला दिया।”', who: 'A', vo: 'a1', vt: 47.7 },
+  { t0: 53.6, t1: 59.9, text: 'और अगली सुबह…|पूरा तालाब कमलों से भर गया।', who: 'N', vo: 'n2', vt: 53.7 },
+  { t0: 62.1, t1: 67.9, text: 'सेवा ही|सबसे बड़ी पूजा है।', who: 'N', vo: 'n3', vt: 62.2 },
 ];
 
 // ——— text: Devanagari needs whole words; reveal = clip wiping left → right ———
@@ -142,22 +143,23 @@ const BG = { f: layer(), l: layer() }, GLOW = layer(), PE = group(), PROP = grou
 
 // ——— shots: [t0, t1, set, cam0, cam1] ———
 const SHOTS = [
-  [0.0, 4.4, 'steps', [1010, 2330, 1.22], [1010, 2320, 1.3]],      // HOOK: the doors open, Bhagwan holds the SAME lotus; Raghav on his knees
-  [4.4, 7.4, 'steps', [1080, 2120, 1.55], [1080, 2110, 1.65]],     // Bhagwan close — title असली भक्ति + भाग 2
-  [7.4, 11.4, 'hut', [8440, 2420, 1.45], [8440, 2420, 1.55]],      // पिछले भाग में: Maa's fever, his tears
-  [11.4, 15.4, 'pond', [3680, 2420, 1.3], [3680, 2420, 1.38]],     // … he sold the lotus to the merchant
-  [15.4, 18.6, 'steps', [880, 2400, 2.0], [880, 2400, 2.15]],      // "ये आपके हाथ में कैसे?"
-  [18.6, 27.0, 'reveal', [3700, 2430, 1.0], [3720, 2420, 1.06]],   // flashback: the merchant glows… and becomes Vishnu
-  [27.0, 32.0, 'steps', [960, 2300, 1.4], [960, 2300, 1.5]],       // "आप नाराज़ नहीं?"
-  [32.0, 41.0, 'steps', [1000, 2260, 1.12], [1000, 2250, 1.22]],   // the blessing — hand on his head
-  [41.0, 44.0, 'steps', [1000, 2300, 1.0], [1000, 2300, 1.04]],    // Bhagwan vanishes into light; the lotus stays in Raghav's hands
-  [44.0, 50.5, 'hutday', [8330, 2380, 1.15], [8330, 2380, 1.22]],  // Maa, healthy, lights the diya
-  [50.5, 57.5, 'pondfull', [3050, 2470, 1.0], [3050, 2470, 1.1]],  // next morning: the whole pond full of lotuses
-  [57.5, 66.5, 'mandir', [5560, 2430, 0.92], [5580, 2430, 1.0]],   // Raghav + Maa offer a lotus together
-  [66.5, 71.01, 'mandir', [5720, 2520, 1.3], [5720, 2520, 1.36]],  // the lotus at the feet → end card
+  [0.0, 3.6, 'steps', [1000, 2300, 0.95], [1000, 2300, 1.02]],     // HOOK (continues भाग 1): the doors glow, a voice from the light: "राघव…"
+  [3.6, 6.0, 'steps', [1000, 2290, 1.02], [1005, 2300, 1.12]],     // प्रकट: the light swells, a flash — Bhagwan appears
+  [6.0, 10.0, 'steps', [1010, 2330, 1.22], [1010, 2320, 1.32]],    // the SAME lotus in his hand: "ये फूल…" + title असली भक्ति · भाग 2
+  [10.0, 14.0, 'hut', [8440, 2420, 1.45], [8440, 2420, 1.55]],      // पिछले भाग में: Maa's fever, his tears
+  [14.0, 18.0, 'pond', [3680, 2420, 1.3], [3680, 2420, 1.38]],     // … he sold the lotus to the merchant
+  [18.0, 21.2, 'steps', [880, 2400, 2.0], [880, 2400, 2.15]],      // "ये आपके हाथ में कैसे?"
+  [21.2, 29.6, 'reveal', [3700, 2430, 1.0], [3720, 2420, 1.06]],   // flashback: the merchant glows… and becomes Vishnu
+  [29.6, 34.6, 'steps', [960, 2300, 1.4], [960, 2300, 1.5]],       // "आप नाराज़ नहीं?"
+  [34.6, 43.6, 'steps', [1000, 2260, 1.12], [1000, 2250, 1.22]],   // the blessing — hand on his head
+  [43.6, 46.6, 'steps', [1000, 2300, 1.0], [1000, 2300, 1.04]],    // Bhagwan vanishes into light; the lotus stays in Raghav's hands
+  [46.6, 53.1, 'hutday', [8330, 2380, 1.15], [8330, 2380, 1.22]],  // Maa, healthy, lights the diya
+  [53.1, 60.1, 'pondfull', [3050, 2470, 1.0], [3050, 2470, 1.1]],  // next morning: the whole pond full of lotuses
+  [60.1, 69.1, 'mandir', [5560, 2430, 0.92], [5580, 2430, 1.0]],   // Raghav + Maa offer a lotus together
+  [69.1, 73.61, 'mandir', [5720, 2520, 1.3], [5720, 2520, 1.36]],  // the lotus at the feet → end card
 ];
 function shotAt(t) { return SHOTS.find(s => t >= s[0] && t < s[1]) || SHOTS[SHOTS.length - 1]; }
-const HITS = [[4.6, 6], [21.3, 10], [41.6, 6]];
+const HITS = [[4.1, 8], [23.9, 10], [44.2, 6]];
 function shake(t) {
   let x = 0, y = 0;
   for (const [h, a] of HITS) { const d = t - h; if (d < 0 || d > 0.5) continue; const e = a * Math.exp(-d / 0.08); x += (hash(BOIL.step * 3.1 + h) - .5) * 2 * e; y += (hash(BOIL.step * 5.7 + h) - .5) * 2 * e; }
@@ -546,9 +548,9 @@ function subTo(t) {
   lines.forEach((ln, i) => wtext(SUBT, ln, 540, SUBY + 24 + i * lh * sc, { screen: true, size, weight: 700, col: SUBCOL[S.who], reveal: pr(t, S.t0 + i * 0.3, S.t0 + i * 0.3 + 0.4), seed: 11 + S.t0 * 3 + i, tilt: 0.3 }));
 }
 export const TEXTS = t => { const S = SUBS.find(s => t >= s.t0 && t < s.t1); if (!S) return []; const n = S.text.split('|').length; return [{ id: 's' + S.t0, text: S.text.replace('|', ' '), x0: 20, y0: SUBY - 90, x1: 1060, y1: SUBY + 70 + (n - 1) * 90 }]; };
-const LABELS = [[7.5, 10.5, 'पिछले भाग में…'], [50.6, 53.5, 'अगली सुबह…']];
-const CHIPS = [[18.6, 21.9, [[18.9, 'पीला पीतांबर ✓', K.goldL], [19.7, 'वैष्णव तिलक ✓', '#ffffff'], [20.5, 'रथ पर शंख ✓', '#b8f0c0']]]];
-const END = 66.8;
+const LABELS = [[10.1, 13.1, 'पिछले भाग में…'], [53.2, 56.1, 'अगली सुबह…']];
+const CHIPS = [[21.2, 24.5, [[21.5, 'पीला पीतांबर ✓', K.goldL], [22.3, 'वैष्णव तिलक ✓', '#ffffff'], [23.1, 'रथ पर शंख ✓', '#b8f0c0']]]];
+const END = 69.4;
 function badge(t) {   // "भाग 2/2"
   if (t > END) return;
   const x = 905, y = 560; box(x, y, 118, 40, 'rgba(160,30,40,0.92)');
@@ -561,10 +563,10 @@ function labels(t) {
     if (t < t0) return; const u = back1(pr(t, t0, t0 + 0.3)), y = 1460 + i * 125;
     box(540, y, 340 * u + 1, 50 * u + 1); wtext(SUBT, txt, 540, y + 20, { screen: true, size: 58 * u + 1, weight: 700, col, seed: 70 + i + a, tilt: 0 });
   });
-  if (t > 4.6 && t < 7.4) {   // title + भाग 2
-    const u = back1(pr(t, 4.6, 4.9)); box(540, 1560, 360 * u + 1, 92 * u + 1);
+  if (t > 7.0 && t < 10.0) {   // title + भाग 2
+    const u = back1(pr(t, 7.0, 7.3)); box(540, 1560, 360 * u + 1, 92 * u + 1);
     wtext(SUBT, 'असली भक्ति', 540, 1600, { screen: true, size: 124 * u + 1, weight: 700, col: K.goldL, seed: 81, tilt: 0 });
-    const v = back1(pr(t, 5.1, 5.4)); box(540, 1716, 150 * v + 1, 48 * v + 1, 'rgba(160,30,40,0.95)');
+    const v = back1(pr(t, 7.5, 7.8)); box(540, 1716, 150 * v + 1, 48 * v + 1, 'rgba(160,30,40,0.95)');
     wtext(SUBT, 'भाग 2', 540, 1738, { screen: true, size: 66 * v + 1, weight: 700, col: K.white, seed: 82, tilt: 0 });
   }
 }
@@ -583,11 +585,11 @@ function endCard(t) {
 export const EV = [];
 const ev = (t, type, o = {}) => EV.push({ t: +t.toFixed(3), type, ...o });
 SUBS.forEach(S => { if (S.vo) ev(S.vt, 'voice', { id: S.vo, who: S.who }); });
-ev(0.0, 'swell', { dur: 4.4 }); ev(0.1, 'bell'); ev(4.6, 'stab'); ev(7.4, 'whoosh'); ev(7.5, 'crickets', { dur: 4.0 }); ev(11.4, 'birds', { dur: 4.0 });
-ev(15.4, 'whoosh'); ev(18.6, 'whoosh'); ev(18.9, 'tick'); ev(19.7, 'tick'); ev(20.5, 'tick'); ev(21.3, 'flash'); ev(21.4, 'sparkle', { dur: 1.5 });
-ev(32.0, 'bell'); ev(36.5, 'chime'); ev(41.0, 'sparkle', { dur: 2.5 }); ev(44.0, 'birds', { dur: 6.0 }); ev(45.0, 'chime');
-ev(50.5, 'birds', { dur: 7.0 }); ev(51.2, 'sparkle', { dur: 5.0 }); ev(57.5, 'bell'); ev(62.0, 'chime'); ev(END, 'write', { dur: 1.6 });
-[['A', 0], ['B', 4.4], ['C', 7.4], ['D', 15.4], ['E', 18.6], ['F', 21.3], ['G', 27.0], ['H', 32.0], ['I', 41.0], ['J', 44.0], ['K', 50.5], ['L', 57.5], ['Z', END]].forEach(([id, t]) => ev(t, 'cue', { id }));
+ev(0.0, 'swell', { dur: 4.1 }); ev(4.1, 'flash'); ev(4.2, 'sparkle', { dur: 1.5 }); ev(4.2, 'bell'); ev(10.0, 'whoosh'); ev(10.1, 'crickets', { dur: 4.0 }); ev(14.0, 'birds', { dur: 4.0 });
+ev(18.0, 'whoosh'); ev(21.2, 'whoosh'); ev(21.5, 'tick'); ev(22.3, 'tick'); ev(23.1, 'tick'); ev(23.9, 'flash'); ev(24.0, 'sparkle', { dur: 1.5 });
+ev(34.6, 'bell'); ev(39.1, 'chime'); ev(43.6, 'sparkle', { dur: 2.5 }); ev(46.6, 'birds', { dur: 6.0 }); ev(47.6, 'chime');
+ev(53.1, 'birds', { dur: 9.6 }); ev(53.8, 'sparkle', { dur: 5.0 }); ev(60.1, 'bell'); ev(64.6, 'chime'); ev(END, 'write', { dur: 1.6 });
+[['A', 0], ['B', 4.1], ['B2', 6.0], ['C', 10.0], ['D', 18.0], ['E', 21.2], ['F', 23.9], ['G', 29.6], ['H', 34.6], ['I', 43.6], ['J', 46.6], ['K', 53.1], ['L', 60.1], ['Z', END]].forEach(([id, t]) => ev(t, 'cue', { id }));
 
 // ——— one frame ———
 export function frame(comp, t) {
@@ -604,61 +606,65 @@ export function frame(comp, t) {
   if (set === 'steps') {
     drawSteps(t, 1);
     diya(PROP, 640, 2805, 1.2, 100);
-    const vk = 0.95, vx = 1080, vhy = 2650 - 590 * vk, gone = t > 41.8;
-    if (!gone) {
-      const bless = t >= 32.6 && t < 41.0, bu = eo(pr(t, 32.6, 33.6));
-      vishnu(PE, vx, vhy, vk, 'deva', t, { shesh: 1, aura: 1, lotus: t < 41.0 ? 1 : 0, bless: bless ? [lerp(-118, -205, bu), lerp(246, 262, bu)] : null });
+    const vk0 = 0.95, vx = 1080, gone = t > 44.4, shown = t >= 4.1;
+    const vk = vk0 * (t < 4.9 ? lerp(0.8, 1, eo(pr(t, 4.1, 4.9))) : 1), vhy = 2650 - 590 * vk;
+    if (t < 4.1) { const u = pr(t, 2.4, 4.1); sglow(1000, 2250, 420 + 700 * u * u, '#fff4c8', 0.5 + 0.5 * u, 140); for (let i = 0; i < 16; i++) { const w = ((t * 0.4) + hash(i * 2.3)) % 1; dab(FX, 860 + hash(i * 1.1) * 280, 2650 - w * 800, 7, { col: i % 2 ? K.goldL : K.white, p: Math.sin(Math.PI * w) * (0.4 + 0.6 * u), seed: 220 + i }); } }
+    flash(4.1, 0.8);
+    if (!gone && shown) {
+      const bless = t >= 35.2 && t < 43.6, bu = eo(pr(t, 35.2, 36.2));
+      vishnu(PE, vx, vhy, vk, 'deva', t, { shesh: 1, aura: 1, lotus: t < 43.6 ? 1 : 0, bless: bless ? [lerp(-118, -205, bu), lerp(246, 262, bu)] : null });
     }
-    if (t > 41.0 && t < 44.0) { sglow(vx, 2300, 700 * (1 + pr(t, 41.0, 42.0)), '#fff2c0', 1 - pr(t, 42.0, 44.0), 150); for (let i = 0; i < 24; i++) { const u = ((t - 41.0) * 0.5 + hash(i * 3.1)) % 1; dab(FX, vx - 250 + hash(i * 1.7) * 500, 2600 - u * 900, 9, { col: i % 2 ? K.goldL : K.white, p: 1 - u, seed: 160 + i }); } }
-    flash(41.6, 0.6);
+    if (t > 43.6 && t < 46.6) { sglow(vx, 2300, 700 * (1 + pr(t, 43.6, 44.6)), '#fff2c0', 1 - pr(t, 44.6, 46.6), 150); for (let i = 0; i < 24; i++) { const u = ((t - 43.6) * 0.5 + hash(i * 3.1)) % 1; dab(FX, vx - 250 + hash(i * 1.7) * 500, 2600 - u * 900, 9, { col: i % 2 ? K.goldL : K.white, p: 1 - u, seed: 160 + i }); } }
+    flash(44.2, 0.6);
     const x = 880, hy = 2420, k = 1.0;
     let exp, hands, look = [1, -1], tears = true;
-    if (t < 7.4) { exp = { eyes: 'pop', brows: 'up', mouth: spk(0.2, 4.0) ? 'open' : 'o' }; hands = { L: [x - 70, hy + 290], R: [x + 70, hy + 290] }; tears = false; }
-    else if (t < 27.0) { exp = { eyes: 'teary', brows: 'worried', mouth: spk(15.6, 18.3) ? 'open' : 'o' }; hands = { L: [x + 6, hy + 200], R: [x + 34, hy + 196] }; tears = false; }
-    else if (t < 32.0) { exp = { eyes: 'teary', brows: 'sad', mouth: spk(27.1, 32.2) ? 'open' : 'sad' }; hands = { L: [x + 6, hy + 200], R: [x + 34, hy + 196] }; look = [0.5, 0.6]; }
-    else if (t < 41.0) { exp = t < 38.8 ? { eyes: 'calm', brows: 'calm', mouth: 'small' } : { eyes: 'happy', brows: 'up', mouth: 'grin' }; hands = { L: [x + 6, hy + 200], R: [x + 34, hy + 196] }; look = [0.4, -0.6]; }
+    if (t < 4.1) { exp = { eyes: 'teary', brows: 'up', mouth: 'o' }; hands = { L: [x - 70, hy + 290], R: [x + 70, hy + 290] }; look = [0.6, -1]; }
+    else if (t < 10.0) { exp = { eyes: 'pop', brows: 'up', mouth: spk(6.2, 9.6) ? 'open' : 'o' }; hands = { L: [x - 70, hy + 290], R: [x + 70, hy + 290] }; tears = false; }
+    else if (t < 29.6) { exp = { eyes: 'teary', brows: 'worried', mouth: spk(18.2, 20.9) ? 'open' : 'o' }; hands = { L: [x + 6, hy + 200], R: [x + 34, hy + 196] }; tears = false; }
+    else if (t < 34.6) { exp = { eyes: 'teary', brows: 'sad', mouth: spk(29.7, 34.8) ? 'open' : 'sad' }; hands = { L: [x + 6, hy + 200], R: [x + 34, hy + 196] }; look = [0.5, 0.6]; }
+    else if (t < 43.6) { exp = t < 41.4 ? { eyes: 'calm', brows: 'calm', mouth: 'small' } : { eyes: 'happy', brows: 'up', mouth: 'grin' }; hands = { L: [x + 6, hy + 200], R: [x + 34, hy + 196] }; look = [0.4, -0.6]; }
     else { exp = { eyes: 'teary', brows: 'up', mouth: 'smile' }; hands = { L: [x - 20, hy + 250], R: [x + 40, hy + 245] }; look = [0.3, -0.8]; }
-    const arms = person2(FG, seat('raghav', x, t, { hy, k, kneel: 1, exp, look, hands, tears, blush: t > 38.8 }), 2000);
-    if (t >= 41.0) lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.85, 150, 1);
+    const arms = person2(FG, seat('raghav', x, t, { hy, k, kneel: 1, exp, look, hands, tears, blush: t > 41.4 }), 2000);
+    if (t >= 43.6) lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.85, 150, 1);
     vig = 0.16;
   } else if (set === 'reveal' || set === 'pond') {
     drawPond(t, true, false);
-    const rx = 3380, mx = 3990, gy = 3020, rk = 1.05, rhy = gy - AH * rk, mk = 1.1, mhy = gy - AH * mk, turned = set === 'reveal' && t > 21.3;
+    const rx = 3380, mx = 3990, gy = 3020, rk = 1.05, rhy = gy - AH * rk, mk = 1.1, mhy = gy - AH * mk, turned = set === 'reveal' && t > 23.9;
     if (set === 'pond') {   // recap: he hands over the lotus
-      const handed = t > 13.2, u = eo(pr(t, 11.8, 13.0));
-      const marms = person2(PE, stand('vyapari', mx, gy, mk, t, { exp: { eyes: 'half', brows: 'calm', mouth: 'knowing' }, look: [-1, 0], hands: { L: [lerp(mx - 110, mx - 230, eo(pr(t, 12.2, 13.0))), mhy + 230], R: [mx + 80, mhy + 320] } }), 3000);
+      const handed = t > 15.8, u = eo(pr(t, 14.4, 15.6));
+      const marms = person2(PE, stand('vyapari', mx, gy, mk, t, { exp: { eyes: 'half', brows: 'calm', mouth: 'knowing' }, look: [-1, 0], hands: { L: [lerp(mx - 110, mx - 230, eo(pr(t, 14.8, 15.6))), mhy + 230], R: [mx + 80, mhy + 320] } }), 3000);
       const rarms = person2(FG, stand('raghav', rx, gy, rk, t, { exp: { eyes: handed ? 'squeeze' : 'teary', brows: 'sad', mouth: handed ? 'cry' : 'wavy' }, look: [1, 0], tears: handed, hands: handed ? { L: [rx - 40, rhy + 250], R: [rx + 60, rhy + 250] } : { L: [rx - 30, rhy + 260], R: [lerp(rx + 50, rx + 250, u), rhy + 230] } }), 2000);
       if (!handed) lotus(FG, rarms.R[0] + 10, rarms.R[1] - 10, 0.85, 150, 0.4); else lotus(PE, marms.L[0], marms.L[1] - 6, 0.85, 150, 0.6);
     } else {
       if (!turned) {
-        sglow(mx, 2600, 300 + 500 * pr(t, 19.5, 21.3), '#ffe08a', 0.3 + 0.7 * pr(t, 19.5, 21.3), 170);
+        sglow(mx, 2600, 300 + 500 * pr(t, 22.1, 23.9), '#ffe08a', 0.3 + 0.7 * pr(t, 22.1, 23.9), 170);
         const marms = person2(PE, stand('vyapari', mx, gy, mk, t, { exp: { eyes: 'half', brows: 'calm', mouth: 'knowing' }, look: [-1, 0], hands: { L: [mx - 110, mhy + 240], R: [mx + 80, mhy + 320] } }), 3000);
         lotus(PE, marms.L[0], marms.L[1] - 6, 0.85, 150, 0.8);
-        if (t < 21.3) for (const [cx, cy, a0] of [[mx + 30, mhy + 200, 18.9], [mx + 2, mhy - 30, 19.7], [4420, 1800, 20.5]]) if (t > a0) line(FX, handCircle(cx, cy, 80, 175 + a0, 0.1, 30), { w: 9, col: K.red, seed: 176 + a0 });
+        if (t < 23.9) for (const [cx, cy, a0] of [[mx + 30, mhy + 200, 21.5], [mx + 2, mhy - 30, 22.3], [4420, 1800, 23.1]]) if (t > a0) line(FX, handCircle(cx, cy, 80, 175 + a0, 0.1, 30), { w: 9, col: K.red, seed: 176 + a0 });
       } else vishnu(PE, mx, gy - 590, 1.0, 'deva', t, { aura: 1 });
-      flash(21.3, 0.7);
-      const rarms = person2(FG, stand('raghav', rx, gy, rk, t, { exp: turned ? { eyes: 'pop', brows: 'up', mouth: 'yell' } : { eyes: 'sad', brows: 'sad', mouth: 'small' }, look: [1, -0.2], hands: turned && t > 23.5 ? { L: [rx + 8, rhy + 200], R: [rx + 36, rhy + 196] } : { L: [rx - 40, rhy + 250], R: [rx + 60, rhy + 250] } }), 2000);
-      if (!(turned && t > 23.5)) { const h = rarms.R; part(FG, smooth([[h[0] - 40, h[1] + 40], [h[0] - 30, h[1] - 20], [h[0], h[1] - 34], [h[0] + 30, h[1] - 20], [h[0] + 40, h[1] + 40]], 4), { col: '#c7362f', p: 1, seed: 170 }, { w: 3, col: K.ink, seed: 171 }); dab(FG.l, h[0], h[1] - 34, 10, { col: K.gold, p: 1, seed: 172 }); }
+      flash(23.9, 0.7);
+      const rarms = person2(FG, stand('raghav', rx, gy, rk, t, { exp: turned ? { eyes: 'pop', brows: 'up', mouth: 'yell' } : { eyes: 'sad', brows: 'sad', mouth: 'small' }, look: [1, -0.2], hands: turned && t > 26.1 ? { L: [rx + 8, rhy + 200], R: [rx + 36, rhy + 196] } : { L: [rx - 40, rhy + 250], R: [rx + 60, rhy + 250] } }), 2000);
+      if (!(turned && t > 26.1)) { const h = rarms.R; part(FG, smooth([[h[0] - 40, h[1] + 40], [h[0] - 30, h[1] - 20], [h[0], h[1] - 34], [h[0] + 30, h[1] - 20], [h[0] + 40, h[1] + 40]], 4), { col: '#c7362f', p: 1, seed: 170 }, { w: 3, col: K.ink, seed: 171 }); dab(FG.l, h[0], h[1] - 34, 10, { col: K.gold, p: 1, seed: 172 }); }
     }
     vig = 0.16;
   } else if (set === 'pondfull') {
     drawPond(t, false, true);
-    const x = 3000, gy = 3020, k = 1.05, hy = gy - AH * k, wow = t > 52.0;
-    const arms = person2(FG, stand('raghav', x, gy, k, t, { exp: wow ? { eyes: t > 54.5 ? 'happy' : 'pop', brows: 'up', mouth: t > 54.5 ? 'grin' : 'o' } : { eyes: 'open', brows: 'calm', mouth: 'smile' }, look: [0.3, 0.4], tears: t > 54.5, blush: t > 54.5, hands: wow ? { L: [x - 190, hy + 40], R: [x + 190, hy + 40] } : { L: [x - 20, hy + 250], R: [x + 40, hy + 245] } }), 2000);
+    const x = 3000, gy = 3020, k = 1.05, hy = gy - AH * k, wow = t > 54.6;
+    const arms = person2(FG, stand('raghav', x, gy, k, t, { exp: wow ? { eyes: t > 57.1 ? 'happy' : 'pop', brows: 'up', mouth: t > 57.1 ? 'grin' : 'o' } : { eyes: 'open', brows: 'calm', mouth: 'smile' }, look: [0.3, 0.4], tears: t > 57.1, blush: t > 57.1, hands: wow ? { L: [x - 190, hy + 40], R: [x + 190, hy + 40] } : { L: [x - 20, hy + 250], R: [x + 40, hy + 245] } }), 2000);
     if (!wow) lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.85, 150, 0.5);
-    for (let i = 0; i < 40; i++) { const u = ((t - 50.5) * 0.18 + hash(i * 2.9)) % 1; const px = 2450 + hash(i * 1.3) * 1200 + 60 * Math.sin(t * 2 + i); dab(FX, px, 1500 + u * 1600, 11, { col: i % 3 ? K.pink : K.pinkL, p: Math.sin(Math.PI * u), seed: 300 + i, sq: 0.6 }); }
+    for (let i = 0; i < 40; i++) { const u = ((t - 53.1) * 0.18 + hash(i * 2.9)) % 1; const px = 2450 + hash(i * 1.3) * 1200 + 60 * Math.sin(t * 2 + i); dab(FX, px, 1500 + u * 1600, 11, { col: i % 3 ? K.pink : K.pinkL, p: Math.sin(Math.PI * u), seed: 300 + i, sq: 0.6 }); }
     vig = 0.12;
   } else if (set === 'mandir') {
     drawMandir(t);
     diya(FG, 5360, 3040, 1.4, 490); diya(FG, 6140, 3040, 1.4, 495);
-    const placed = t > 59.6, reach = eo(pr(t, 57.9, 59.4));
+    const placed = t > 62.2, reach = eo(pr(t, 60.5, 62.0));
     person2(FG, seat('amma', 5130, t, { hy: 2640, k: 1.1, kneel: 1, exp: { eyes: t > 62 ? 'calm' : 'open', brows: 'calm', mouth: 'smile' }, look: [1, -0.5], hands: { L: [5136, 2640 + 200 * 1.1], R: [5166, 2640 + 196 * 1.1] }, blush: 1 }), 2600);
     const x = 5330, hy = 2560, k = 1.25;
     const hands = placed ? { L: [x + 8, hy + 210], R: [x + 38, hy + 205] } : { L: [lerp(x + 20, x + 260, reach), lerp(hy + 300, hy + 160, reach)], R: [lerp(x + 70, x + 320, reach), lerp(hy + 290, hy + 150, reach)] };
     const arms = person2(FG, seat('raghav', x, t, { hy, k, kneel: 1, exp: placed ? { eyes: 'calm', brows: 'calm', mouth: 'smile' } : { eyes: 'open', brows: 'calm', mouth: 'smile' }, look: [1, -0.6], hands, blush: 1 }), 2000);
     if (!placed) lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.85, 150, 0.5);
     else lotus(FG, 5750, 2700, 0.9, 150, 1);
-    if (t > 62.0 && t < 63.2) { const u = Math.sin(Math.PI * pr(t, 62.0, 63.2)) * 16; for (const sg of [-1, 1]) { const h = [5750 + sg * 21 * 0.92, 2140 - 2]; line(FX, [[h[0] - u, h[1]], [h[0] + u, h[1]]], { w: 5, col: K.white, seed: 190 + sg }); line(FX, [[h[0], h[1] - u], [h[0], h[1] + u]], { w: 5, col: K.white, seed: 192 + sg }); } }
+    if (t > 64.6 && t < 65.8) { const u = Math.sin(Math.PI * pr(t, 64.6, 65.8)) * 16; for (const sg of [-1, 1]) { const h = [5750 + sg * 21 * 0.92, 2140 - 2]; line(FX, [[h[0] - u, h[1]], [h[0] + u, h[1]]], { w: 5, col: K.white, seed: 190 + sg }); line(FX, [[h[0], h[1] - u], [h[0], h[1] + u]], { w: 5, col: K.white, seed: 192 + sg }); } }
     vig = 0.2;
   } else if (set === 'hut' || set === 'hutday') {
     const day = set === 'hutday';
@@ -672,10 +678,10 @@ export function frame(comp, t) {
       vig = 0.34;
     } else {   // Maa, healthy, lights the diya
       const mx = 8180, mgy = 3000, mk = 1.0, mhy = mgy - AH * mk;
-      const marms = person2(PE, stand('amma', mx, mgy, mk, t, { exp: { eyes: t > 47.5 ? 'happy' : 'open', brows: 'calm', mouth: spk(45.1, 49.8) ? 'open' : 'smile' }, look: [1, 0], hands: { L: [mx + 10, mhy + 250], R: [mx + 70, mhy + 245] } }), 3000);
+      const marms = person2(PE, stand('amma', mx, mgy, mk, t, { exp: { eyes: t > 50.1 ? 'happy' : 'open', brows: 'calm', mouth: spk(47.7, 52.4) ? 'open' : 'smile' }, look: [1, 0], hands: { L: [mx + 10, mhy + 250], R: [mx + 70, mhy + 245] } }), 3000);
       diya(PE, (marms.L[0] + marms.R[0]) / 2, Math.min(marms.L[1], marms.R[1]) - 8, 1.3, 600);
       const rx = 8640, rgy = 3040, rk = 1.0, rhy = rgy - AH * rk;
-      const rarms = person2(FG, stand('raghav', rx, rgy, rk, t, { exp: { eyes: t > 46.5 ? 'happy' : 'teary', brows: 'up', mouth: t > 46.5 ? 'grin' : 'smile' }, look: [-1, 0], tears: 1, blush: 1, hands: { L: [rx - 20, rhy + 250], R: [rx + 40, rhy + 245] } }), 2000);
+      const rarms = person2(FG, stand('raghav', rx, rgy, rk, t, { exp: { eyes: t > 49.1 ? 'happy' : 'teary', brows: 'up', mouth: t > 49.1 ? 'grin' : 'smile' }, look: [-1, 0], tears: 1, blush: 1, hands: { L: [rx - 20, rhy + 250], R: [rx + 40, rhy + 245] } }), 2000);
       lotus(FG, (rarms.L[0] + rarms.R[0]) / 2, Math.min(rarms.L[1], rarms.R[1]) - 10, 0.85, 150, 0.6);
       vig = 0.14;
     }
