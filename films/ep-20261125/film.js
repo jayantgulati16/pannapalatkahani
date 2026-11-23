@@ -10,7 +10,7 @@ import { group, clearGroup, part, tube } from './rig.js';
 import { clamp, lerp, hash, ss, eio, eo, ei } from '/core/lib.js';
 STYLE.clean = true;
 
-export const DUR = 81.0;
+export const DUR = 85.0;
 const NOSUBS = new URLSearchParams(location.search).get('nosubs') === '1';
 const K = { ink: '#1d1b22', bone: '#fbf8f1', cream: '#f3ead2', white: '#ffffff', grey: '#9a9aa3', dgrey: '#55555f',
   wood: '#b57f52', woodD: '#7d5434', red: '#e2412f', green: '#4f9a5a', leaf: '#7cc36e', yellow: '#f5c63c', note: '#ffe46b', pink: '#f29ab8', pinkL: '#fbd3e0', orange: '#ec8a3c',
@@ -27,19 +27,19 @@ const oval = (cx, cy, rx, ry, n = 32) => Array.from({ length: n }, (_, i) => { c
 export const SUBS = [
   { t0: 0.0, t1: 3.6, text: '“प्रभु… आज मैंने|आपका फूल बेच दिया!”', who: 'R', vo: 'r1', vt: 0.2 },
   { t0: 7.2, t1: 12.4, text: 'राघव रोज़ अपना सबसे सुंदर कमल|भगवान विष्णु के चरणों में चढ़ाता था।', who: 'N', vo: 'n1', vt: 7.3 },
-  { t0: 15.7, t1: 19.9, text: '“प्रभु, मुझे कुछ नहीं चाहिए…|बस मेरी माँ ठीक रहे।”', who: 'R', vo: 'r2', vt: 15.8 },
-  { t0: 20.1, t1: 23.0, text: 'पर उसी रात…|माँ को तेज़ बुख़ार चढ़ गया।', who: 'N', vo: 'n6', vt: 20.2 },
-  { t0: 23.2, t1: 28.4, text: '“बुख़ार बहुत तेज़ है। ये दवा चाहिए…|दस सोने के सिक्के की।”', who: 'V', vo: 'v1', vt: 23.3 },
-  { t0: 32.7, t1: 36.9, text: 'राघव के पास|बस चार ताँबे के सिक्के थे।', who: 'N', vo: 'n2', vt: 32.8 },
-  { t0: 37.2, t1: 41.8, text: 'वो पूरी रात|माँ का हाथ पकड़कर रोता रहा।', who: 'N', vo: 'n7', vt: 37.3 },
-  { t0: 42.2, t1: 46.8, text: 'अगली सुबह तालाब में|सिर्फ़ एक कमल खिला…', who: 'N', vo: 'n3', vt: 42.3 },
-  { t0: 47.1, t1: 50.3, text: 'तभी एक अमीर व्यापारी|ने उसे रोका।', who: 'N', vo: 'n8', vt: 47.2 },
-  { t0: 50.6, t1: 55.4, text: '“ये कमल मुझे दे दो।|बदले में… दस सोने के सिक्के।”', who: 'B', vo: 'b1', vt: 50.7 },
-  { t0: 57.7, t1: 62.8, text: 'एक तरफ़ भगवान की पूजा…|दूसरी तरफ़ माँ की जान।', who: 'N', vo: 'n4', vt: 57.8 },
-  { t0: 68.1, t1: 70.4, text: '“राघव…”', who: 'A', vo: 'a1', vt: 68.2 },
-  { t0: 70.7, t1: 74.9, text: '“प्रभु…|क्या आप मुझे माफ़ करेंगे?”', who: 'R', vo: 'r3', vt: 70.8 },
-  { t0: 75.3, t1: 77.5, text: '“राघव…”', who: 'P', vo: 'p1', vt: 75.4 },
-  { t0: 77.7, t1: 81.0, text: 'आगे क्या हुआ… देखिए भाग 2 में,|कल शाम 7:30 बजे!', who: 'N', vo: 'n5', vt: 77.8 },
+  { t0: 14.9, t1: 19.95, text: '“प्रभु, मुझे कुछ नहीं चाहिए…|बस मेरी माँ ठीक रहे।”', who: 'R', vo: 'r2', vt: 15.0 },
+  { t0: 20.1, t1: 24.2, text: 'पर उसी रात…|माँ को तेज़ बुख़ार चढ़ गया।', who: 'N', vo: 'n6', vt: 20.2 },
+  { t0: 24.4, t1: 30.0, text: '“बुख़ार बहुत तेज़ है। ये दवा चाहिए…|दस सोने के सिक्के की।”', who: 'V', vo: 'v1', vt: 24.5 },
+  { t0: 34.3, t1: 38.5, text: 'राघव के पास|बस चार ताँबे के सिक्के थे।', who: 'N', vo: 'n2', vt: 34.4 },
+  { t0: 38.8, t1: 43.4, text: 'वो पूरी रात|माँ का हाथ पकड़कर रोता रहा।', who: 'N', vo: 'n7', vt: 38.9 },
+  { t0: 43.8, t1: 48.4, text: 'अगली सुबह तालाब में|सिर्फ़ एक कमल खिला…', who: 'N', vo: 'n3', vt: 43.9 },
+  { t0: 48.7, t1: 51.9, text: 'तभी एक अमीर व्यापारी|ने उसे रोका।', who: 'N', vo: 'n8', vt: 48.8 },
+  { t0: 52.2, t1: 57.4, text: '“ये कमल मुझे दे दो।|बदले में… दस सोने के सिक्के।”', who: 'B', vo: 'b1', vt: 52.3 },
+  { t0: 59.7, t1: 64.8, text: 'एक तरफ़ भगवान की पूजा…|दूसरी तरफ़ माँ की जान।', who: 'N', vo: 'n4', vt: 59.8 },
+  { t0: 70.1, t1: 72.4, text: '“राघव…”', who: 'A', vo: 'a1', vt: 70.2 },
+  { t0: 72.7, t1: 76.9, text: '“प्रभु…|क्या आप मुझे माफ़ करेंगे?”', who: 'R', vo: 'r3', vt: 72.8 },
+  { t0: 77.3, t1: 79.5, text: '“राघव…”', who: 'P', vo: 'p1', vt: 77.4 },
+  { t0: 79.7, t1: 85.0, text: 'आगे क्या हुआ… देखिए भाग 2 में,|कल शाम 7:30 बजे!', who: 'N', vo: 'n5', vt: 79.8 },
 ];
 
 // ——— text: Devanagari needs whole words; reveal = clip wiping left → right ———
@@ -154,26 +154,26 @@ const SHOTS = [
   [7.0, 12.5, 'pond', [3000, 2480, 1.02], [3020, 2470, 1.12]],     // a day earlier: dawn pond, his best lotus
   [12.5, 15.6, 'mandir', [5640, 2420, 0.9], [5640, 2420, 0.95]],   // the brass murti; he offers the lotus
   [15.6, 20.0, 'mandir', [5420, 2560, 1.45], [5420, 2540, 1.58]],  // prayer close-up
-  [20.0, 23.0, 'hut', [8250, 2470, 0.95], [8250, 2470, 1.0]],      // that night: Maa's fever
-  [23.0, 28.5, 'hut', [8150, 2470, 1.0], [8150, 2470, 1.05]],      // vaidya: 10 gold coins
-  [28.5, 32.5, 'hut', [8600, 2430, 2.2], [8600, 2430, 2.4]],       // Raghav's face
-  [32.5, 37.0, 'coins', [10000, 2420, 1.0], [10000, 2420, 1.08]],  // 4 copper coins
-  [37.0, 42.0, 'hut', [8440, 2420, 1.45], [8440, 2420, 1.58]],     // crying all night, holding her hand
-  [42.0, 47.0, 'pond', [3000, 2480, 1.05], [3000, 2480, 1.12]],    // next morning: only one lotus
-  [47.0, 50.5, 'pond', [3480, 2460, 0.9], [3760, 2460, 0.92]],     // the merchant + his chariot (conch flag)
-  [50.5, 53.2, 'pond', [3960, 2340, 1.55], [3960, 2340, 1.65]],    // "give me this lotus"
-  [53.2, 55.5, 'gold', [10000, 2420, 1.0], [10000, 2420, 1.08]],   // 10 gold coins
-  [55.5, 57.5, 'pond', [3380, 2300, 2.1], [3380, 2300, 2.3]],      // Raghav: दस?!
-  [57.5, 63.0, 'dilemma', [11600, 2470, 1.0], [11600, 2470, 1.07]],// puja or Maa?
-  [63.0, 66.5, 'pond', [3680, 2420, 1.3], [3680, 2420, 1.38]],     // he gives the lotus — the merchant's knowing smile
-  [66.5, 68.0, 'hutday', [8330, 2420, 1.3], [8330, 2420, 1.34]],   // the medicine
-  [68.0, 70.5, 'hutday', [8330, 2260, 1.9], [8330, 2260, 2.0]],    // Maa opens her eyes
-  [70.5, 75.0, 'steps', [1000, 2420, 1.5], [1000, 2400, 1.62]],    // night again (= the hook)
-  [75.0, 77.5, 'steps', [1000, 2300, 0.95], [1000, 2300, 1.0]],    // the doors glow gold: "राघव…"
-  [77.5, 81.01, 'steps', [1000, 2380, 1.2], [1000, 2380, 1.28]],   // his face in the light → भाग 2 कल
+  [20.0, 24.2, 'hut', [8250, 2470, 0.95], [8250, 2470, 1.0]],      // that night: Maa's fever
+  [24.2, 30.1, 'hut', [8150, 2470, 1.0], [8150, 2470, 1.05]],      // vaidya: 10 gold coins
+  [30.1, 34.1, 'hut', [8600, 2430, 2.2], [8600, 2430, 2.4]],       // Raghav's face
+  [34.1, 38.6, 'coins', [10000, 2420, 1.0], [10000, 2420, 1.08]],  // 4 copper coins
+  [38.6, 43.6, 'hut', [8440, 2420, 1.45], [8440, 2420, 1.58]],     // crying all night, holding her hand
+  [43.6, 48.6, 'pond', [3000, 2480, 1.05], [3000, 2480, 1.12]],    // next morning: only one lotus
+  [48.6, 52.1, 'pond', [3480, 2460, 0.9], [3760, 2460, 0.92]],     // the merchant + his chariot (conch flag)
+  [52.1, 54.8, 'pond', [3960, 2340, 1.55], [3960, 2340, 1.65]],    // "give me this lotus"
+  [54.8, 57.5, 'gold', [10000, 2420, 1.0], [10000, 2420, 1.08]],   // 10 gold coins
+  [57.5, 59.5, 'pond', [3380, 2300, 2.1], [3380, 2300, 2.3]],      // Raghav: दस?!
+  [59.5, 65.0, 'dilemma', [11600, 2470, 1.0], [11600, 2470, 1.07]],// puja or Maa?
+  [65.0, 68.5, 'pond', [3680, 2420, 1.3], [3680, 2420, 1.38]],     // he gives the lotus — the merchant's knowing smile
+  [68.5, 70.0, 'hutday', [8330, 2420, 1.3], [8330, 2420, 1.34]],   // the medicine
+  [70.0, 72.5, 'hutday', [8330, 2260, 1.9], [8330, 2260, 2.0]],    // Maa opens her eyes
+  [72.5, 77.0, 'steps', [1000, 2420, 1.5], [1000, 2400, 1.62]],    // night again (= the hook)
+  [77.0, 79.5, 'steps', [1000, 2300, 0.95], [1000, 2300, 1.0]],    // the doors glow gold: "राघव…"
+  [79.5, 85.01, 'steps', [1000, 2380, 1.2], [1000, 2380, 1.28]],   // his face in the light → भाग 2 कल
 ];
 function shotAt(t) { return SHOTS.find(s => t >= s[0] && t < s[1]) || SHOTS[SHOTS.length - 1]; }
-const HITS = [[4.2, 8], [28.5, 6], [32.6, 4], [53.2, 6], [55.5, 10], [75.0, 8], [75.4, 6]];
+const HITS = [[4.2, 8], [30.1, 6], [34.2, 4], [54.8, 6], [57.5, 10], [77.0, 8], [77.4, 6]];
 function shake(t) {
   let x = 0, y = 0;
   for (const [h, a] of HITS) { const d = t - h; if (d < 0 || d > 0.5) continue; const e = a * Math.exp(-d / 0.08); x += (hash(BOIL.step * 3.1 + h) - .5) * 2 * e; y += (hash(BOIL.step * 5.7 + h) - .5) * 2 * e; }
@@ -562,9 +562,9 @@ function subTo(t) {
   lines.forEach((ln, i) => wtext(SUBT, ln, 540, SUBY + 24 + i * lh * sc, { screen: true, size, weight: 700, col: SUBCOL[S.who], reveal: pr(t, S.t0 + i * 0.3, S.t0 + i * 0.3 + 0.4), seed: 11 + S.t0 * 3 + i, tilt: 0.3 }));
 }
 export const TEXTS = t => { const S = SUBS.find(s => t >= s.t0 && t < s.t1); if (!S) return []; const n = S.text.split('|').length; return [{ id: 's' + S.t0, text: S.text.replace('|', ' '), x0: 20, y0: SUBY - 90, x1: 1060, y1: SUBY + 70 + (n - 1) * 90 }]; };
-const LABELS = [[7.1, 10.0, 'एक दिन पहले…'], [42.1, 45.0, 'अगली सुबह…']];
-const CHIPS = [[32.5, 37.0, [[33.6, 'दवा: 10 सोने के सिक्के', K.goldL], [35.0, 'पास में: 4 ताँबे के सिक्के', '#ffb38a']]]];
-const END = 78.6;
+const LABELS = [[7.1, 10.0, 'एक दिन पहले…'], [43.7, 46.6, 'अगली सुबह…']];
+const CHIPS = [[34.1, 38.6, [[35.2, 'दवा: 10 सोने के सिक्के', K.goldL], [36.6, 'पास में: 4 ताँबे के सिक्के', '#ffb38a']]]];
+const END = 80.6;
 function badge(t) {   // "भाग 1/2" — on screen the whole time (Jayant: people must know there are 2 parts)
   if (t > END) return;
   const x = 905, y = 560; box(x, y, 118, 40, 'rgba(160,30,40,0.92)');
@@ -583,7 +583,7 @@ function labels(t) {
     const v = back1(pr(t, 4.7, 5.0)); box(540, 1716, 150 * v + 1, 48 * v + 1, 'rgba(160,30,40,0.95)');
     wtext(SUBT, 'भाग 1', 540, 1738, { screen: true, size: 66 * v + 1, weight: 700, col: K.white, seed: 82, tilt: 0 });
   }
-  if (t > 55.55 && t < 57.5) { const u = back1(pr(t, 55.55, 55.85)); box(540, 1620, 200 * u + 1, 84 * u + 1); wtext(SUBT, 'दस?!', 540, 1664, { screen: true, size: 130 * u + 1, weight: 700, col: K.goldL, seed: 84, tilt: 0 }); }
+  if (t > 57.55 && t < 59.5) { const u = back1(pr(t, 57.55, 57.85)); box(540, 1620, 200 * u + 1, 84 * u + 1); wtext(SUBT, 'दस?!', 540, 1664, { screen: true, size: 130 * u + 1, weight: 700, col: K.goldL, seed: 84, tilt: 0 }); }
 }
 function endCard(t) {
   if (t < END) return;
@@ -600,12 +600,12 @@ export const EV = [];
 const ev = (t, type, o = {}) => EV.push({ t: +t.toFixed(3), type, ...o });
 SUBS.forEach(S => { if (S.vo) ev(S.vt, 'voice', { id: S.vo, who: S.who }); });
 ev(0.0, 'crickets', { dur: 7.0 }); ev(4.2, 'stab'); ev(7.0, 'whoosh'); ev(7.1, 'birds', { dur: 5.0 }); ev(12.5, 'bell'); ev(14.6, 'chime'); ev(15.6, 'bell');
-ev(20.0, 'crickets', { dur: 8.5 }); ev(20.6, 'cough'); ev(21.8, 'cough'); ev(28.5, 'heartbeat'); ev(29.5, 'heartbeat'); ev(30.5, 'heartbeat');
-ev(32.6, 'coins'); ev(33.6, 'tick'); ev(35.0, 'tick'); ev(37.0, 'crickets', { dur: 5.0 });
-ev(42.0, 'birds', { dur: 5.0 }); ev(47.0, 'hooves', { dur: 2.0 }); ev(53.2, 'coins', { gold: 1 }); ev(54.2, 'sparkle', { dur: 0.8 }); ev(55.5, 'hit');
-for (let i = 0; i < 6; i++) ev(57.6 + i * 0.9, 'heartbeat'); ev(65.3, 'glint'); ev(66.5, 'whoosh'); ev(68.0, 'sparkle', { dur: 1.2 });
-ev(70.5, 'crickets', { dur: 4.5 }); ev(75.0, 'swell', { dur: 2.6 }); ev(75.4, 'bell'); ev(END, 'write', { dur: 1.4 });
-[['A', 0], ['B', 4.2], ['C', 7.0], ['D', 12.5], ['E', 20.0], ['F', 28.5], ['G', 37.0], ['H', 42.0], ['I', 50.5], ['J', 57.5], ['K', 63.0], ['L', 66.5], ['M', 70.5], ['N', 75.0], ['Z', 77.5]].forEach(([id, t]) => ev(t, 'cue', { id }));
+ev(20.0, 'crickets', { dur: 8.5 }); ev(20.6, 'cough'); ev(21.8, 'cough'); ev(30.1, 'heartbeat'); ev(31.1, 'heartbeat'); ev(32.1, 'heartbeat');
+ev(34.2, 'coins'); ev(35.2, 'tick'); ev(36.6, 'tick'); ev(38.6, 'crickets', { dur: 5.0 });
+ev(43.6, 'birds', { dur: 5.0 }); ev(48.6, 'hooves', { dur: 2.0 }); ev(54.8, 'coins', { gold: 1 }); ev(55.8, 'sparkle', { dur: 0.8 }); ev(57.5, 'hit');
+for (let i = 0; i < 6; i++) ev(59.6 + i * 0.9, 'heartbeat'); ev(67.3, 'glint'); ev(68.5, 'whoosh'); ev(70.0, 'sparkle', { dur: 1.2 });
+ev(72.5, 'crickets', { dur: 4.5 }); ev(77.0, 'swell', { dur: 2.6 }); ev(77.4, 'bell'); ev(END, 'write', { dur: 1.4 });
+[['A', 0], ['B', 4.2], ['C', 7.0], ['D', 12.5], ['E', 20.0], ['F', 30.1], ['G', 38.6], ['H', 43.6], ['I', 52.1], ['J', 59.5], ['K', 65.0], ['L', 68.5], ['M', 72.5], ['N', 77.0], ['Z', 79.5]].forEach(([id, t]) => ev(t, 'cue', { id }));
 
 // ——— one frame ———
 export function frame(comp, t) {
@@ -619,45 +619,45 @@ export function frame(comp, t) {
   let vig = 0.22;
   const spk = (a, b) => talking(t, a, b) === 'open';
   if (set === 'steps') {
-    const glowU = t < 75.0 ? 0 : pr(t, 75.0, 76.4);
+    const glowU = t < 77.0 ? 0 : pr(t, 77.0, 78.4);
     drawSteps(t, glowU);
     diya(PROP, 700, 2805, 1.2, 100);
     const lit = glowU > 0, x = 1000, hy = 2300, k = 1.0;
-    const talkNow = spk(0.2, 3.2) || spk(70.8, 74.4);
-    const exp = lit ? { eyes: t > 77.5 ? 'teary' : 'pop', brows: 'up', mouth: t > 77.5 ? 'o' : 'open' }
-      : talkNow ? { eyes: 'squeeze', brows: 'sad', mouth: 'cry' } : { eyes: (t > 3.3 && t < 4.0) || t > 74.4 ? 'sad' : 'squeeze', brows: 'sad', mouth: (t > 3.3 && t < 4.0) || t > 74.4 ? 'sad' : 'cry' };
+    const talkNow = spk(0.2, 3.2) || spk(72.8, 76.4);
+    const exp = lit ? { eyes: t > 79.5 ? 'teary' : 'pop', brows: 'up', mouth: t > 79.5 ? 'o' : 'open' }
+      : talkNow ? { eyes: 'squeeze', brows: 'sad', mouth: 'cry' } : { eyes: (t > 3.3 && t < 4.0) || t > 76.4 ? 'sad' : 'squeeze', brows: 'sad', mouth: (t > 3.3 && t < 4.0) || t > 76.4 ? 'sad' : 'cry' };
     const hands = lit ? { L: [x - 140, hy + 150], R: [x + 140, hy + 150] } : { L: [x - 70, hy + 300], R: [x + 70, hy + 300] };
-    person2(PE, seat('raghav', x, t, { hy, k, kneel: 1, exp, look: lit ? [0, -1] : [0, 0.8], hands, tears: !lit || t > 77.5 }), 2000);
+    person2(PE, seat('raghav', x, t, { hy, k, kneel: 1, exp, look: lit ? [0, -1] : [0, 0.8], hands, tears: !lit || t > 79.5 }), 2000);
     vig = lit ? 0.18 : 0.34;
   } else if (set === 'pond') {
-    const day2 = t >= 42.0;
+    const day2 = t >= 43.6;
     drawPond(t, day2);
     if (t < 12.5) {   // day 1: his best lotus, a smile
       const x = 3000, gy = 3020, k = 1.05, hy = gy - AH * k;
       const arms = person2(FG, stand('raghav', x, gy, k, t, { exp: { eyes: t < 9.5 ? 'open' : 'happy', brows: 'calm', mouth: 'smile' }, look: [0.3, 0.6], hands: { L: [x - 20, hy + 250], R: [x + 40, hy + 245] } }), 2000);
       lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.85, 150, 0.3);
-    } else if (t < 47.0) {   // day 2: only one lotus — he takes it
-      const x = 3000, gy = 3020, k = 1.05, hy = gy - AH * k, got = t > 45.0;
+    } else if (t < 48.6) {   // day 2: only one lotus — he takes it
+      const x = 3000, gy = 3020, k = 1.05, hy = gy - AH * k, got = t > 46.6;
       const arms = person2(FG, stand('raghav', x, gy, k, t, { exp: { eyes: got ? 'teary' : 'sad', brows: 'sad', mouth: got ? 'small' : 'sad' }, look: got ? [0.3, 0.7] : [1, 0.3], hands: got ? { L: [x - 20, hy + 250], R: [x + 40, hy + 245] } : { L: [x - 80, hy + 320], R: [x + 80, hy + 320] } }), 2000);
       if (got) lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.85, 150, 0.4);
     } else {   // the merchant
       const rx = 3380, mx = 3990, gy = 3020, rk = 1.05, mk = 1.1, rhy = gy - AH * rk, mhy = gy - AH * mk;
-      const give = t >= 63.0, handed = t > 64.8;
-      const talk = t > 50.7 && t < 53.2;
-      const mExp = give ? { eyes: t > 65.0 ? 'half' : 'open', brows: 'calm', mouth: 'knowing' } : talk ? { eyes: 'open', brows: 'calm', mouth: spk(50.7, 53.1) ? 'open' : 'smile' } : { eyes: 'open', brows: 'calm', mouth: 'smile' };
-      const mHands = give ? { L: [lerp(mx - 110, mx - 230, eo(pr(t, 63.8, 64.6))), mhy + 230], R: [mx + 80, mhy + 320] } : talk ? { L: [mx - 160, mhy + 190], R: [mx + 80, mhy + 320] } : { L: [mx - 80, mhy + 320], R: [mx + 80, mhy + 320] };
+      const give = t >= 65.0, handed = t > 66.8;
+      const talk = t > 52.3 && t < 54.8;
+      const mExp = give ? { eyes: t > 67.0 ? 'half' : 'open', brows: 'calm', mouth: 'knowing' } : talk ? { eyes: 'open', brows: 'calm', mouth: spk(52.3, 54.7) ? 'open' : 'smile' } : { eyes: 'open', brows: 'calm', mouth: 'smile' };
+      const mHands = give ? { L: [lerp(mx - 110, mx - 230, eo(pr(t, 65.8, 66.6))), mhy + 230], R: [mx + 80, mhy + 320] } : talk ? { L: [mx - 160, mhy + 190], R: [mx + 80, mhy + 320] } : { L: [mx - 80, mhy + 320], R: [mx + 80, mhy + 320] };
       const marms = person2(PE, stand('vyapari', mx, gy, mk, t, { exp: mExp, look: [-1, 0], hands: mHands }), 3000);
-      const shock = t >= 55.5 && t < 57.5;
-      const rExp = shock ? { eyes: 'pop', brows: 'up', mouth: 'yell' } : give ? { eyes: handed ? 'squeeze' : 'teary', brows: 'sad', mouth: handed ? 'cry' : 'wavy' } : t > 50.5 ? { eyes: 'open', brows: 'worried', mouth: 'small' } : { eyes: 'sad', brows: 'sad', mouth: 'small' };
-      const rHands = give && !handed ? { L: [rx - 30, rhy + 260], R: [lerp(rx + 50, rx + 250, eo(pr(t, 63.3, 64.6))), rhy + 230] } : handed ? { L: [rx - 40, rhy + 250], R: [rx + 60, rhy + 250] } : { L: [rx - 20, rhy + 250], R: [rx + 40, rhy + 245] };
+      const shock = t >= 57.5 && t < 59.5;
+      const rExp = shock ? { eyes: 'pop', brows: 'up', mouth: 'yell' } : give ? { eyes: handed ? 'squeeze' : 'teary', brows: 'sad', mouth: handed ? 'cry' : 'wavy' } : t > 52.1 ? { eyes: 'open', brows: 'worried', mouth: 'small' } : { eyes: 'sad', brows: 'sad', mouth: 'small' };
+      const rHands = give && !handed ? { L: [rx - 30, rhy + 260], R: [lerp(rx + 50, rx + 250, eo(pr(t, 65.3, 66.6))), rhy + 230] } : handed ? { L: [rx - 40, rhy + 250], R: [rx + 60, rhy + 250] } : { L: [rx - 20, rhy + 250], R: [rx + 40, rhy + 245] };
       const rarms = person2(FG, stand('raghav', rx, gy, rk, t, { exp: rExp, look: [1, 0], hands: rHands, tears: handed }), 2000);
       if (!handed) lotus(FG, give ? rarms.R[0] + 10 : (rarms.L[0] + rarms.R[0]) / 2, rarms.R[1] - 10, 0.85, 150, 0.4);
       else { lotus(PE, marms.L[0], marms.L[1] - 6, 0.85, 150, 0.6);   // the merchant holds it; Raghav holds a red potli of gold
         const h = rarms.R;
         part(FG, smooth([[h[0] - 40, h[1] + 40], [h[0] - 30, h[1] - 20], [h[0], h[1] - 34], [h[0] + 30, h[1] - 20], [h[0] + 40, h[1] + 40]], 4), { col: '#c7362f', p: 1, seed: 170 }, { w: 3, col: K.ink, seed: 171 });
         dab(FG.l, h[0], h[1] - 34, 10, { col: K.gold, p: 1, seed: 172 }); }
-      if (t > 65.3 && t < 66.3) {   // a gold glint in the merchant's eye
-        const h = [mx + 22 * mk, mhy - 4 * mk], u = Math.sin(Math.PI * pr(t, 65.3, 66.3)) * 34;
+      if (t > 67.3 && t < 68.3) {   // a gold glint in the merchant's eye
+        const h = [mx + 22 * mk, mhy - 4 * mk], u = Math.sin(Math.PI * pr(t, 67.3, 68.3)) * 34;
         line(FX, [[h[0] - u, h[1]], [h[0] + u, h[1]]], { w: 5, col: K.goldL, seed: 180 }); line(FX, [[h[0], h[1] - u], [h[0], h[1] + u]], { w: 5, col: K.goldL, seed: 181 });
       }
     }
@@ -665,10 +665,10 @@ export function frame(comp, t) {
   } else if (set === 'mandir') {
     drawMandir(t);
     diya(FG, 5360, 3040, 1.4, 490); diya(FG, 6140, 3040, 1.4, 495);
-    const x = 5300, hy = 2560, k = 1.25, placed = t > 14.6, pray = t > 15.6;
+    const x = 5300, hy = 2560, k = 1.25, placed = t > 14.4, pray = t > 14.9;
     const reach = eo(pr(t, 12.9, 14.4));
     const hands = pray ? { L: [x + 8, hy + 210], R: [x + 38, hy + 205] } : placed ? { L: [x + 50, hy + 320], R: [x + 100, hy + 310] } : { L: [lerp(x + 20, x + 260, reach), lerp(hy + 300, hy + 160, reach)], R: [lerp(x + 70, x + 320, reach), lerp(hy + 290, hy + 150, reach)] };
-    const arms = person2(FG, seat('raghav', x, t, { hy, k, kneel: 1, exp: pray ? { eyes: 'calm', brows: 'sad', mouth: spk(15.8, 19.4) ? 'open' : 'small' } : { eyes: 'open', brows: 'calm', mouth: 'smile' }, look: [1, -0.6], hands }), 2000);
+    const arms = person2(FG, seat('raghav', x, t, { hy, k, kneel: 1, exp: pray ? { eyes: 'calm', brows: 'sad', mouth: spk(15.0, 19.7) ? 'open' : 'small' } : { eyes: 'open', brows: 'calm', mouth: 'smile' }, look: [1, -0.6], hands }), 2000);
     if (!placed) lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.85, 150, 0.3);
     else lotus(FG, 5750, 2700, 0.9, 150, 0.6);
     vig = 0.22;
@@ -676,24 +676,24 @@ export function frame(comp, t) {
     const day = set === 'hutday';
     drawHut(t, day);
     cotBack(PE);
-    const better = day && t > 68.1;
+    const better = day && t > 70.1;
     const cough = !day && ((t > 20.5 && t < 21.1) || (t > 21.7 && t < 22.3));
-    person2(PE, seat('amma', 8290, t, { hy: 2300, k: 0.95, patti: !better && (t > 23 || day), sweat: !day, blush: better, exp: better ? { eyes: 'open', brows: 'calm', mouth: spk(68.2, 69.2) ? 'open' : 'smile' } : cough ? { eyes: 'squeeze', brows: 'sad', mouth: 'o' } : { eyes: 'closed', brows: 'sad', mouth: 'sad' }, look: [1, 0.2], hands: { L: [8220, 2590], R: [8360, 2590] } }), 3000);
+    person2(PE, seat('amma', 8290, t, { hy: 2300, k: 0.95, patti: !better && (t > 24.2 || day), sweat: !day, blush: better, exp: better ? { eyes: 'open', brows: 'calm', mouth: spk(70.2, 71.2) ? 'open' : 'smile' } : cough ? { eyes: 'squeeze', brows: 'sad', mouth: 'o' } : { eyes: 'closed', brows: 'sad', mouth: 'sad' }, look: [1, 0.2], hands: { L: [8220, 2590], R: [8360, 2590] } }), 3000);
     cotFront(PE, day);
     if (!day) {
-      if (t >= 23.0 && t < 28.5) {   // the vaidya: pulse, then writes the medicine
-        const vx = 7720, vhy = 2430, pulse = t < 24.6;
-        person2(PROP, seat('vaidya', vx, t, { hy: vhy, k: 1.0, exp: { eyes: pulse ? 'half' : 'sad', brows: 'worried', mouth: spk(23.3, 27.9) ? 'open' : 'flat' }, look: [1, 0], hands: pulse ? { L: [vx + 10, vhy + 300], R: [8130, 2600] } : { L: [vx + 10, vhy + 300], R: [vx + 110, vhy + 280 + 6 * Math.sin(t * 9)] } }), 3500);
+      if (t >= 24.2 && t < 30.1) {   // the vaidya: pulse, then writes the medicine
+        const vx = 7720, vhy = 2430, pulse = t < 25.8;
+        person2(PROP, seat('vaidya', vx, t, { hy: vhy, k: 1.0, exp: { eyes: pulse ? 'half' : 'sad', brows: 'worried', mouth: spk(24.5, 29.1) ? 'open' : 'flat' }, look: [1, 0], hands: pulse ? { L: [vx + 10, vhy + 300], R: [8130, 2600] } : { L: [vx + 10, vhy + 300], R: [vx + 110, vhy + 280 + 6 * Math.sin(t * 9)] } }), 3500);
         stool(PROP, vx, vhy + 400);
         if (!pulse) { part(PROP, rect(vx - 10, vhy + 250, vx + 120, vhy + 330), { col: '#f3ead2', p: 1, seed: 570 }, { w: 3, col: K.ink, seed: 571 });
-          for (let i = 0; i < 3; i++) line(PROP.l, [[vx + 10, vhy + 270 + i * 20], [vx + 10 + 90 * clamp((t - 24.8 - i * 0.9) / 0.9), vhy + 270 + i * 20]], { w: 3, col: K.ink, seed: 572 + i }); }
+          for (let i = 0; i < 3; i++) line(PROP.l, [[vx + 10, vhy + 270 + i * 20], [vx + 10 + 90 * clamp((t - 26.0 - i * 0.9) / 0.9), vhy + 270 + i * 20]], { w: 3, col: K.ink, seed: 572 + i }); }
       }
       const x = 8600, hy = 2440, k = 1.0;
       let exp, hands, tears = false;
-      if (t < 23.0) { exp = { eyes: 'pop', brows: 'worried', mouth: 'o' }; hands = { L: [8400, 2610], R: [8470, 2560] }; }
-      else if (t < 28.5) { exp = { eyes: 'sad', brows: 'worried', mouth: 'flat' }; hands = { L: [x - 40, hy + 250], R: [x + 10, hy + 240] }; }
-      else if (t < 37.0) { exp = t < 30.0 ? { eyes: 'pop', brows: 'up', mouth: 'o' } : { eyes: 'teary', brows: 'sad', mouth: 'wavy' }; hands = { L: [x - 40, hy + 250], R: [x + 10, hy + 240] }; tears = t > 30.8; }
-      else { exp = { eyes: 'squeeze', brows: 'sad', mouth: t > 39.5 ? 'sad' : 'cry' }; hands = { L: [8400, 2600], R: [8440, 2615] }; tears = true; }
+      if (t < 24.2) { exp = { eyes: 'pop', brows: 'worried', mouth: 'o' }; hands = { L: [8400, 2610], R: [8470, 2560] }; }
+      else if (t < 30.1) { exp = { eyes: 'sad', brows: 'worried', mouth: 'flat' }; hands = { L: [x - 40, hy + 250], R: [x + 10, hy + 240] }; }
+      else if (t < 38.6) { exp = t < 31.6 ? { eyes: 'pop', brows: 'up', mouth: 'o' } : { eyes: 'teary', brows: 'sad', mouth: 'wavy' }; hands = { L: [x - 40, hy + 250], R: [x + 10, hy + 240] }; tears = t > 32.4; }
+      else { exp = { eyes: 'squeeze', brows: 'sad', mouth: t > 41.1 ? 'sad' : 'cry' }; hands = { L: [8400, 2600], R: [8440, 2615] }; tears = true; }
       person2(FG, seat('raghav', x, t, { hy, k, kneel: 1, exp, look: [-1, 0.2], hands, tears }), 2000);
       diya(PROP, 7480, 2950, 1.2, 580);
       vig = 0.34;
@@ -711,7 +711,7 @@ export function frame(comp, t) {
     const x = 11560, gy = 3060, k = 1.15, hy = gy - AH * k;
     const arms = person2(FG, stand('raghav', x, gy, k, t, { exp: { eyes: 'open', brows: 'worried', mouth: 'wavy' }, look: [look, -0.1], hands: { L: [x - 20, hy + 250], R: [x + 40, hy + 245] }, sweat: 1 }), 2000);
     lotus(FG, (arms.L[0] + arms.R[0]) / 2, Math.min(arms.L[1], arms.R[1]) - 10, 0.85, 150, 0.4);
-    const beat = Math.exp(-((t - 57.6) % 0.9) / 0.12);
+    const beat = Math.exp(-((t - 59.6) % 0.9) / 0.12);
     vig = 0.25 + 0.15 * beat;
   }
   badge(t);
