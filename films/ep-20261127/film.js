@@ -292,7 +292,7 @@ SPEC.oldman = { top: '#9db8c9', len: 430, bottom: '#e9e4d8', shoe: '#7d5434', ha
 
 // ——— printed words / voice script (N narrator Sulafat, M Meera, J judge, V Khanna) ———
 export const SUBS = [
-  { t0: 0.0, t1: 2.0, text: '“जज साहब… ये—”', who: 'M', vo: 'm1', vt: 0.2, words: [0.35, 0.95, 1.55] },
+  { t0: 0.0, t1: 2.15, text: '“जज साहब… ये—”', who: 'M', vo: 'm1', vt: 0.2, words: [0.68, 1.47, 1.95] },
   { t0: 5.3, t1: 10.9, text: 'इस दुनिया में हर इंसान को|पूरी ज़िंदगी के लिए|सिर्फ़ दस लाख लफ़्ज़ मिलते हैं।', who: 'N', vo: 'n1', vt: 5.4 },
   { t0: 11.1, t1: 15.4, text: 'मीटर ज़ीरो…|तो आवाज़ हमेशा के लिए चली जाती है।', who: 'N', vo: 'n2', vt: 11.2 },
   { t0: 19.9, t1: 26.4, text: 'आरव के पास सिर्फ़ बारह सौ लफ़्ज़ थे।|लोग कहते थे,|बचपन में सब बर्बाद कर दिए।', who: 'N', vo: 'n3', vt: 20.0 },
@@ -300,8 +300,8 @@ export const SUBS = [
   { t0: 33.3, t1: 39.8, text: 'बचपन में किसी अनजान ने|अपने लफ़्ज़ देकर उसकी आवाज़ लौटाई थी…|मीरा उसे आज तक ढूँढ रही थी।', who: 'N', vo: 'n5', vt: 33.4 },
   { t0: 40.2, t1: 46.6, text: 'आज मीरा को|अपने बेक़सूर पापा को बचाना था…|पर उसके पास बस पैंतालीस लफ़्ज़ थे।', who: 'N', vo: 'n6', vt: 40.3 },
   { t0: 48.2, t1: 51.5, text: '“माई लॉर्ड, सारे काग़ज़|इसके ख़िलाफ़ हैं!”', who: 'V', vo: 'v1', vt: 48.3 },
-  { t0: 51.7, t1: 55.4, text: '“मेरे पापा बेक़सूर हैं।|घोटाला किसी और ने किया।”', who: 'M', vo: 'm2', vt: 51.8, words: [52.0, 52.4, 52.9, 53.5, 54.0, 54.4, 54.8, 55.1] },
-  { t0: 58.0, t1: 60.0, text: '“जज साहब… ये—”', who: 'M', vo: 'm1', vt: 58.2, words: [58.35, 58.95, 59.55] },
+  { t0: 51.7, t1: 55.4, text: '“मेरे पापा बेक़सूर हैं।|घोटाला किसी और ने किया।”', who: 'M', vo: 'm2', vt: 51.8, words: [52.14, 52.32, 52.67, 53.14, 53.92, 54.23, 54.86, 55.1] },
+  { t0: 58.0, t1: 60.1, text: '“जज साहब… ये—”', who: 'M', vo: 'm1', vt: 58.2, words: [58.68, 59.47, 59.95] },
   { t0: 63.7, t1: 67.4, text: '“कहने को कुछ नहीं?|पाँच मिनट बाद फ़ैसला।”', who: 'J', vo: 'j1', vt: 63.8 },
   { t0: 73.1, t1: 78.7, text: 'मीरा को टूटता देख…|आरव ने अपनी आख़िरी आवाज़ भी|उसके नाम कर दी।', who: 'N', vo: 'n7', vt: 73.2 },
 ];
@@ -343,9 +343,13 @@ const SHOTS = [
   [72.6, 76.0, 'wrists', [16000, 2420, 1.0], [16000, 2420, 1.06]],  // bands join: सारे लफ़्ज़ भेजें? → 1,200 ⇄ 0000
   [76.0, 82.1, 'corridor', [14000, 2780, 1.35], [14000, 2780, 1.42]],// his smile through tears, her shock → end card
 ];
-export const DUR = 82.0;
+// time warp: stretch story intervals so the narration takes fit (story time τ ↔ real time t)
+const STRETCH = [[5.3, 9.7, 1.0], [9.7, 15.6, 0.9], [23.4, 26.5, 0.6], [26.5, 29.5, 0.8], [29.5, 33.2, 0.8], [33.2, 40.0, 0.9]];
+function toReal(s) { let r = s; for (const [a, b, x] of STRETCH) { if (s >= b) r += x; else if (s > a) r += x * (s - a) / (b - a); } return r; }
+function toStory(t) { let lo = 0, hi = 120; for (let i = 0; i < 40; i++) { const m = (lo + hi) / 2; if (toReal(m) < t) lo = m; else hi = m; } return (lo + hi) / 2; }
+export const DUR = +toReal(82.0).toFixed(2);
 function shotAt(t) { return SHOTS.find(s => t >= s[0] && t < s[1]) || SHOTS[SHOTS.length - 1]; }
-const HITS = [[1.6, 10], [59.8, 10], [67.0, 8], [73.0, 6]];
+const HITS = [[1.95, 10], [59.95, 10], [67.25, 8], [73.0, 6]];
 function shake(t) {
   let x = 0, y = 0;
   for (const [h, a] of HITS) { const d = t - h; if (d < 0 || d > 0.5) continue; const e = a * Math.exp(-d / 0.08); x += (hash(BOIL.step * 3.1 + h) - .5) * 2 * e; y += (hash(BOIL.step * 5.7 + h) - .5) * 2 * e; }
@@ -482,8 +486,8 @@ function hud(x, y, value, state, who, sc = 1, blink = 1) {
   if (who) { const nw = 26 + 22 * who.length; box(x - 120 * sc, y - 88 * sc, nw / 2 * sc + 12, 28 * sc, lit); wtext(SUBT, who, x - 120 * sc, y - 76 * sc, { screen: true, size: 36 * sc, weight: 700, col: K.ink, seed: 5, tilt: 0 }); }
 }
 function timer(t) {   // 05:00 from 67.3 s, real time
-  if (t < 67.3) return;
-  const left = Math.max(0, 300 - (t - 67.3)), mm = Math.floor(left / 60), ss2 = Math.floor(left % 60), u = back1(pr(t, 67.3, 67.7));
+  if (t < 67.4) return;
+  const left = Math.max(0, 300 - (t - 67.4)), mm = Math.floor(left / 60), ss2 = Math.floor(left % 60), u = back1(pr(t, 67.4, 67.8));
   box(190, 560, 140 * u + 1, 52 * u + 1, 'rgba(120,10,20,0.95)');
   digits(SUBT, `${String(mm).padStart(2, '0')}:${String(ss2).padStart(2, '0')}`, 190, 564, 66 * u + 1, '#ffffff', { screen: true });
 }
@@ -502,8 +506,8 @@ function subTo(t) {
   if (WHO[S.who]) { const nw = 30 + 21 * WHO[S.who].length; box(120 + nw / 2, cy - hh - 22, nw / 2 + 14, 34, SUBCOL[S.who]); wtext(SUBT, WHO[S.who], 120 + nw / 2, cy - hh - 8, { screen: true, size: 42, weight: 700, col: K.ink, seed: 5, tilt: 0 }); }
   lines.forEach((ln, i) => wtext(SUBT, ln, 540, SUBY + 24 + i * lh * sc, { screen: true, size, weight: 700, col: SUBCOL[S.who], reveal: pr(t, S.t0 + i * 0.3, S.t0 + i * 0.3 + 0.4), seed: 11 + S.t0 * 3 + i, tilt: 0.3 }));
 }
-export const TEXTS = t => { const S = SUBS.find(s => t >= s.t0 && t < s.t1); if (!S) return []; const n = S.text.split('|').length; return [{ id: 's' + S.t0, text: S.text.replace('|', ' '), x0: 20, y0: SUBY - 90, x1: 1060, y1: SUBY + 70 + (n - 1) * 90 }]; };
-const LABELS = [[2.0, 3.0, 'आवाज़ ग़ायब…'], [15.7, 18.6, 'उसी सुबह…'], [60.0, 61.0, 'आवाज़ ग़ायब…']];
+export const TEXTS = t0 => { const t = toStory(t0); const S = SUBS.find(s => t >= s.t0 && t < s.t1); if (!S) return []; const n = S.text.split('|').length; return [{ id: 's' + S.t0, text: S.text.replace('|', ' '), x0: 20, y0: SUBY - 90, x1: 1060, y1: SUBY + 70 + (n - 1) * 90 }]; };
+const LABELS = [[2.15, 3.0, 'आवाज़ ग़ायब…'], [15.7, 18.6, 'उसी सुबह…'], [60.1, 61.0, 'आवाज़ ग़ायब…']];
 const END = 78.8;
 function badge(t) { if (t > END) return; const x = 905, y = 560; box(x, y, 118, 40, 'rgba(160,30,40,0.92)'); wtext(SUBT, 'भाग 1/2', x, y + 16, { screen: true, size: 46, weight: 700, col: K.white, seed: 3, tilt: 0 }); }
 function labels(t) {
@@ -534,14 +538,16 @@ function endCard(t) {
 export const EV = [];
 const ev = (t, type, o = {}) => EV.push({ t: +t.toFixed(3), type, ...o });
 SUBS.forEach(S => { if (S.vo) ev(S.vt, 'voice', { id: S.vo, who: S.who }); if (S.words) S.words.forEach(w => ev(w, 'tick')); });
-ev(1.6, 'zero'); ev(3.0, 'glitch'); ev(5.3, 'whoosh'); ev(5.6, 'sparkle', { dur: 2 }); ev(9.7, 'whoosh'); ev(9.7, 'city', { dur: 5.9 }); ev(15.6, 'whoosh'); ev(15.6, 'cafe', { dur: 10.9 });
+ev(1.95, 'zero'); ev(3.0, 'glitch'); ev(5.3, 'whoosh'); ev(5.6, 'sparkle', { dur: 2 }); ev(9.7, 'whoosh'); ev(9.7, 'city', { dur: 5.9 }); ev(15.6, 'whoosh'); ev(15.6, 'cafe', { dur: 10.9 });
 ev(18.4, 'laugh'); ev(21.9, 'page'); ev(26.5, 'whoosh'); ev(26.6, 'beep', { dur: 3 }); ev(29.6, 'ticks', { dur: 3.0 }); ev(33.2, 'whoosh'); ev(40.0, 'birds', { dur: 7.8 }); ev(44.6, 'page');
-ev(47.8, 'whoosh'); ev(55.4, 'ticks', { dur: 2.6 }); ev(59.8, 'zero'); ev(61.0, 'heartbeat', { dur: 2.6 }); ev(67.0, 'gavel'); ev(67.3, 'heartbeat', { dur: 11.5 }); ev(67.3, 'clock', { dur: 14 });
+ev(47.8, 'whoosh'); ev(55.4, 'ticks', { dur: 2.6 }); ev(59.95, 'zero'); ev(61.0, 'heartbeat', { dur: 2.6 }); ev(67.25, 'gavel'); ev(67.4, 'heartbeat', { dur: 11.4 }); ev(67.4, 'clock', { dur: 14 });
 ev(70.2, 'whoosh'); ev(72.0, 'join'); ev(73.0, 'transfer', { dur: 2.4 }); ev(75.4, 'ding'); ev(END, 'write', { dur: 1.6 });
-[['A', 0], ['B', 5.3], ['C', 9.7], ['D', 15.6], ['E', 26.5], ['F', 33.2], ['G', 40.0], ['H', 47.8], ['I', 55.4], ['J', 58.0], ['K', 61.0], ['L', 63.6], ['M', 67.3], ['N', 70.2], ['O', 73.0], ['P', 76.0], ['Z', END]].forEach(([id, t]) => ev(t, 'cue', { id }));
+EV.forEach(e => { if (e.dur) e.dur = +(toReal(e.t + e.dur) - toReal(e.t)).toFixed(3); e.t = +toReal(e.t).toFixed(3); });
+[['A', 0], ['B', 5.3], ['C', 9.7], ['D', 15.6], ['E', 26.5], ['F', 33.2], ['G', 40.0], ['H', 47.8], ['I', 55.4], ['J', 58.0], ['K', 61.0], ['L', 63.6], ['M', 67.4], ['N', 70.2], ['O', 73.0], ['P', 76.0], ['Z', END]].forEach(([id, t]) => ev(+toReal(t).toFixed(3), 'cue', { id }));
 
 // ——— one frame ———
-export function frame(comp, t) {
+export function frame(comp, t) { return frameS(comp, toStory(t)); }
+function frameS(comp, t) {
   const S = shotAt(t), set = S[2];
   const e = ss((t - S[0]) / (S[1] - S[0]));
   CAM.x = lerp(S[3][0], S[4][0], e); CAM.y = lerp(S[3][1], S[4][1], e); CAM.s = lerp(S[3][2], S[4][2], e);
@@ -556,8 +562,8 @@ export function frame(comp, t) {
   const tagW = (x, y, txt, col, size = 40) => tag(sx(x), sy(y), txt, col, size);
   if (set === 'court') {
     drawCourt(t);
-    const judging = t >= 63.6 && t < 68.0, gu = pr(t, 66.6, 67.0), ga = judging ? (t < 66.6 ? -0.2 : t < 67.0 ? lerp(-0.9, 0.35, ei(gu)) : 0.35) : 0.3;
-    const ja = person3(PE, seat('judge', 1100, t, { hy: 2080, k: 0.9, exp: judging ? { eyes: 'half', brows: 'down', mouth: spk(63.8, 67.2) ? 'open' : 'flat' } : { eyes: 'open', brows: 'down', mouth: 'flat' }, look: [-0.5, 0.3], hands: { L: [1040, 2300], R: [1190, judging && t < 67.0 && t > 66.6 ? 2200 : 2290] } }), 600);
+    const judging = t >= 63.6 && t < 68.0, gu = pr(t, 66.9, 67.25), ga = judging ? (t < 66.9 ? -0.2 : t < 67.25 ? lerp(-0.9, 0.35, ei(gu)) : 0.35) : 0.3;
+    const ja = person3(PE, seat('judge', 1100, t, { hy: 2080, k: 0.9, exp: judging ? { eyes: 'half', brows: 'down', mouth: spk(63.8, 67.2) ? 'open' : 'flat' } : { eyes: 'open', brows: 'down', mouth: 'flat' }, look: [-0.5, 0.3], hands: { L: [1040, 2300], R: [1190, judging && t < 67.25 && t > 66.9 ? 2200 : 2290] } }), 600);
     bench(PROP); gavel(PROP, ja.R[0], ja.R[1] + 6, 0.85, ga, 740);
     const papaScared = t >= 58.0;
     person3(PE, seat('papa', 1720, t, { hy: 2470, k: 0.85, exp: papaScared ? { eyes: t > 61 ? 'teary' : 'pop', brows: 'worried', mouth: t > 61 ? 'sad' : 'o' } : { eyes: 'sad', brows: 'worried', mouth: 'small' }, tears: t > 61.8, look: [-1, 0.2], hands: { L: [1650, 2760], R: [1790, 2760] } }), 900);
@@ -573,7 +579,7 @@ export function frame(comp, t) {
     const hook = t < 5.3 || (t >= 58.0 && t < 61.0), zero = mw === 0, running = t >= 68.0;
     let exp, hands, tears = false, look = [0.6, -0.4];
     const raised = { L: [mx - 80 * mk, mhy + 330 * mk], R: [mx + 150 * mk, mhy + 40 * mk] };
-    if (hook) { exp = zero ? { eyes: 'pop', brows: 'up', mouth: BOIL.step % 4 < 2 ? 'o' : 'open' } : { eyes: 'open', brows: 'worried', mouth: talking(t, 0.2, 1.6) === 'open' || talking(t, 58.2, 59.7) === 'open' ? 'open' : 'small' }; hands = raised; }
+    if (hook) { exp = zero ? { eyes: 'pop', brows: 'up', mouth: BOIL.step % 4 < 2 ? 'o' : 'open' } : { eyes: 'open', brows: 'worried', mouth: talking(t, 0.2, 1.95) === 'open' || talking(t, 58.2, 59.95) === 'open' ? 'open' : 'small' }; hands = raised; }
     else if (t < 33.2) { exp = { eyes: 'open', brows: 'angry', mouth: BOIL.step % 3 ? 'open' : 'small' }; hands = { L: [mx - 80 * mk, mhy + 330 * mk], R: [mx + 160 * mk, mhy + 160 * mk] }; look = [0.7, -0.2]; }
     else if (t < 51.6) { exp = { eyes: 'sad', brows: 'worried', mouth: 'flat' }; hands = { L: [mx - 20 * mk, mhy + 280 * mk], R: [mx + 60 * mk, mhy + 300 * mk] }; look = [0.8, -0.2]; }
     else if (t < 55.4) { exp = { eyes: 'open', brows: 'worried', mouth: spk(51.8, 55.2) ? 'open' : 'small' }; hands = { L: [mx + 10 * mk, mhy + 210 * mk], R: [mx + 140 * mk, mhy + 250 * mk] }; }
@@ -590,8 +596,8 @@ export function frame(comp, t) {
       const ma = person3(FG, stand('meera', rx, 3420, mk, t, { exp: { eyes: 'squeeze', brows: 'sad', mouth: 'cry' }, tears: 1, look: [1, 0], feet: { L: [rx - 60 + ph * 50, 3420], R: [rx + 60 - ph * 50, 3420] }, hands: { L: [rx - 20, 3420 - AH * mk + 120], R: [rx + 40, 3420 - AH * mk + 110] } }), 300);
       wristBand(FG, ma, 'L', 'red', mk, 0.2);
     }
-    if (t >= 59.8 && t < 61) flash(59.8, 0.6);
-    if (t < 5.3) flash(1.6, 0.6);
+    if (t >= 59.95 && t < 61) flash(59.95, 0.6);
+    if (t < 5.3) flash(1.95, 0.6);
     if (t < 5.3 || (t >= 51.6 && t < 61.0)) hud(540, 1560, mw, mState, 'मीरा', 1, blinkR);
     if (t >= 29.5 && t < 33.2) hud(540, 1560, mw, mw < 100 ? 'red' : 'cyan', 'मीरा', 1, 1);
     if (kTalk) hud(540, 1560, Math.round(450000 - 8 * pr(t, 48.3, 51.4)), 'cyan', 'खन्ना वकील', 1);
