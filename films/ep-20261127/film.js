@@ -7,7 +7,6 @@ import { group, clearGroup, part, tube } from './rig.js';
 import { clamp, lerp, hash, ss, eio, eo, ei } from '/core/lib.js';
 STYLE.clean = true;
 
-export const DUR = 80.0;
 const NOSUBS = new URLSearchParams(location.search).get('nosubs') === '1';
 const K = { ink: '#1d1b22', bone: '#fbf8f1', cream: '#f3ead2', white: '#ffffff', grey: '#9a9aa3', dgrey: '#55555f',
   wood: '#b57f52', woodD: '#7d5434', red: '#e2412f', green: '#4f9a5a', leaf: '#7cc36e', yellow: '#f5c63c', note: '#ffe46b', pink: '#f29ab8', pinkL: '#fbd3e0', orange: '#ec8a3c',
@@ -20,7 +19,6 @@ const rect = (x0, y0, x1, y1) => [[x0, y0], [x1, y0], [x1, y1], [x0, y1]];
 const rrect = (x0, y0, x1, y1, r) => { const p = []; for (const [cx, cy, a0] of [[x1 - r, y0 + r, -Math.PI / 2], [x1 - r, y1 - r, 0], [x0 + r, y1 - r, Math.PI / 2], [x0 + r, y0 + r, Math.PI]]) for (let i = 0; i <= 6; i++) { const a = a0 + i / 6 * Math.PI / 2; p.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); } return p; };
 const back1 = u => { u = clamp(u) - 1; return 1 + u * u * (2.8 * u + 1.8); };
 const oval = (cx, cy, rx, ry, n = 32) => Array.from({ length: n }, (_, i) => { const a = i / n * Math.PI * 2; return [cx + Math.cos(a) * rx, cy + Math.sin(a) * ry]; });
-export const SUBS = [];
 
 // ——— text: Devanagari needs whole words; reveal = clip wiping left → right ———
 function wtext(L, str, x, y, o = {}) {
@@ -240,8 +238,13 @@ function digits(L, str, x, y, size, col, o = {}) {   // digital numbers (world c
 function fmt(n) { if (n < 10000) return String(Math.max(0, Math.round(n))).padStart(4, '0'); const s = String(Math.round(n)); const last3 = s.slice(-3), rest = s.slice(0, -3); return rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + last3; }
 function bandBig(C, x, y, s, value, state, o = {}) {   // close-up of a wrist with the band (world coords; forearm left→right)
   const skinC = o.skin || K.skinM, sd = o.sd || 950;
-  if (!o.noArm) { part(C, tube([[x - 520 * s, y + 30 * s], [x + 420 * s, y - 10 * s]], 190 * s, 160 * s), { col: skinC, p: 1, seed: sd }, { w: 5, col: K.ink, seed: sd + 1 });
-    if (o.sleeve) part(C, tube([[x - 640 * s, y + 34 * s], [x - 330 * s, y + 22 * s]], 230 * s, 220 * s), { col: o.sleeve, p: 1, seed: sd + 2 }, { w: 5, col: o.sleeveLine || K.ink, seed: sd + 3 }); }
+  const f = o.flip ? -1 : 1;
+  if (!o.noArm) {
+    const hx = x + f * 470 * s, hy2 = y - 14 * s;
+    for (let i = 0; i < 4; i++) part(C, tube([[hx + f * 40 * s, hy2 - 60 * s + i * 40 * s], [hx + f * 120 * s, hy2 - 66 * s + i * 42 * s]], 40 * s, 34 * s), { col: skinC, p: 1, seed: sd + 20 + i }, { w: 4, col: K.ink, seed: sd + 24 + i });
+    part(C, smooth([[hx - f * 60 * s, hy2 - 90 * s], [hx + f * 70 * s, hy2 - 96 * s], [hx + f * 110 * s, hy2 - 20 * s], [hx + f * 80 * s, hy2 + 90 * s], [hx - f * 60 * s, hy2 + 86 * s]], 4), { col: skinC, p: 1, seed: sd + 28 }, { w: 5, col: K.ink, seed: sd + 29 });
+    part(C, tube([[x - f * 1300 * s, y + 40 * s], [x + f * 420 * s, y - 10 * s]], 200 * s, 165 * s), { col: skinC, p: 1, seed: sd }, { w: 5, col: K.ink, seed: sd + 1 });
+    if (o.sleeve) part(C, tube([[x - f * 1500 * s, y + 44 * s], [x - f * 330 * s, y + 22 * s]], 240 * s, 225 * s), { col: o.sleeve, p: 1, seed: sd + 2 }, { w: 5, col: o.sleeveLine || K.ink, seed: sd + 3 }); }
   const [lit, dark] = BAND[state], bw = 210 * s, bh = 230 * s;
   part(C, rrect(x - bw / 2 - 30 * s, y - bh / 2 - 10 * s, x + bw / 2 + 30 * s, y + bh / 2 + 10 * s, 36 * s), { col: '#2a2a33', p: 1, seed: sd + 4 }, { w: 5, col: K.ink, seed: sd + 5 });
   const scr = rrect(x - bw / 2 - 10 * s, y - bh / 2 + 22 * s, x + bw / 2 + 10 * s, y + bh / 2 - 22 * s, 22 * s);
@@ -278,14 +281,422 @@ function box(cx, cy, hw, hh, col = 'rgba(20,19,26,0.93)', L = SUBT) {
 }
 function tag(x, y, txt, col = K.goldL, size = 40, bg) { const g = SUBT.g; g.save(); g.font = `700 ${size}px Kalam`; const w = g.measureText(txt).width; g.restore(); box(x, y, w / 2 + 22, size * 0.62, bg); wtext(SUBT, txt, x, y + size * 0.36, { screen: true, size, weight: 700, col, seed: 7 + x, tilt: 0 }); }
 
-export const TEXTS = () => [];
-export const EV = [];
 const finish = (comp, vig = 0.15) => {
   comp.paperCam(CAM.x * 0.6, CAM.y * 0.6, CAM.s / 0.6); comp.clean = true; comp.begin(PAPER);
   comp.crayon(BG.f.c); comp.crayon(BG.l.c); comp.crayon(GLOW.c); comp.group(PE); comp.group(PROP); comp.group(FG); comp.crayon(FX.c); comp.knock(SUBK.c); comp.crayon(SUBT.c);
   comp.finish({ vig, emb: 0, bright: 1, lamp: [0.5, 0.5, 1, 0] });
 };
-export function frame(comp, t) { return testFrame(comp, t, 'cast'); }
+// ═══════════════════════ भाग 1 ═══════════════════════
+SPEC.vendor = { top: '#e0893a', len: 420, bottom: '#f1ece0', shoe: '#7d5434', hair: 'short', hairCol: '#241a16', moustache: '#241a16', skin: K.skinO };
+SPEC.oldman = { top: '#9db8c9', len: 430, bottom: '#e9e4d8', shoe: '#7d5434', hair: 'balding', hairCol: '#e2ded8', moustache: '#e8e4de', skin: K.skinM, browCol: '#d0cbc4' };
+
+// ——— printed words / voice script (N narrator Sulafat, M Meera, J judge, V Khanna) ———
+export const SUBS = [
+  { t0: 0.0, t1: 2.0, text: '“जज साहब… ये—”', who: 'M', vo: 'm1', vt: 0.2, words: [0.35, 0.95, 1.55] },
+  { t0: 5.3, t1: 10.9, text: 'इस दुनिया में हर इंसान को|पूरी ज़िंदगी के लिए|सिर्फ़ दस लाख लफ़्ज़ मिलते हैं।', who: 'N', vo: 'n1', vt: 5.4 },
+  { t0: 11.1, t1: 15.4, text: 'मीटर ज़ीरो…|तो आवाज़ हमेशा के लिए चली जाती है।', who: 'N', vo: 'n2', vt: 11.2 },
+  { t0: 19.9, t1: 26.4, text: 'आरव के पास सिर्फ़ बारह सौ लफ़्ज़ थे।|लोग कहते थे,|बचपन में सब बर्बाद कर दिए।', who: 'N', vo: 'n3', vt: 20.0 },
+  { t0: 26.6, t1: 33.1, text: 'और मीरा… एक वकील,|जिसने ग़रीबों को इंसाफ़ दिलाने में|अपने लगभग सारे लफ़्ज़ ख़र्च कर दिए।', who: 'N', vo: 'n4', vt: 26.7 },
+  { t0: 33.3, t1: 39.8, text: 'बचपन में किसी अनजान ने|अपने लफ़्ज़ देकर उसकी आवाज़ लौटाई थी…|मीरा उसे आज तक ढूँढ रही थी।', who: 'N', vo: 'n5', vt: 33.4 },
+  { t0: 40.2, t1: 46.6, text: 'आज मीरा को|अपने बेक़सूर पापा को बचाना था…|पर उसके पास बस पैंतालीस लफ़्ज़ थे।', who: 'N', vo: 'n6', vt: 40.3 },
+  { t0: 48.2, t1: 51.5, text: '“माई लॉर्ड, सारे काग़ज़|इसके ख़िलाफ़ हैं!”', who: 'V', vo: 'v1', vt: 48.3 },
+  { t0: 51.7, t1: 55.4, text: '“मेरे पापा बेक़सूर हैं।|घोटाला किसी और ने किया।”', who: 'M', vo: 'm2', vt: 51.8, words: [52.0, 52.4, 52.9, 53.5, 54.0, 54.4, 54.8, 55.1] },
+  { t0: 58.0, t1: 60.0, text: '“जज साहब… ये—”', who: 'M', vo: 'm1', vt: 58.2, words: [58.35, 58.95, 59.55] },
+  { t0: 63.7, t1: 67.4, text: '“कहने को कुछ नहीं?|पाँच मिनट बाद फ़ैसला।”', who: 'J', vo: 'j1', vt: 63.8 },
+  { t0: 73.1, t1: 78.7, text: 'मीरा को टूटता देख…|आरव ने अपनी आख़िरी आवाज़ भी|उसके नाम कर दी।', who: 'N', vo: 'n7', vt: 73.2 },
+];
+// Meera's meter over time (what the HUD shows): 3 → 0 in the hook; 45 → 37 → 3 → 0 in court
+function meeraWords(t) {
+  const tick = (S, from) => { let v = from; for (const w of S.words) if (t >= w) v--; return v; };
+  if (t < 5.3) return tick(SUBS[0], 3);
+  if (t < 29.5) return 45;
+  if (t < 33.2) return Math.round(lerp(320, 45, eio(pr(t, 29.5, 32.6))));
+  if (t < 51.9) return 45;
+  if (t < 55.3) return tick(SUBS[8], 45);
+  if (t < 58.3) return Math.round(lerp(37, 3, eio(pr(t, 55.4, 58.0))));
+  if (t < 70) return tick(SUBS[9], 3);
+  return t < 73.0 ? 0 : Math.round(lerp(0, 1200, eio(pr(t, 73.0, 75.4))));
+}
+const aaravWords = t => t < 73.0 ? 1200 : Math.round(lerp(1200, 0, eio(pr(t, 73.0, 75.4))));
+
+// ——— shots: [t0, t1, set, cam0, cam1] ———
+const SHOTS = [
+  [0.0, 5.3, 'court', [700, 2760, 1.45], [700, 2760, 1.6]],       // HOOK: Meera, file raised, 0003 → 0000, silence, title
+  [5.3, 9.7, 'baby', [6000, 2420, 1.0], [6000, 2420, 1.12]],       // a newborn's wrist lights 10,00,000
+  [9.7, 15.6, 'street', [4170, 2760, 0.92], [4200, 2760, 0.98]],     // quiet street: gestures, the rich talk
+  [15.6, 21.6, 'cafe', [8000, 2600, 1.0], [8000, 2600, 1.06]],      // उसी सुबह… café: the funny drawing, Meera laughs
+  [21.6, 23.4, 'cafe', [7860, 2470, 2.0], [7860, 2470, 2.15]],      // close on the sketchbook: page flip → the hospital-bed drawing (clue)
+  [23.4, 26.5, 'cafe', [7700, 2420, 1.35], [7700, 2420, 1.42]],     // Aarav: 1,200
+  [26.5, 29.5, 'wrist', [6000, 2420, 1.0], [6000, 2420, 1.1]],      // Meera's band 0045 blinking red
+  [29.5, 33.2, 'court', [760, 2700, 1.25], [740, 2700, 1.32]],      // montage: arguing for the poor, numbers falling
+  [33.2, 40.0, 'steps', [11380, 2760, 1.25], [11380, 2740, 1.35]],    // Meera looks at her band… who was it?
+  [40.0, 43.6, 'steps', [10900, 2560, 0.74], [10950, 2560, 0.8]],
+  [43.6, 47.8, 'steps', [10760, 2620, 1.55], [10760, 2620, 1.65]],   // court steps: Papa, the board, Aarav's note
+  [47.8, 51.6, 'court', [1350, 2800, 1.2], [1350, 2800, 1.28]],     // Khanna
+  [51.6, 55.4, 'court', [700, 2760, 1.3], [700, 2760, 1.38]],       // Meera: "मेरे पापा बेक़सूर हैं…"
+  [55.4, 58.0, 'court', [1100, 2560, 0.74], [1100, 2560, 0.8]],     // wide: 37… 18… 08… 03
+  [58.0, 61.0, 'court', [700, 2760, 1.5], [700, 2760, 1.62]],       // the file — "जज साहब… ये—" 0000
+  [61.0, 63.6, 'court', [1720, 2560, 1.9], [1720, 2560, 2.0]],      // Papa's face
+  [63.6, 68.0, 'court', [1100, 2200, 1.4], [1100, 2200, 1.5]],      // the judge: five minutes
+  [68.0, 70.2, 'court', [900, 2700, 0.9], [980, 2700, 0.9]],        // Meera runs out crying
+  [70.2, 72.6, 'corridor', [14000, 2800, 1.1], [14000, 2800, 1.16]],// Aarav grabs her hand
+  [72.6, 76.0, 'wrists', [16000, 2420, 1.0], [16000, 2420, 1.06]],  // bands join: सारे लफ़्ज़ भेजें? → 1,200 ⇄ 0000
+  [76.0, 82.1, 'corridor', [14000, 2780, 1.35], [14000, 2780, 1.42]],// his smile through tears, her shock → end card
+];
+export const DUR = 82.0;
+function shotAt(t) { return SHOTS.find(s => t >= s[0] && t < s[1]) || SHOTS[SHOTS.length - 1]; }
+const HITS = [[1.6, 10], [59.8, 10], [67.0, 8], [73.0, 6]];
+function shake(t) {
+  let x = 0, y = 0;
+  for (const [h, a] of HITS) { const d = t - h; if (d < 0 || d > 0.5) continue; const e = a * Math.exp(-d / 0.08); x += (hash(BOIL.step * 3.1 + h) - .5) * 2 * e; y += (hash(BOIL.step * 5.7 + h) - .5) * 2 * e; }
+  return [x, y];
+}
+
+// ——— SET: courtroom ———
+function drawCourt(t) {
+  const B = BG;
+  poly(B.f, rect(-600, 900, 2800, 3000), '#efe3c8', 1, { seed: 10 });
+  poly(B.f, rect(-600, 2250, 2800, 3000), K.court, 1, { seed: 11 });
+  for (let i = 0; i < 16; i++) line(B.l, [[-500 + i * 210, 2270], [-500 + i * 210, 2990]], { w: 4, col: K.courtD, seed: 12 + i });
+  line(B.l, [[-600, 2250], [2800, 2250]], { w: 8, col: K.courtD, seed: 30 });
+  poly(B.f, rect(-600, 3000, 2800, 3900), '#b98b5e', 1, { seed: 31 });
+  for (let i = 0; i < 7; i++) line(B.l, [[-600, 3060 + i * 120], [2800, 3060 + i * 120]], { w: 3, col: '#9a7048', seed: 32 + i });
+  // the balance (justice) on the wall
+  const bx = 1100, by = 1380; line(B.l, [[bx, by - 40], [bx, by + 300]], { w: 10, col: K.gold, seed: 40 }); line(B.l, [[bx - 170, by + 20], [bx + 170, by + 20]], { w: 9, col: K.gold, seed: 41 });
+  for (const sg of [-1, 1]) { line(B.l, [[bx + sg * 170, by + 20], [bx + sg * 210, by + 150]], { w: 4, col: K.gold, seed: 42 + sg }); line(B.l, [[bx + sg * 170, by + 20], [bx + sg * 130, by + 150]], { w: 4, col: K.gold, seed: 44 + sg }); poly(B.f, smooth([[bx + sg * 170 - 60, by + 150], [bx + sg * 170 + 60, by + 150], [bx + sg * 170, by + 190]], 4), K.gold, 1, { seed: 46 + sg }); }
+  poly(B.f, rect(bx - 70, by + 300, bx + 70, by + 330), K.gold, 1, { seed: 48 });
+  // the board: court rule (planted)
+  poly(B.f, rect(110, 1500, 640, 1860), '#2f4a3a', 1, { seed: 50 }); edge(B.l, rect(110, 1500, 640, 1860), K.woodD, 14, 1, 51);
+  wtext(B.l, 'अदालत में दलील', 375, 1640, { size: 52, weight: 700, col: K.white, seed: 52, tilt: 0 });
+  wtext(B.l, 'सिर्फ़ वकील की ज़ुबानी', 375, 1730, { size: 52, weight: 700, col: '#ffe9a0', seed: 53, tilt: 0 });
+  // the judge's chair back
+  poly(B.f, rrect(960, 1760, 1240, 2330, 40), K.maroon, 1, { seed: 55 }); edge(B.l, rrect(960, 1760, 1240, 2330, 40), K.ink, 5, 0.9, 56);
+  // clock
+  poly(B.f, handCircle(1780, 1450, 90, 57, 0, 30), K.white, 1, { seed: 57 }); edge(B.l, handCircle(1780, 1450, 90, 58, 0, 30), K.woodD, 10, 1, 58);
+  const a = t * 0.5; line(B.l, [[1780, 1450], [1780 + Math.sin(a) * 60, 1450 - Math.cos(a) * 60]], { w: 5, col: K.ink, seed: 59 }); line(B.l, [[1780, 1450], [1780 + 38, 1450 - 20]], { w: 7, col: K.ink, seed: 60 });
+}
+function bench(C) {
+  part(C, rect(760, 2340, 1440, 2780), { col: K.courtD, p: 1, seed: 600 }, { w: 5, col: K.ink, seed: 601 });
+  part(C, rect(730, 2300, 1470, 2350), { col: K.wood, p: 1, seed: 602 }, { w: 5, col: K.ink, seed: 603 });
+  for (const x of [880, 1100, 1320]) line(C.l, [[x - 70, 2420], [x + 70, 2420], [x + 70, 2700], [x - 70, 2700], [x - 70, 2420]], { w: 4, col: '#4a2e1e', seed: 604 + x });
+}
+function dock(C) {
+  part(C, rect(1560, 2790, 1890, 3160), { col: K.court, p: 1, seed: 620 }, { w: 5, col: K.ink, seed: 621 });
+  part(C, rect(1540, 2760, 1910, 2800), { col: K.wood, p: 1, seed: 622 }, { w: 5, col: K.ink, seed: 623 });
+  for (let i = 0; i < 5; i++) line(C.l, [[1600 + i * 70, 2820], [1600 + i * 70, 3140]], { w: 4, col: K.courtD, seed: 624 + i });
+}
+function lawTable(C, x0, x1, y, sd) {
+  part(C, rect(x0, y, x1, y + 380), { col: '#7d5434', p: 1, seed: sd }, { w: 5, col: K.ink, seed: sd + 1 });
+  part(C, rect(x0 - 20, y - 30, x1 + 20, y + 10), { col: K.wood, p: 1, seed: sd + 2 }, { w: 5, col: K.ink, seed: sd + 3 });
+}
+
+// ——— SET: a newborn's wrist / Meera's wrist (close-ups) ———
+function drawSoft(col) { poly(BG.f, rect(5000, 1000, 7000, 3800), col, 1, { seed: 70 }); for (let i = 0; i < 8; i++) dab(BG.f, 5300 + hash(i * 2.1) * 1400, 1500 + hash(i * 3.3) * 1800, 120 + 80 * hash(i), { col: '#ffffff', p: 0.25, seed: 71 + i }); }
+
+// ——— SET: the quiet street ———
+function drawStreet(t) {
+  const B = BG;
+  poly(B.f, rect(2600, 900, 5600, 3000), '#bfe3ee', 1, { seed: 100 });
+  const bl = [[2700, 1500, '#e6c9a8'], [3150, 1250, '#d9b8c8'], [3600, 1600, '#c9d6b0'], [4050, 1150, '#e8d2a0'], [4500, 1450, '#c8c2e0'], [4950, 1300, '#e3b9a0']];
+  bl.forEach(([x, top, col], i) => {
+    poly(B.f, rect(x, top, x + 430, 3000), col, 1, { seed: 101 + i }); edge(B.l, rect(x, top, x + 430, 3000), K.ink, 4, 0.5, 110 + i);
+    for (let r = 0; r < 6; r++) for (let c = 0; c < 3; c++) { const wy = top + 80 + r * 190; if (wy > 2500) continue; poly(B.f, rect(x + 50 + c * 130, wy, x + 130 + c * 130, wy + 110), '#7fa6c4', 1, { seed: 120 + i * 20 + r * 3 + c }); }
+    poly(GLOW, rect(x + 20, top + 30, x + 410, top + 46), i % 2 ? '#47e8f0' : '#ff7ad1', 0.8, { seed: 200 + i });   // neon strip
+  });
+  // a big floating band hologram
+  const hx = 4280, hy = 1350 + Math.sin(t * 1.5) * 20; poly(GLOW, rrect(hx - 170, hy - 70, hx + 170, hy + 70, 40), '#47e8f0', 0.35, { seed: 210 }); edge(B.l, rrect(hx - 170, hy - 70, hx + 170, hy + 70, 40), '#47e8f0', 7, 0.9, 211);
+  digits(B.l, '10,00,000', hx, hy, 52, '#47e8f0', { glow: 1 });
+  poly(B.f, rect(2600, 2900, 5600, 3200), '#b7b0a6', 1, { seed: 220 }); poly(B.f, rect(2600, 3200, 5600, 3900), '#8d8a86', 1, { seed: 221 });
+  for (let i = 0; i < 10; i++) line(B.l, [[2700 + i * 300, 3500], [2850 + i * 300, 3500]], { w: 8, col: '#f1ece0', seed: 222 + i });
+}
+
+// ——— SET: café ———
+function drawCafe(t) {
+  const B = BG;
+  poly(B.f, rect(6800, 900, 9200, 2800), '#f2d7b0', 1, { seed: 300 });
+  poly(B.f, rect(6800, 2800, 9200, 3900), '#c89a6a', 1, { seed: 301 });
+  for (let i = 0; i < 9; i++) line(B.l, [[6800 + i * 300, 2800], [6650 + i * 330, 3900]], { w: 3, col: '#a87c52', seed: 302 + i });
+  poly(B.f, smooth([[7300, 2250], [7300, 1500], [7400, 1330], [7600, 1260], [7800, 1330], [7900, 1500], [7900, 2250]], 5), '#fff3d0', 1, { seed: 310 }); edge(B.l, smooth([[7300, 2250], [7300, 1500], [7400, 1330], [7600, 1260], [7800, 1330], [7900, 1500], [7900, 2250]], 5), '#7d5434', 14, 1, 311);
+  line(B.l, [[7600, 1270], [7600, 2250]], { w: 8, col: '#7d5434', seed: 312 }); line(B.l, [[7300, 1760], [7900, 1760]], { w: 8, col: '#7d5434', seed: 313 });
+  poly(B.f, smooth([[8250, 2250], [8250, 1500], [8350, 1330], [8550, 1260], [8750, 1330], [8850, 1500], [8850, 2250]], 5), '#fff3d0', 1, { seed: 314 }); edge(B.l, smooth([[8250, 2250], [8250, 1500], [8350, 1330], [8550, 1260], [8750, 1330], [8850, 1500], [8850, 2250]], 5), '#7d5434', 14, 1, 315);
+  line(B.l, [[8550, 1270], [8550, 2250]], { w: 8, col: '#7d5434', seed: 316 }); line(B.l, [[8250, 1760], [8850, 1760]], { w: 8, col: '#7d5434', seed: 317 });
+  for (let i = 0; i < 3; i++) poly(GLOW, [[7330 + i * 180, 1300], [7430 + i * 180, 1300], [7700 + i * 180, 2900], [7560 + i * 180, 2900]], '#ffe9a8', 0.28, { seed: 320 + i });
+  // hanging plant
+  line(B.l, [[8080, 900], [8080, 1260]], { w: 3, col: K.dgrey, seed: 330 }); poly(B.f, smooth([[8010, 1260], [8150, 1260], [8130, 1350], [8030, 1350]], 3), '#c4693e', 1, { seed: 331 });
+  for (let i = 0; i < 7; i++) dab(B.f, 7990 + i * 28, 1250 + Math.sin(i) * 20 + (i % 2) * 60, 26, { col: i % 2 ? '#5fa35a' : '#7cc36e', p: 1, seed: 332 + i });
+}
+function cafeTable(C) {
+  part(C, rect(7980, 2760, 8020, 3200), { col: K.woodD, p: 1, seed: 340 }, { w: 4, col: K.ink, seed: 341 });
+  part(C, oval(8000, 3200, 140, 26), { col: K.woodD, p: 1, seed: 342 }, { w: 4, col: K.ink, seed: 343 });
+  part(C, smooth([[7640, 2690], [8360, 2690], [8380, 2770], [7620, 2770]], 3), { col: K.wood, p: 1, seed: 344 }, { w: 5, col: K.ink, seed: 345 });
+  for (const x of [7930, 8130]) { part(C, rect(x - 24, 2600, x + 24, 2690), { col: '#f6e3c0', p: 0.95, seed: 346 + x }, { w: 3, col: K.ink, seed: 347 + x }); poly(C.f, rect(x - 20, 2630, x + 20, 2686), '#c98a4a', 1, { seed: 348 + x }); }
+}
+// drawings on the sketchbook page
+const pageFunny = (C, x, y, s) => {   // Meera as a superhero lawyer with a cape and a giant file (a joke)
+  line(C.l, handCircle(x, y - 40 * s, 22 * s, 760, 0.1, 18), { w: 3.5, col: K.ink, seed: 761 }); line(C.l, [[x, y - 18 * s], [x, y + 40 * s]], { w: 3.5, col: K.ink, seed: 762 });
+  line(C.l, [[x - 30 * s, y - 50 * s], [x - 18 * s, y - 70 * s], [x - 6 * s, y - 58 * s]], { w: 3, col: K.ink, seed: 763 });
+  poly(C.l, [[x, y - 14 * s], [x - 55 * s, y + 50 * s], [x - 10 * s, y + 40 * s]], K.red, 1, { seed: 764 });
+  line(C.l, [[x, y], [x + 40 * s, y - 30 * s]], { w: 3.5, col: K.ink, seed: 765 }); poly(C.l, rect(x + 36 * s, y - 70 * s, x + 66 * s, y - 30 * s), '#c58f55', 1, { seed: 766 });
+  line(C.l, [[x, y + 40 * s], [x - 16 * s, y + 70 * s]], { w: 3.5, col: K.ink, seed: 767 }); line(C.l, [[x, y + 40 * s], [x + 16 * s, y + 70 * s]], { w: 3.5, col: K.ink, seed: 768 });
+  for (const sg of [-1, 1]) dab(C.l, x + sg * 8 * s, y - 44 * s, 2.5 * s, { col: K.ink, p: 1, seed: 769 + sg }); line(C.l, smooth([[x - 9 * s, y - 32 * s], [x, y - 26 * s], [x + 9 * s, y - 32 * s]], 4, false), { w: 3, col: K.ink, seed: 771 });
+};
+const pageBed = (C, x, y, s) => {   // the clue: a hospital bed, a small girl, a tiny heart
+  line(C.l, [[x - 55 * s, y + 20 * s], [x + 55 * s, y + 20 * s]], { w: 3.5, col: '#555', seed: 780 }); line(C.l, [[x - 55 * s, y - 20 * s], [x - 55 * s, y + 50 * s]], { w: 3.5, col: '#555', seed: 781 }); line(C.l, [[x + 55 * s, y + 5 * s], [x + 55 * s, y + 50 * s]], { w: 3.5, col: '#555', seed: 782 });
+  line(C.l, handCircle(x - 30 * s, y + 2 * s, 13 * s, 783, 0.1, 14), { w: 3, col: '#555', seed: 784 }); line(C.l, smooth([[x - 15 * s, y + 8 * s], [x + 20 * s, y], [x + 50 * s, y + 10 * s]], 4, false), { w: 3, col: '#555', seed: 785 });
+  const hx = x + 20 * s, hy = y - 50 * s; poly(C.l, smooth([[hx, hy + 14 * s], [hx - 16 * s, hy], [hx - 9 * s, hy - 10 * s], [hx, hy - 3 * s], [hx + 9 * s, hy - 10 * s], [hx + 16 * s, hy]], 3), K.red, 1, { seed: 786 });
+};
+
+// ——— SET: court steps (outside) ———
+function drawSteps(t) {
+  const B = BG;
+  poly(B.f, rect(9600, 900, 12400, 3000), '#cfe7f2', 1, { seed: 400 });
+  poly(B.f, rect(9900, 1250, 12100, 2700), '#efe6d2', 1, { seed: 401 }); edge(B.l, rect(9900, 1250, 12100, 2700), K.ink, 5, 0.6, 402);
+  poly(B.f, [[9850, 1250], [11000, 900], [12150, 1250]], '#e4d8bf', 1, { seed: 403 }); edge(B.l, [[9850, 1250], [11000, 900], [12150, 1250]], K.ink, 5, 0.7, 404);
+  for (let i = 0; i < 7; i++) { const x = 10050 + i * 300; poly(B.f, rect(x, 1330, x + 90, 2700), '#f8f2e4', 1, { seed: 405 + i }); line(B.l, [[x, 1330], [x, 2700]], { w: 3, col: '#b8ab92', seed: 412 + i }); line(B.l, [[x + 90, 1330], [x + 90, 2700]], { w: 3, col: '#b8ab92', seed: 419 + i }); }
+  poly(B.f, rrect(10850, 1950, 11150, 2700, 20), '#6e4a32', 1, { seed: 430 }); edge(B.l, rrect(10850, 1950, 11150, 2700, 20), K.ink, 5, 0.9, 431);
+  for (let i = 0; i < 6; i++) { const y = 2700 + i * 110; poly(B.f, rect(9600, y, 12400, y + 110), i % 2 ? '#d8cfbd' : '#cbc1ad', 1, { seed: 440 + i }); line(B.l, [[9600, y], [12400, y]], { w: 4, col: '#a59a85', seed: 450 + i }); }
+  // the board at the gate
+  part(PROP, rect(10180, 1880, 10220, 2760), { col: K.woodD, p: 1, seed: 460 }, { w: 4, col: K.ink, seed: 461 });
+  part(PROP, rect(9900, 1560, 10500, 1960), { col: '#2f4a3a', p: 1, seed: 462 }, { w: 10, col: K.woodD, seed: 463 });
+  wtext(PROP.l, 'अदालत में दलील', 10200, 1720, { size: 62, weight: 700, col: K.white, seed: 464, tilt: 0 });
+  wtext(PROP.l, 'सिर्फ़ वकील की ज़ुबानी', 10200, 1830, { size: 62, weight: 700, col: '#ffe9a0', seed: 465, tilt: 0 });
+}
+
+// ——— SET: corridor ———
+function drawCorridor(t) {
+  const B = BG;
+  poly(B.f, rect(12800, 900, 15200, 3900), '#e9dcc0', 1, { seed: 500 });
+  poly(B.f, [[12800, 3900], [13700, 2700], [14300, 2700], [15200, 3900]], '#a8916e', 1, { seed: 501 });
+  poly(B.f, rect(13700, 1500, 14300, 2700), '#d9cba9', 1, { seed: 502 });
+  for (const [a, b] of [[[12800, 900], [13700, 1500]], [[15200, 900], [14300, 1500]], [[12800, 3900], [13700, 2700]], [[15200, 3900], [14300, 2700]]]) line(B.l, [a, b], { w: 5, col: '#8c7a5c', seed: 503 + a[0] + b[1] });
+  poly(B.f, rect(13880, 1800, 14120, 2700), '#fff4d0', 1, { seed: 510 }); sglow(14000, 2300, 420, '#fff2c0', 0.5, 511);
+  for (const sg of [-1, 1]) { const x0 = sg < 0 ? 12950 : 14750; poly(B.f, rect(x0, 1700, x0 + 300, 2900), '#7d5434', 1, { seed: 520 + sg }); edge(B.l, rect(x0, 1700, x0 + 300, 2900), K.ink, 5, 0.8, 522 + sg); }
+}
+
+// ——— HUD: the word meter on screen ———
+function hud(x, y, value, state, who, sc = 1, blink = 1) {
+  const [lit] = BAND[state];
+  box(x, y, 190 * sc, 74 * sc, 'rgba(14,14,20,0.94)');
+  const g = SUBT.g; g.save(); g.strokeStyle = lit; g.lineWidth = 5 * sc; g.globalAlpha = 0.9; g.beginPath(); g.roundRect(x - 172 * sc, y - 58 * sc, 344 * sc, 116 * sc, 22 * sc); g.stroke(); g.restore();
+  if (blink > 0.05) digits(SUBT, fmt(value), x, y + 4 * sc, 84 * sc, lit, { screen: true, glow: 1, p: blink });
+  if (who) { const nw = 26 + 22 * who.length; box(x - 120 * sc, y - 88 * sc, nw / 2 * sc + 12, 28 * sc, lit); wtext(SUBT, who, x - 120 * sc, y - 76 * sc, { screen: true, size: 36 * sc, weight: 700, col: K.ink, seed: 5, tilt: 0 }); }
+}
+function timer(t) {   // 05:00 from 67.3 s, real time
+  if (t < 67.3) return;
+  const left = Math.max(0, 300 - (t - 67.3)), mm = Math.floor(left / 60), ss2 = Math.floor(left % 60), u = back1(pr(t, 67.3, 67.7));
+  box(190, 560, 140 * u + 1, 52 * u + 1, 'rgba(120,10,20,0.95)');
+  digits(SUBT, `${String(mm).padStart(2, '0')}:${String(ss2).padStart(2, '0')}`, 190, 564, 66 * u + 1, '#ffffff', { screen: true });
+}
+
+// ——— printed words: big, high-contrast, top third ———
+const SUBY = 280;
+const SUBCOL = { N: K.white, M: '#ffb3c6', J: '#b8f0c0', V: '#ffe46b' };
+const WHO = { M: 'मीरा', J: 'जज साहब', V: 'खन्ना वकील' };
+function subTo(t) {
+  const S = SUBS.find(s => t >= s.t0 && t < s.t1); if (!S) return;
+  const lines = S.text.split('|'), size0 = lines.length > 1 ? 70 : 78, lh = size0 * 1.3;
+  const g = SUBK.g; g.save(); g.font = `700 ${size0}px Kalam`; const tw = Math.max(...lines.map(l => g.measureText(l).width)); g.restore();
+  const sc = tw > 960 ? 960 / tw : 1, size = size0 * sc, hh = 52 + (lines.length - 1) * lh * sc / 2;
+  const cy = SUBY + (lines.length - 1) * lh * sc / 2;
+  box(540, cy, Math.min(tw * sc / 2 + 50, 532), hh);
+  if (WHO[S.who]) { const nw = 30 + 21 * WHO[S.who].length; box(120 + nw / 2, cy - hh - 22, nw / 2 + 14, 34, SUBCOL[S.who]); wtext(SUBT, WHO[S.who], 120 + nw / 2, cy - hh - 8, { screen: true, size: 42, weight: 700, col: K.ink, seed: 5, tilt: 0 }); }
+  lines.forEach((ln, i) => wtext(SUBT, ln, 540, SUBY + 24 + i * lh * sc, { screen: true, size, weight: 700, col: SUBCOL[S.who], reveal: pr(t, S.t0 + i * 0.3, S.t0 + i * 0.3 + 0.4), seed: 11 + S.t0 * 3 + i, tilt: 0.3 }));
+}
+export const TEXTS = t => { const S = SUBS.find(s => t >= s.t0 && t < s.t1); if (!S) return []; const n = S.text.split('|').length; return [{ id: 's' + S.t0, text: S.text.replace('|', ' '), x0: 20, y0: SUBY - 90, x1: 1060, y1: SUBY + 70 + (n - 1) * 90 }]; };
+const LABELS = [[2.0, 3.0, 'आवाज़ ग़ायब…'], [15.7, 18.6, 'उसी सुबह…'], [60.0, 61.0, 'आवाज़ ग़ायब…']];
+const END = 78.8;
+function badge(t) { if (t > END) return; const x = 905, y = 560; box(x, y, 118, 40, 'rgba(160,30,40,0.92)'); wtext(SUBT, 'भाग 1/2', x, y + 16, { screen: true, size: 46, weight: 700, col: K.white, seed: 3, tilt: 0 }); }
+function labels(t) {
+  const L = LABELS.find(l => t >= l[0] && t < l[1]);
+  if (L) { box(540, 1690, 330, 60); wtext(SUBT, L[2], 540, 1712, { screen: true, size: 62, weight: 700, col: K.note, reveal: pr(t, L[0] + 0.1, L[0] + 0.5), seed: 61 + L[0], tilt: 0 }); }
+  if (t > 3.0 && t < 5.3) {   // title
+    const u = back1(pr(t, 3.0, 3.3)), gl = t < 3.6 && BOIL.step % 2 ? 8 : 0;
+    box(540, 1500, 330 * u + 1, 110 * u + 1, 'rgba(14,14,20,0.95)');
+    digits(SUBT, '0000', 540 + gl, 1505, 170 * u + 1, '#ff4a4a', { screen: true, glow: 1 });
+    const v = back1(pr(t, 3.5, 3.8)); box(540, 1660, 300 * v + 1, 52 * v + 1);
+    wtext(SUBT, 'लफ़्ज़ों का क़र्ज़', 540, 1684, { screen: true, size: 70 * v + 1, weight: 700, col: K.goldL, seed: 81, tilt: 0 });
+    const w = back1(pr(t, 3.9, 4.2)); box(540, 1770, 110 * w + 1, 42 * w + 1, 'rgba(160,30,40,0.95)');
+    wtext(SUBT, 'भाग 1', 540, 1792, { screen: true, size: 56 * w + 1, weight: 700, col: K.white, seed: 82, tilt: 0 });
+  }
+}
+function endCard(t) {
+  if (t < END) return;
+  const g = SUBT.g; g.save(); g.fillStyle = 'rgba(20,19,26,0.94)'; g.fillRect(0, 1180, W, 740); g.restore();
+  wtext(SUBT, 'आरव के पास सिर्फ़', 540, 1300, { screen: true, size: 70, weight: 700, col: K.bone, reveal: pr(t, END + 0.05, END + 0.4), seed: 90, tilt: 0 });
+  wtext(SUBT, '1,200 लफ़्ज़ ही क्यों थे?', 540, 1395, { screen: true, size: 76, weight: 700, col: K.goldL, reveal: pr(t, END + 0.3, END + 0.7), seed: 91, tilt: 0 });
+  wtext(SUBT, 'अपना अंदाज़ा कमेंट करो', 540, 1490, { screen: true, size: 54, weight: 700, col: '#ffb3c6', reveal: pr(t, END + 0.7, END + 1.1), seed: 92, tilt: 0 });
+  const u = back1(pr(t, END + 1.2, END + 1.5)); box(540, 1610, 360 * u + 1, 56 * u + 1, 'rgba(160,30,40,0.97)');
+  wtext(SUBT, 'भाग 2 · कल शाम 7:30', 540, 1634, { screen: true, size: 64 * u + 1, weight: 700, col: K.white, seed: 93, tilt: 0 });
+  wtext(SUBT, 'Follow करो · @pannapalatkahani', 540, 1740, { screen: true, size: 50, weight: 700, col: K.note, reveal: pr(t, END + 1.6, END + 2.0), seed: 94, tilt: 0 });
+}
+
+// ——— events for the mixer ———
+export const EV = [];
+const ev = (t, type, o = {}) => EV.push({ t: +t.toFixed(3), type, ...o });
+SUBS.forEach(S => { if (S.vo) ev(S.vt, 'voice', { id: S.vo, who: S.who }); if (S.words) S.words.forEach(w => ev(w, 'tick')); });
+ev(1.6, 'zero'); ev(3.0, 'glitch'); ev(5.3, 'whoosh'); ev(5.6, 'sparkle', { dur: 2 }); ev(9.7, 'whoosh'); ev(9.7, 'city', { dur: 5.9 }); ev(15.6, 'whoosh'); ev(15.6, 'cafe', { dur: 10.9 });
+ev(18.4, 'laugh'); ev(21.9, 'page'); ev(26.5, 'whoosh'); ev(26.6, 'beep', { dur: 3 }); ev(29.6, 'ticks', { dur: 3.0 }); ev(33.2, 'whoosh'); ev(40.0, 'birds', { dur: 7.8 }); ev(44.6, 'page');
+ev(47.8, 'whoosh'); ev(55.4, 'ticks', { dur: 2.6 }); ev(59.8, 'zero'); ev(61.0, 'heartbeat', { dur: 2.6 }); ev(67.0, 'gavel'); ev(67.3, 'heartbeat', { dur: 11.5 }); ev(67.3, 'clock', { dur: 14 });
+ev(70.2, 'whoosh'); ev(72.0, 'join'); ev(73.0, 'transfer', { dur: 2.4 }); ev(75.4, 'ding'); ev(END, 'write', { dur: 1.6 });
+[['A', 0], ['B', 5.3], ['C', 9.7], ['D', 15.6], ['E', 26.5], ['F', 33.2], ['G', 40.0], ['H', 47.8], ['I', 55.4], ['J', 58.0], ['K', 61.0], ['L', 63.6], ['M', 67.3], ['N', 70.2], ['O', 73.0], ['P', 76.0], ['Z', END]].forEach(([id, t]) => ev(t, 'cue', { id }));
+
+// ——— one frame ———
+export function frame(comp, t) {
+  const S = shotAt(t), set = S[2];
+  const e = ss((t - S[0]) / (S[1] - S[0]));
+  CAM.x = lerp(S[3][0], S[4][0], e); CAM.y = lerp(S[3][1], S[4][1], e); CAM.s = lerp(S[3][2], S[4][2], e);
+  const [shx, shy] = shake(t); CAM.x += shx / CAM.s; CAM.y += shy / CAM.s;
+  BOIL.amp = 0;
+  [PE, PROP, FG].forEach(clearGroup);
+  [BG.f, BG.l, GLOW, FX, SUBK, SUBT].forEach(clear);
+  let vig = 0.18;
+  const spk = (a, b) => talking(t, a, b) === 'open';
+  const flash = (t0, d, col = '#ff2a2a', a0 = 0.55) => { if (t > t0 && t < t0 + d) { const g = FX.g; g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = a0 * (1 - pr(t, t0, t0 + d)); g.fillStyle = col; g.fillRect(0, 0, W, H); g.restore(); } };
+  const mw = meeraWords(t), mState = mw === 0 ? 'red' : mw < 100 ? 'red' : 'cyan', blinkR = mw < 100 ? (Math.sin(t * 9) > -0.3 ? 1 : 0.25) : 1;
+  const tagW = (x, y, txt, col, size = 40) => tag(sx(x), sy(y), txt, col, size);
+  if (set === 'court') {
+    drawCourt(t);
+    const judging = t >= 63.6 && t < 68.0, gu = pr(t, 66.6, 67.0), ga = judging ? (t < 66.6 ? -0.2 : t < 67.0 ? lerp(-0.9, 0.35, ei(gu)) : 0.35) : 0.3;
+    const ja = person3(PE, seat('judge', 1100, t, { hy: 2080, k: 0.9, exp: judging ? { eyes: 'half', brows: 'down', mouth: spk(63.8, 67.2) ? 'open' : 'flat' } : { eyes: 'open', brows: 'down', mouth: 'flat' }, look: [-0.5, 0.3], hands: { L: [1040, 2300], R: [1190, judging && t < 67.0 && t > 66.6 ? 2200 : 2290] } }), 600);
+    bench(PROP); gavel(PROP, ja.R[0], ja.R[1] + 6, 0.85, ga, 740);
+    const papaScared = t >= 58.0;
+    person3(PE, seat('papa', 1720, t, { hy: 2470, k: 0.85, exp: papaScared ? { eyes: t > 61 ? 'teary' : 'pop', brows: 'worried', mouth: t > 61 ? 'sad' : 'o' } : { eyes: 'sad', brows: 'worried', mouth: 'small' }, tears: t > 61.8, look: [-1, 0.2], hands: { L: [1650, 2760], R: [1790, 2760] } }), 900);
+    dock(PROP);
+    // Khanna
+    const kTalk = t >= 47.8 && t < 51.6;
+    const kx = 1350, kgy = 3420, kk = 1.08, khy = kgy - AH * kk;
+    const ka = person3(FG, stand('khanna', kx, kgy, kk, t, { exp: kTalk ? { eyes: 'half', brows: 'angry', mouth: spk(48.3, 51.4) ? 'yell' : 'knowing' } : t >= 58.0 ? { eyes: 'half', brows: 'calm', mouth: 'knowing' } : { eyes: 'open', brows: 'angry', mouth: 'flat' }, look: kTalk ? [-0.3, -0.5] : [-1, 0], hands: kTalk ? { L: [kx - 90 * kk, khy + 300 * kk], R: [kx - 170 * kk, khy + 150 * kk] } : { L: [kx - 80 * kk, khy + 330 * kk], R: [kx + 70 * kk, khy + 320 * kk] } }), 700);
+    wristBand(FG, ka, 'R', 'cyan');
+    lawTable(FG, 1180, 1640, 3060, 650);
+    // Meera
+    const mx = 660, mgy = 3400, mk = 1.08, mhy = mgy - AH * mk;
+    const hook = t < 5.3 || (t >= 58.0 && t < 61.0), zero = mw === 0, running = t >= 68.0;
+    let exp, hands, tears = false, look = [0.6, -0.4];
+    const raised = { L: [mx - 80 * mk, mhy + 330 * mk], R: [mx + 150 * mk, mhy + 40 * mk] };
+    if (hook) { exp = zero ? { eyes: 'pop', brows: 'up', mouth: BOIL.step % 4 < 2 ? 'o' : 'open' } : { eyes: 'open', brows: 'worried', mouth: talking(t, 0.2, 1.6) === 'open' || talking(t, 58.2, 59.7) === 'open' ? 'open' : 'small' }; hands = raised; }
+    else if (t < 33.2) { exp = { eyes: 'open', brows: 'angry', mouth: BOIL.step % 3 ? 'open' : 'small' }; hands = { L: [mx - 80 * mk, mhy + 330 * mk], R: [mx + 160 * mk, mhy + 160 * mk] }; look = [0.7, -0.2]; }
+    else if (t < 51.6) { exp = { eyes: 'sad', brows: 'worried', mouth: 'flat' }; hands = { L: [mx - 20 * mk, mhy + 280 * mk], R: [mx + 60 * mk, mhy + 300 * mk] }; look = [0.8, -0.2]; }
+    else if (t < 55.4) { exp = { eyes: 'open', brows: 'worried', mouth: spk(51.8, 55.2) ? 'open' : 'small' }; hands = { L: [mx + 10 * mk, mhy + 210 * mk], R: [mx + 140 * mk, mhy + 250 * mk] }; }
+    else if (t < 58.0) { exp = { eyes: 'teary', brows: 'worried', mouth: BOIL.step % 3 ? 'open' : 'small' }; hands = { L: [mx - 80 * mk, mhy + 330 * mk], R: [mx + 170 * mk, mhy + 120 * mk] }; }
+    else if (t < 68.0) { exp = { eyes: t > 62.5 ? 'squeeze' : 'pop', brows: 'sad', mouth: t > 62.5 ? 'cry' : 'o' }; hands = { L: [mx - 20 * mk, mhy + 120 * mk], R: [mx + 40 * mk, mhy + 110 * mk] }; tears = t > 62.5; look = [0.3, 0.3]; }
+    if (!running) {
+      const ma = person3(FG, stand('meera', mx, mgy, mk, t, { exp, look, hands, tears, sweat: t >= 55.4 && t < 58 }), 300);
+      if (hook || (t >= 55.4 && t < 58)) caseFile(FG, ma.R[0] + 10, ma.R[1] - 70, 0.55, 720);
+      if (hook) wtext(FG.l, 'CCTV', ma.R[0] + 10, ma.R[1] - 70, { size: 40, weight: 700, col: K.ink, seed: 730, tilt: 0 });
+      wristBand(FG, ma, 'L', mState, mk, blinkR);
+      lawTable(FG, 420, 900, 3060, 640);
+    } else {   // running out (crying), left → right across the shot
+      const rx = lerp(700, 1500, pr(t, 68.0, 70.2)), ph = Math.sin(t * 14);
+      const ma = person3(FG, stand('meera', rx, 3420, mk, t, { exp: { eyes: 'squeeze', brows: 'sad', mouth: 'cry' }, tears: 1, look: [1, 0], feet: { L: [rx - 60 + ph * 50, 3420], R: [rx + 60 - ph * 50, 3420] }, hands: { L: [rx - 20, 3420 - AH * mk + 120], R: [rx + 40, 3420 - AH * mk + 110] } }), 300);
+      wristBand(FG, ma, 'L', 'red', mk, 0.2);
+    }
+    if (t >= 59.8 && t < 61) flash(59.8, 0.6);
+    if (t < 5.3) flash(1.6, 0.6);
+    if (t < 5.3 || (t >= 51.6 && t < 61.0)) hud(540, 1560, mw, mState, 'मीरा', 1, blinkR);
+    if (t >= 29.5 && t < 33.2) hud(540, 1560, mw, mw < 100 ? 'red' : 'cyan', 'मीरा', 1, 1);
+    if (kTalk) hud(540, 1560, Math.round(450000 - 8 * pr(t, 48.3, 51.4)), 'cyan', 'खन्ना वकील', 1);
+    vig = hook && zero ? 0.32 : 0.18;
+  } else if (set === 'baby' || set === 'wrist') {
+    if (set === 'baby') {
+      drawSoft('#f8e1e8');
+      const u = pr(t, 5.8, 7.0);
+      bandBig(PE, 6060, 2500, 0.8, u < 0.05 ? '' : '10,00,000', 'cyan', { skin: '#f2c3a6', sleeve: '#ffffff', blink: u, fs: 1.25 });
+      for (let i = 0; i < 18; i++) { const w = ((t - 5.3) * 0.25 + hash(i * 2.1)) % 1; dab(FX, 5700 + hash(i * 1.3) * 700, 2700 - w * 900, 8, { col: i % 2 ? '#bff8ff' : K.white, p: Math.sin(Math.PI * w) * u, seed: 60 + i }); }
+    } else {
+      drawSoft('#e8e3ef');
+      bandBig(PE, 6060, 2500, 0.9, 45, 'red', { skin: K.skinM, sleeve: K.coat, sleeveLine: '#5a5866', blink: Math.sin(t * 9) > -0.3 ? 1 : 0.25 });
+      if (t > 27.3) tagW(6060, 2200, 'सिर्फ़ 45 लफ़्ज़ बाक़ी', '#ff8a8a', 50);
+    }
+    vig = 0.14;
+  } else if (set === 'street') {
+    drawStreet(t);
+    const k = 0.92, gy = 3260;
+    const ka = person3(PE, stand('khanna', 3760, gy, k, t, { exp: { eyes: 'happy', brows: 'up', mouth: BOIL.step % 3 ? 'grin' : 'open' }, look: [1, 0], hands: { L: [3760 - 70, gy - AH * k + 300], R: [3760 + 190, gy - AH * k + 200] } }), 700);
+    wristBand(PE, ka, 'R', 'cyan', k);
+    const ox = 4230, oa = person3(PE, stand('oldman', ox, gy, k, t, { exp: { eyes: 'sad', brows: 'worried', mouth: 'flat' }, look: [-1, 0], hands: { L: [ox - 60, gy - AH * k + 330], R: [ox + 40, gy - AH * k + 150 + Math.sin(t * 6) * 20] } }), 800);
+    wristBand(PE, oa, 'R', 'red', k, Math.sin(t * 9) > 0 ? 1 : 0.3);
+    const vx = 4640, va = person3(PE, stand('vendor', vx, gy, k, t, { exp: { eyes: 'open', brows: 'up', mouth: 'smile' }, look: [-1, 0], hands: { L: [vx - 150, gy - AH * k + 120 + Math.sin(t * 5) * 30], R: [vx + 60, gy - AH * k + 320] } }), 900);
+    wristBand(PE, va, 'L', 'cyan', k);
+    part(PROP, rect(4740, 2750, 5040, 3000), { col: '#c4693e', p: 1, seed: 905 }, { w: 4, col: K.ink, seed: 906 });   // tea stall box
+    for (let i = 0; i < 3; i++) part(PROP, rect(4780 + i * 80, 2690, 4820 + i * 80, 2750), { col: '#f6e3c0', p: 1, seed: 907 + i }, { w: 3, col: K.ink, seed: 910 + i });
+    if (t > 10.4) tagW(3760, 3380, '4,50,000', '#47e8f0', 44);
+    if (t > 11.2) tagW(4230, 3380, '0000', '#ff6a6a', 44);
+    if (t > 12.0) tagW(4640, 3380, 'इशारों में बात', K.goldL, 40);
+    vig = 0.12;
+  } else if (set === 'cafe') {
+    drawCafe(t);
+    const ax = 7620, ahy = 2290, ak = 1.0, mx = 8400, mhy = 2290, mk = 1.0;
+    for (const cx of [ax, mx]) { poly(BG.f, rrect(cx - 120, 2440, cx + 120, 2900, 30), '#8a5a3a', 1, { seed: 350 + cx }); edge(BG.l, rrect(cx - 120, 2440, cx + 120, 2900, 30), K.ink, 5, 0.9, 351 + cx); poly(BG.f, rect(cx - 150, 2880, cx + 150, 2930), '#6e4a32', 1, { seed: 352 + cx }); for (const sg of [-1, 1]) poly(BG.f, rect(cx + sg * 130 - 12, 2930, cx + sg * 130 + 12, 3250), '#6e4a32', 1, { seed: 353 + cx + sg }); }
+    const laughing = t > 18.0 && t < 21.6, clueShot = t >= 21.6 && t < 23.4;
+    const aa = person3(PE, seat('aarav', ax, t, { hy: ahy, k: ak, exp: t > 18 ? { eyes: 'happy', brows: 'up', mouth: 'smile' } : { eyes: 'open', brows: 'calm', mouth: 'small' }, look: [1, 0.3], hands: { L: [7780, 2580], R: [7880, 2560] }, glint: 1 }), 100);
+    const flipped = t > 22.2;
+    sketchbook(PE, 7860, 2470, 1.0, 700, 1, clueShot && flipped ? pageBed : pageFunny);
+    if (clueShot && t > 21.9 && t < 22.5) { const u = pr(t, 21.9, 22.5); line(FX, [[7790 + 140 * u, 2390], [7790 + 140 * u, 2560]], { w: 6, col: '#8a6a4a', seed: 760 }); }
+    wristBand(PE, aa, 'L', 'cyan', ak);
+    const ma = person3(PE, seat('meera', mx, t, { hy: mhy, k: mk, exp: laughing ? { eyes: 'happy', brows: 'up', mouth: 'grin' } : t < 18 ? { eyes: 'open', brows: 'calm', mouth: 'smile' } : { eyes: 'open', brows: 'calm', mouth: 'smile' }, blush: laughing, look: [-1, 0.3], hands: laughing ? { L: [8330, 2390], R: [8480, 2600] } : { L: [8280, 2600], R: [8480, 2600] } }), 300);
+    wristBand(PE, ma, 'R', 'red', mk, Math.sin(t * 9) > -0.3 ? 1 : 0.3);
+    cafeTable(FG);
+    if (laughing && t > 18.6) tag(780, 1500, 'हँसी मुफ़्त है!', K.goldL, 48);
+    if (t >= 23.4) tag(540, 1560, 'सिर्फ़ 1,200 लफ़्ज़', '#47e8f0', 56);
+    if (clueShot && flipped) tagW(7860, 2340, '?', K.red, 40);
+    vig = 0.12;
+  } else if (set === 'steps') {
+    drawSteps(t);
+    const close = t < 40.0;
+    const px = 11000, pgy = 2700, pk = 0.62;
+    const pa = person3(PE, stand('papa', px, pgy, pk, t, { exp: { eyes: 'sad', brows: 'worried', mouth: 'sad' }, look: [-0.5, 0.2], hands: { L: [px - 20, pgy - AH * pk + 250 * pk], R: [px + 20, pgy - AH * pk + 255 * pk] } }), 900);
+    wristBand(PE, pa, 'L', 'cyan', pk);
+    const ax = 10620, agy = 3330, ak = 1.0, ahy = agy - AH * ak;
+    const noteUp = t > 43.6;
+    const aa = person3(FG, stand('aarav', ax, agy, ak, t, { exp: noteUp ? { eyes: 'open', brows: 'worried', mouth: 'small' } : { eyes: 'open', brows: 'worried', mouth: 'small' }, look: [1, -0.2], glint: 1, hands: noteUp ? { L: [ax + 100, ahy + 250], R: [ax + 250, ahy + 250] } : { L: [ax - 70, ahy + 330], R: [ax + 110, ahy + 280] } }), 100);
+    sketchbook(FG, noteUp ? ax + 175 : aa.R[0] + 10, noteUp ? ahy + 120 : aa.R[1] + 20, noteUp ? 1.25 : 0.5, 700, noteUp ? 1 : 0);
+    if (noteUp) { wtext(FG.l, 'सिर्फ़ ज़रूरी', ax + 180, ahy + 60, { size: 30, weight: 700, col: K.ink, seed: 790, tilt: 0 }); wtext(FG.l, 'बोलना।', ax + 180, ahy + 100, { size: 30, weight: 700, col: K.ink, seed: 791, tilt: 0 }); wtext(FG.l, 'सबूत', ax + 180, ahy + 150, { size: 32, weight: 700, col: K.red, seed: 792, tilt: 0 }); wtext(FG.l, 'दिखाना।', ax + 180, ahy + 190, { size: 32, weight: 700, col: K.red, seed: 793, tilt: 0 }); }
+    wristBand(FG, aa, 'L', 'cyan', ak);
+    const mx = 11380, mgy = 3330, mk = 1.0, mhy = mgy - AH * mk, nod = t > 45.6 && t < 46.6 ? Math.sin(pr(t, 45.6, 46.6) * Math.PI * 2) * 12 : 0;
+    const ms = stand('meera', mx, mgy, mk, t, { exp: close ? { eyes: t > 36.5 ? 'teary' : 'sad', brows: 'worried', mouth: 'small' } : t > 45.6 ? { eyes: 'open', brows: 'worried', mouth: 'flat' } : { eyes: 'sad', brows: 'worried', mouth: 'small' }, look: close ? [-0.2, 0.7] : [-1, -0.1], hands: close ? { L: [mx - 10, mhy + 260], R: [mx + 70, mhy + 300] } : { L: [mx - 70, mhy + 290], R: [mx + 80, mhy + 320] } });
+    ms.hy += nod;
+    const ma = person3(FG, ms, 300);
+    if (!close) caseFile(FG, ma.R[0] + 6, ma.R[1] + 30, 0.42, 720);
+    wristBand(FG, ma, 'L', 'red', mk, Math.sin(t * 9) > -0.3 ? 1 : 0.3);
+    if (close && t > 36.2) tagW(11380, 2350, 'कौन था वो?', '#ffb3c6', 52);
+    if (!close && t > 41.0 && t < 43.6) tagW(11000, 2800, 'पापा पर झूठा घोटाला', '#ff9a8a', 40);
+    if (!close && t > 42.2 && t < 43.6) tagW(10200, 2060, 'अदालत का नियम', K.goldL, 38);
+    if (!close && t > 40.4 && t < 43.6) hud(540, 1580, 45, 'red', 'मीरा', 0.8, Math.sin(t * 9) > -0.3 ? 1 : 0.25);
+    vig = 0.12;
+  } else if (set === 'corridor') {
+    drawCorridor(t);
+    const after = t >= 76.0, ax = 13720, mx = 14280, gy = 3330, k = 1.05, hy = gy - AH * k;
+    const grab = t > 71.0;
+    const aa = person3(FG, stand('aarav', after ? ax : lerp(13300, ax, eo(pr(t, 70.2, 71.2))), gy, k, t, { exp: after ? { eyes: 'teary', brows: 'worried', mouth: 'smile' } : { eyes: 'open', brows: 'worried', mouth: 'small' }, tears: after && t > 77, look: [1, -0.2], glint: 1, hands: grab ? { L: [ax - 70, hy + 330], R: [ax + 200, hy + 300] } : { L: [ax - 70, hy + 330], R: [ax + 80, hy + 300] } }), 100);
+    wristBand(FG, aa, 'R', after ? 'red' : 'cyan', k, after ? 1 : 1);
+    const ma = person3(FG, stand('meera', mx, gy, k, t, { exp: after ? { eyes: 'pop', brows: 'up', mouth: 'o' } : { eyes: 'squeeze', brows: 'sad', mouth: 'cry' }, tears: !after || t > 77.5, look: [-1, -0.2], hands: grab ? { L: [mx - 200, hy + 300], R: [mx + 70, hy + 320] } : { L: [mx - 20, hy + 120], R: [mx + 40, hy + 110] } }), 300);
+    wristBand(FG, ma, 'L', after ? 'green' : 'red', k, after ? 1 : 0.3);
+    if (after) { hud(300, 1580, 0, 'red', 'आरव', 0.75, 1); hud(780, 1580, 1200, 'green', 'मीरा', 0.75, 1); }
+    vig = 0.2;
+  } else if (set === 'wrists') {
+    drawSoft('#1e1d2a');
+    const u = pr(t, 73.0, 75.4), aw = aaravWords(t), mwv = meeraWords(t);
+    bandBig(PE, 15720, 2620, 0.55, aw, aw === 0 ? 'red' : 'cyan', { skin: K.skinO, sleeve: K.navy, sd: 980 });
+    bandBig(PROP, 16280, 2620, 0.55, mwv, mwv > 0 ? 'green' : 'red', { skin: K.skinM, sleeve: K.coat, sleeveLine: '#5a5866', flip: 1, sd: 1000 });
+    if (t > 73.0 && t < 75.6) for (let i = 0; i < 20; i++) { const w = ((t - 73) * 1.4 + i / 20) % 1; dab(FX, lerp(15720, 16280, w), 2620 - Math.sin(Math.PI * w) * 140, 10, { col: '#bff8ff', p: Math.sin(Math.PI * w), seed: 1100 + i }); }
+    if (t < 73.4) {   // the popup
+      const v = back1(pr(t, 72.7, 73.0)); const pop = rrect(15730, 2080, 16270, 2380, 30);
+      poly(FX, pop, 'rgba(14,14,20,0.95)', 1, { seed: 1110 }); edge(FX, pop, '#47e8f0', 6, 1, 1111);
+      wtext(FX, 'सारे लफ़्ज़ भेजें?', 16000, 2190, { size: 60 * v + 1, weight: 700, col: K.white, seed: 1112, tilt: 0 });
+      const press = t > 72.95; poly(FX, rrect(15900, 2240, 16100, 2340, 24), press ? '#2bd36e' : '#4cf08a', 1, { seed: 1113 });
+      wtext(FX, 'भेजें', 16000, 2310, { size: 48, weight: 700, col: K.ink, seed: 1114, tilt: 0 });
+    }
+    hud(300, 1580, aw, aw === 0 ? 'red' : 'cyan', 'आरव', 0.75, 1); hud(780, 1580, mwv, mwv > 0 ? 'green' : 'red', 'मीरा', 0.75, 1);
+    if (t > 75.4) flash(75.4, 0.5, '#4cf08a', 0.35);
+    vig = 0.22;
+  }
+  badge(t); timer(t);
+  if (!NOSUBS) { subTo(t); labels(t); }
+  else if (t > 3.0 && t < 5.3) labels(t);
+  endCard(t);
+  finish(comp, vig);
+}
+
 export function testFrame(comp, t, test) {
   [PE, PROP, FG].forEach(clearGroup); [BG.f, BG.l, GLOW, FX, SUBK, SUBT].forEach(clear); BOIL.amp = 0;
   CAM.x = 20000; CAM.y = 2400; CAM.s = 1.0;
