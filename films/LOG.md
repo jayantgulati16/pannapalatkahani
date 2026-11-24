@@ -88,3 +88,4 @@
 - Ep 6 on YouTube 2026-11-24 18:31 IST, video id dBjxi5a4Vfg, https://youtube.com/shorts/dBjxi5a4Vfg (trig_011XpuE9ZfGUh7HaAqrdUv1P).
 - 2026-11-24 19:31 IST: Ep 7 Instagram auto-post (trig_01TXRg2RnagBrswUPBgn2b4p) NOT posted — the Windsor create_video_post call was denied by this session's permission check. Reel URL is live (200, 11 MB). Jayant notified to post manually (reel-ep07 raw URL + caption). Next run: check the IG feed for Ep 7; if he posted, record the media id and mark the dashboard row posted.
 - Ep 4 on Facebook 2026-11-24 19:30 IST, video id 1144233464920863, https://www.facebook.com/1144233464920863 (trig_01DAXEirzCJEqxVtB3RUV9ep).
+- Ep 7 posted on Instagram 2026-11-24 19:37 IST (असली कौन?, reel-ep07) after Jayant said "Post kro", media id 17900677968681991, https://www.instagram.com/reel/DgIIZPOAKzH/
