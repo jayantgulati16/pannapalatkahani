@@ -206,22 +206,38 @@ function person3(C, s, sd) {
       part(C, tube([el, hd], 24 * k, 20 * k), skin, O(4, sd + 100 + sg));
       part(C, tube([shp, el, [lerp(el[0], hd[0], P0.tee ? 0.25 : 0.5), lerp(el[1], hd[1], P0.tee ? 0.25 : 0.5)]], 32 * k, 26 * k), { col: P0.sleeve || P0.top, p: 1, seed: sd + 102 + sg }, O(4, sd + 104 + sg, lc));
     }
-    for (const side of ['L', 'R']) part(C, handCircle(arms[side][0], arms[side][1], 15 * k, sd + 110 + (side === 'L' ? 0 : 1), 0, 18), skin, O(4, sd + 112 + (side === 'L' ? 0 : 1)));
+    for (const side of ['L', 'R']) hand(C, arms['e' + side], arms[side], k, skin, skinC, (s.pose && s.pose[side]) || 'open', side === 'L' ? -1 : 1, sd + 110 + (side === 'L' ? 0 : 20));
     if (P0.watch) wristBand(C, arms, 'L', 'gold', k);
   }
   WMUL.k = 1;
   arms.k = k; s.head = PH(0, 0); return arms;
 }
+
+// ——— hands with real fingers (Jayant, 25 Nov: "haatho ki ungaliya") ———
+// pose: open (relaxed) | spread (scared / waving) | fist | point | grip (holding something) | flat (palm on mouth)
+function hand(C, el, hd, k, skin, skinC, pose, sg, sd) {
+  let dx = hd[0] - el[0], dy = hd[1] - el[1]; const d = Math.hypot(dx, dy) || 1; dx /= d; dy /= d;
+  const ang = Math.atan2(dy, dx), O = q => ({ w: 3.5, col: K.ink, seed: q, p: 0.9 });
+  const at = (a, r) => [hd[0] + Math.cos(ang + a) * r * k, hd[1] + Math.sin(ang + a) * r * k];
+  const spec = { open: [[-0.3, 38], [-0.1, 43], [0.1, 42], [0.3, 35]], spread: [[-0.75, 40], [-0.26, 46], [0.22, 45], [0.66, 37]], fist: [[-0.3, 14], [-0.1, 15], [0.1, 15], [0.3, 14]],
+    point: [[-0.3, 14], [-0.04, 48], [0.12, 15], [0.3, 14]], grip: [[-0.3, 22], [-0.1, 24], [0.1, 24], [0.3, 21]], flat: [[-0.17, 42], [-0.06, 46], [0.06, 45], [0.17, 40]] }[pose] || [];
+  const fw = 9.5 * k, base = 10;
+  spec.forEach(([a, L], i) => { const b = at(a * 0.6, base), tip = at(a, base + L); part(C, tube([b, tip], fw * 1.05, fw * 0.9), skin, O(sd + i)); });
+  const ta = pose === 'spread' ? 1.25 : pose === 'fist' || pose === 'grip' ? 0.9 : 1.05, tl = pose === 'fist' ? 16 : 28;   // thumb on the inner side
+  part(C, tube([at(-sg * 0.9, 6), at(-sg * ta, 6 + tl)], fw * 1.15, fw), skin, O(sd + 6));
+  part(C, smooth([at(Math.PI - 0.55, 20), at(-1.3, 16), at(-0.45, 19), at(0.45, 19), at(1.3, 16), at(Math.PI + 0.55, 20)], 4), skin, O(sd + 8));   // the palm, over the finger roots
+  if (pose === 'fist' || pose === 'grip') for (let i = 0; i < 3; i++) line(C.l, [at(-0.28 + i * 0.28, 14), at(-0.2 + i * 0.28, 20)], { w: 2.5, col: '#9a5f45', seed: sd + 10 + i });
+}
 const AH = 680;
 function stand(kind, x, gy, k, t, o = {}) {
   const hy = gy - AH * k - (SPEC[kind].kid ? 18 * k : 0);
-  return { kind, t, x, gy, k, hy, hk: o.hk, feet: o.feet || { L: [x - 42 * k, gy], R: [x + 42 * k, gy] }, hands: o.hands || { L: [x - 78 * k, hy + 320 * k], R: [x + 78 * k, hy + 320 * k] }, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'small' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, blush: o.blush, glint: o.glint };
+  return { kind, t, x, gy, k, hy, hk: o.hk, feet: o.feet || { L: [x - 42 * k, gy], R: [x + 42 * k, gy] }, hands: o.hands || { L: [x - 78 * k, hy + 320 * k], R: [x + 78 * k, hy + 320 * k] }, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'small' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, blush: o.blush, glint: o.glint, pose: o.pose };
 }
 function seat(kind, x, t, o = {}) {
   const k = o.k ?? 1, hy = o.hy ?? 2010, gy = hy + 600;
-  return { kind, t, x, gy, k, hy, hk: o.hk, seated: 1, kneel: o.kneel, feet: { L: [x - 40, gy], R: [x + 40, gy] }, hands: o.hands || { L: [x - 90 * k, hy + 300 * k], R: [x + 90 * k, hy + 300 * k] }, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, blush: o.blush, glint: o.glint };
+  return { kind, t, x, gy, k, hy, hk: o.hk, seated: 1, kneel: o.kneel, feet: { L: [x - 40, gy], R: [x + 40, gy] }, hands: o.hands || { L: [x - 90 * k, hy + 300 * k], R: [x + 90 * k, hy + 300 * k] }, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, blush: o.blush, glint: o.glint, pose: o.pose };
 }
-function bust(kind, x, hy, k, t, o = {}) { return { kind, t, x, hy, k, hk: o.hk, bust: 1, bustL: o.L || 300, hands: o.hands, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, blush: o.blush, glint: o.glint }; }
+function bust(kind, x, hy, k, t, o = {}) { return { kind, t, x, hy, k, hk: o.hk, bust: 1, bustL: o.L || 300, hands: o.hands, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, blush: o.blush, glint: o.glint, pose: o.pose }; }
 function talking(t, a, b) { return t > a && t < b && BOIL.step % 3 ? 'open' : 'small'; }
 
 // ——— the word meter ———
@@ -373,14 +389,14 @@ export function testFrame(comp, t, test) {
   for (let i = 0; i < 7; i++) dab(BG.f, 19500 + hash(i * 2.3) * 1000, 1700 + hash(i * 1.7) * 1800, 200, { col: NIGHT.bg2, p: 0.7, seed: 2 + i });
   if (test === 'cast') {
     const kk = 0.82, kx = W0 + 250, kgy = H0 + 1010, khy = kgy - AH * kk;
-    const ka = person3(PE, stand('kabir', kx, kgy, kk, t, { exp: { eyes: 'open', brows: 'worried', mouth: 'small' }, look: [0.3, 0], hands: { L: [kx - 70 * kk, khy + 330 * kk], R: [kx + 110 * kk, khy + 280 * kk] } }), 100);
+    const ka = person3(PE, stand('kabir', kx, kgy, kk, t, { exp: { eyes: 'open', brows: 'worried', mouth: 'small' }, look: [0.3, 0], pose: { R: 'grip' }, hands: { L: [kx - 70 * kk, khy + 330 * kk], R: [kx + 110 * kk, khy + 280 * kk] } }), 100);
     part(PE, rrect(ka.R[0] - 14, ka.R[1] - 30, ka.R[0] + 24, ka.R[1] + 40, 8), { col: '#1b1c24', p: 1, seed: 140 }, { w: 3, col: '#5c5f70', seed: 141 });   // phone
     part(PE, rrect(kx - 210, kgy - 120, kx - 110, kgy, 20), { col: '#2c2e3a', p: 1, seed: 142 }, { w: 3, col: '#5c5f70', seed: 143 }); for (let i = 0; i < 3; i++) dab(PE.l, kx - 160, kgy - 92 + i * 30, 10, { col: '#5c5f70', p: 1, seed: 144 + i });   // speaker
     lab(250, 1060, 'कबीर · 25', 'हुडी · हेडफ़ोन · स्पीकर');
     balaa(FG, W0 + 760, H0 + 1010, 0.41, t, { glowEar: 1 });
     lab(780, 1060, 'वो चीज़', 'चेहरा नहीं, सिर्फ़ कान', '#ff9a8a');
     const bk = 0.55, bx = W0 + 190, bgy = H0 + 1560;
-    const ba = person3(PROP, stand('broker', bx, bgy, bk, t, { exp: { eyes: 'pop', brows: 'worried', mouth: 'wavy' }, sweat: 1, look: [0.6, 0], hands: { L: [bx - 60 * bk, bgy - AH * bk + 330 * bk], R: [bx + 130 * bk, bgy - AH * bk + 200 * bk] } }), 400);
+    const ba = person3(PROP, stand('broker', bx, bgy, bk, t, { exp: { eyes: 'pop', brows: 'worried', mouth: 'wavy' }, sweat: 1, look: [0.6, 0], pose: { R: 'point' }, hands: { L: [bx - 60 * bk, bgy - AH * bk + 330 * bk], R: [bx + 130 * bk, bgy - AH * bk + 200 * bk] } }), 400);
     for (let i = 0; i < 2; i++) line(PROP.l, [[ba.R[0], ba.R[1]], [ba.R[0] + 10 + i * 12, ba.R[1] + 36]], { w: 4, col: K.gold, seed: 150 + i });
     lab(190, 1610, 'ब्रोकर', 'चाबी · पसीना');
     phoneFrame(PROP, W0 + 545, H0 + 1340, 0.85, 2300);
@@ -398,7 +414,7 @@ export function testFrame(comp, t, test) {
       poly(BG.f, rrect(cx - 170, cy - 230, cx + 170, cy + 230, 30), NIGHT.bg2, 1, { seed: 10 + i });
       const G = [PE, PROP, FG][Math.floor(i / 3)];
       const hy = cy - 60, k = 1.35;
-      const a = person3(G, bust(kind, cx, hy, k, t, { L: 170, exp, tears, blush, hands: hush ? { L: [cx - 14, hy + 30 * k], R: [cx + 14, hy + 34 * k] } : undefined }), 200 + i * 50);
+      const a = person3(G, bust(kind, cx, hy, k, t, { L: 170, exp, tears, blush, hands: hush ? { L: [cx - 14, hy + 30 * k], R: [cx + 14, hy + 34 * k] } : undefined, pose: hush ? { L: 'flat', R: 'flat' } : undefined }), 200 + i * 50);
       if (mark) { s_mark(G, cx, hy, k); }
       poly(FX, rrect(cx - 150, cy + 150, cx + 150, cy + 222, 20), '#0b0b12', 1, { seed: 20 + i });
       wtext(FX, lb, cx, cy + 202, { size: 40, weight: 700, col: '#e8d7ff', seed: 30 + i, tilt: 0 });
@@ -421,6 +437,17 @@ export function testFrame(comp, t, test) {
     part(PROP, smooth([[ax - 4, ay - 230], [ax + 30, ay - 220], [ax + 40, ay - 180], [ax + 20, ay - 150], [ax - 6, ay - 170]], 3), { col: '#cdb4b0', p: 0.9, seed: 331 }, null); sglow(ax + 14, ay - 190, 80, '#e8d7ff', 0.4, 332);
     lab(790, 1680, 'अलमारी', 'आँखें नहीं — उँगलियाँ + कान की चमक');
     title('वो चीज़ (बला)', 'डिज़ाइन — सिर्फ़ आवाज़ से शिकार करती है');
+  } else if (test === 'hands') {
+    const poses = [['open', 'आराम से'], ['spread', 'डर / हाथ हिलाना'], ['point', 'इशारा'], ['fist', 'मुट्ठी'], ['grip', 'फ़ोन पकड़ना'], ['flat', 'मुँह दबाना']];
+    poses.forEach(([ps, lb], i) => {
+      const cx = W0 + 270 + (i % 2) * 540, cy = H0 + 560 + Math.floor(i / 2) * 470;
+      poly(BG.f, rrect(cx - 250, cy - 210, cx + 250, cy + 210, 30), NIGHT.bg2, 1, { seed: 10 + i });
+      const G = [PE, PROP, FG][Math.floor(i / 2)], k = 2.6, el = [cx - 160, cy + 120], hd = [cx - 10, cy - 10];
+      part(G, tube([[cx - 330, cy + 200], el, hd], 24 * k, 20 * k), { col: K.skinM, p: 1, seed: 40 + i }, { w: 5, col: K.ink, seed: 50 + i });
+      hand(G, el, hd, k, { col: K.skinM, p: 1, gap: 7, w: 9, seed: 80 + i }, K.skinM, ps, 1, 100 + i * 20);
+      wtext(SUBT, lb, cx - W0, cy - H0 + 180, { screen: true, size: 44, weight: 700, col: '#e8d7ff', seed: 30 + i, tilt: 0 });
+    });
+    title('हाथ — अब असली उँगलियाँ', '5 उँगलियाँ · हर भाव के लिए अलग पकड़');
   } else if (test === 'meter') {
     const st = [[18, 'हरा · सन्नाटा'], [29, 'सुई काँपती · 29 dB'], [48, 'पीला · फ़ोन गिरा'], [85, 'लाल · गिलास टूटा']];
     st.forEach(([db, c], i) => { const mx = W0 + 280 + (i % 2) * 520, my = H0 + 500 + Math.floor(i / 2) * 560; vuMeter(i < 2 ? PE : PROP, mx, my, 0.95, db, { sd: 2200 + i * 60, shake: db === 29, t }); wtext(SUBT, c, mx - W0, my - H0 + 290, { screen: true, size: 40, weight: 700, col: '#e8d7ff', seed: 40 + i, tilt: 0 }); });

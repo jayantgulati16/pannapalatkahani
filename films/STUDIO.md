@@ -17,6 +17,7 @@ Dashboard episode label = the post date (D+1). Step 08 detail: "Scheduled: <D+1>
 - Length: see the A/B test in the Growth playbook; one twist (two in the 60 s version); end on a payoff that makes people rewatch or tag someone.
 - Last 2 s: end card drawn in crayon: "अगला पन्ना कल" + "@pannapalatkahani".
 - CLOSING VOICE (Jayant, 25 Nov — every episode from now on): over the end card the narrator (Sulafat) says "अगली कहानी देखने के लिए… सब्सक्राइब और फ़ॉलो करो!" (subtitle "अगली कहानी देखने के लिए…|Subscribe और Follow करो!", end-card line "Subscribe & Follow करो · @pannapalatkahani"). Leave ~3.5 s after the end card starts. For a Part 1 the end card still promises "भाग 2 · कल शाम 7:30".
+- HANDS (Jayant, 25 Nov): characters have real hands with fingers — use person3() + hand() from films/ep-20261129/film.js (poses open/spread/point/fist/grip/flat) for every new episode, not the old round mitten hands.
 - Caption: 1 hook line (Hinglish) + 1 question that invites comments ("Tum kya karte?") + EXACTLY 5 hashtags max (Instagram hard limit since Dec 2025;
   more can make the API post fail): #pannapalatkahani + 4 specific to the story (topic, emotion, format, e.g. #hindistory #animation). No generic #reels/#explore.
 - Note in LOG.md which hook/topic was used, so the week's topics vary.
