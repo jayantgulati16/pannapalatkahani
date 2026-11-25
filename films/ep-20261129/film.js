@@ -46,13 +46,13 @@ function wtext(L, str, x, y, o = {}) {
 function poly(L, pts, col, p = 0.85, o = {}) { fill(L, pts, { col, p, gap: o.gap ?? 9, w: o.w ?? 10, ang: o.ang ?? 0.6, seed: o.seed ?? 1, boil: o.boil ?? 0.3, over: o.over ?? 4 }); }
 function edge(L, pts, col, w = 4, p = 0.6, sd = 1, closed = true) { line(L, closed ? [...pts, pts[0]] : pts, { w, col, p, seed: sd, boil: 0.5 }); }
 
-function ik(sh, hd, L1, L2, side) {
+function ik(sh, hd, L1, L2, side, down) {
   let dx = hd[0] - sh[0], dy = hd[1] - sh[1]; let d = Math.hypot(dx, dy); const mx = L1 + L2 - 1;
   let tgt = hd; if (d > mx) { tgt = [sh[0] + dx / d * mx, sh[1] + dy / d * mx]; dx = tgt[0] - sh[0]; dy = tgt[1] - sh[1]; d = mx; }
   d = Math.max(d, 1e-3);
   const a = Math.atan2(dy, dx), B = Math.acos(clamp((L1 * L1 + d * d - L2 * L2) / (2 * L1 * d), -1, 1));
   const e1 = [sh[0] + Math.cos(a + B) * L1, sh[1] + Math.sin(a + B) * L1], e2 = [sh[0] + Math.cos(a - B) * L1, sh[1] + Math.sin(a - B) * L1];
-  const score = e => side * e[0];
+  const score = down ? e => e[1] : e => side * e[0];
   return [score(e1) > score(e2) ? e1 : e2, tgt];
 }
 // Expressive face (23 Nov, Jayant: "cartoon mein emotions ho"): almond eyes with iris + highlights, lids that droop, thick brows,
@@ -202,7 +202,7 @@ function person3(C, s, sd) {
   const arms = {};
   if (!s.bust || s.hands) {
     for (const [side, sg] of [['L', -1], ['R', 1]]) {
-      const shp = P(sg * 46 * wd, 68), [el, hd] = ik(shp, s.hands[side], 118 * k, 110 * k, sg); arms[side] = hd; arms['e' + side] = el;
+      const shp = P(sg * 46 * wd, 68), [el, hd] = ik(shp, s.hands[side], 118 * k, 110 * k, sg, s.elbowDown || (s.pose && s.pose[side] === 'flat')); arms[side] = hd; arms['e' + side] = el;
       part(C, tube([el, hd], 24 * k, 20 * k), skin, O(4, sd + 100 + sg));
       part(C, tube([shp, el, [lerp(el[0], hd[0], P0.tee ? 0.25 : 0.5), lerp(el[1], hd[1], P0.tee ? 0.25 : 0.5)]], 32 * k, 26 * k), { col: P0.sleeve || P0.top, p: 1, seed: sd + 102 + sg }, O(4, sd + 104 + sg, lc));
     }
@@ -231,13 +231,13 @@ function hand(C, el, hd, k, skin, skinC, pose, sg, sd) {
 const AH = 680;
 function stand(kind, x, gy, k, t, o = {}) {
   const hy = gy - AH * k - (SPEC[kind].kid ? 18 * k : 0);
-  return { kind, t, x, gy, k, hy, hk: o.hk, feet: o.feet || { L: [x - 42 * k, gy], R: [x + 42 * k, gy] }, hands: o.hands || { L: [x - 78 * k, hy + 320 * k], R: [x + 78 * k, hy + 320 * k] }, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'small' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, blush: o.blush, glint: o.glint, pose: o.pose };
+  return { kind, t, x, gy, k, hy, hk: o.hk, feet: o.feet || { L: [x - 42 * k, gy], R: [x + 42 * k, gy] }, hands: o.hands || { L: [x - 78 * k, hy + 320 * k], R: [x + 78 * k, hy + 320 * k] }, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'small' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, blush: o.blush, glint: o.glint, pose: o.pose, elbowDown: o.elbowDown };
 }
 function seat(kind, x, t, o = {}) {
   const k = o.k ?? 1, hy = o.hy ?? 2010, gy = hy + 600;
-  return { kind, t, x, gy, k, hy, hk: o.hk, seated: 1, kneel: o.kneel, feet: { L: [x - 40, gy], R: [x + 40, gy] }, hands: o.hands || { L: [x - 90 * k, hy + 300 * k], R: [x + 90 * k, hy + 300 * k] }, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, blush: o.blush, glint: o.glint, pose: o.pose };
+  return { kind, t, x, gy, k, hy, hk: o.hk, seated: 1, kneel: o.kneel, feet: { L: [x - 40, gy], R: [x + 40, gy] }, hands: o.hands || { L: [x - 90 * k, hy + 300 * k], R: [x + 90 * k, hy + 300 * k] }, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, blush: o.blush, glint: o.glint, pose: o.pose, elbowDown: o.elbowDown };
 }
-function bust(kind, x, hy, k, t, o = {}) { return { kind, t, x, hy, k, hk: o.hk, bust: 1, bustL: o.L || 300, hands: o.hands, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, blush: o.blush, glint: o.glint, pose: o.pose }; }
+function bust(kind, x, hy, k, t, o = {}) { return { kind, t, x, hy, k, hk: o.hk, bust: 1, bustL: o.L || 300, hands: o.hands, exp: o.exp || { eyes: 'open', brows: 'flat', mouth: 'smile' }, look: o.look || [0, 0], sweat: o.sweat, tears: o.tears, blush: o.blush, glint: o.glint, pose: o.pose, elbowDown: o.elbowDown }; }
 function talking(t, a, b) { return t > a && t < b && BOIL.step % 3 ? 'open' : 'small'; }
 
 // ——— the word meter ———
@@ -374,11 +374,297 @@ function phoneFrame(C, x, y, s, sd = 2300) {   // a phone held up: video call sc
   part(C, rrect(x - 132 * s, y - 250 * s, x + 132 * s, y + 250 * s, 20 * s), { col: '#f3d9c0', p: 1, seed: sd + 2 }, null);
 }
 
-export const SUBS = [];
-export const TEXTS = () => [];
+// ═══════════════════════ भाग 1 ═══════════════════════
+// ——— printed words / voice script (N narrator Sulafat, B broker Fenrir, K Kabir Iapetus, M Maa Gacrux, X the thing = Maa's voice, made eerie in the mix) ———
+export const SUBS = [
+  { t0: 0.2, t1: 4.6, text: '“कबीर बेटा…|दरवाज़ा खोलो… मैं हूँ।”', who: 'X', vo: 'v1', vt: 0.3 },
+  { t0: 7.9, t1: 12.3, text: '“रात को… तीस डेसिबल से|ज़्यादा आवाज़ मत करना।”', who: 'B', vo: 'b1', vt: 8.0 },
+  { t0: 12.4, t1: 19.1, text: 'इस पुराने फ़्लैट के हर कमरे में|एक साउंड मीटर लगा है…|और एक ही नियम है।', who: 'N', vo: 'n1', vt: 12.5 },
+  { t0: 19.5, t1: 22.4, text: '“हाँ माँ, पहुँच गया!|बढ़िया फ़्लैट है!”', who: 'K', vo: 'k1', vt: 19.6 },
+  { t0: 22.5, t1: 24.1, text: '“खाना खा लेना बेटा।”', who: 'M', vo: 'm1', vt: 22.6 },
+  { t0: 24.2, t1: 28.8, text: 'कबीर ने इसे मज़ाक समझा…|और हेडफ़ोन लगाकर सो गया।', who: 'N', vo: 'n2', vt: 24.3 },
+  { t0: 29.0, t1: 37.1, text: 'रात सवा दो बजे… फ़ोन नीचे गिरा —|और सुई पहली बार|तीस के पार गई।', who: 'N', vo: 'n3', vt: 29.1 },
+  { t0: 37.3, t1: 42.6, text: 'तभी दीवार के पीछे से…|लंबे नाख़ूनों से|खुरचने की आवाज़ आई।', who: 'N', vo: 'n4', vt: 37.4 },
+  { t0: 42.8, t1: 50.2, text: 'दरवाज़े की दरार से दिखा…|बाहर कोई खड़ा था।|उसके पैर उल्टे मुड़े हुए थे।', who: 'N', vo: 'n5', vt: 42.9 },
+  { t0: 50.3, t1: 57.8, text: 'कबीर ने मुँह दबा लिया…|उसकी धड़कन से ही|सुई उनतीस पर काँप रही थी।', who: 'N', vo: 'n6', vt: 50.4 },
+  { t0: 58.5, t1: 62.8, text: '“बेटा… माँ हूँ…|दरवाज़ा खोलो ना…”', who: 'X', vo: 'v2', vt: 58.6 },
+  { t0: 63.0, t1: 70.6, text: 'पर माँ तो दूसरे शहर में थी…|उस चीज़ ने शाम को फ़ोन पर|माँ की आवाज़ सुन ली थी।', who: 'N', vo: 'n7', vt: 63.1 },
+  { t0: 70.7, t1: 74.9, text: 'पीछे हटते ही…|उसका पैर काँच के गिलास से टकराया।', who: 'N', vo: 'n8', vt: 70.8 },
+  { t0: 77.0, t1: 85.4, text: 'कबीर को लगा ख़तरा दरवाज़े के बाहर है…|पर वो चीज़|अब कमरे के अंदर थी।', who: 'N', vo: 'n9', vt: 77.1 },
+  { t0: 85.6, t1: 91.0, text: 'भाग 2 देखने के लिए…|फ़ॉलो और सब्सक्राइब करो… पर धीरे से।', who: 'N', vo: 'n10', vt: 85.7 },
+];
+export const DUR = 91.2;
+const STRETCH = [];
+function toReal(s) { return s; }
+function toStory(t) { return t; }
+const T_THUD = 30.6, T_CRASH = 75.2, T_DARK = 76.6, T_KNOCK = 57.9;
+function dbAt(t) {   // what the meter reads (story time)
+  const tr = (a, f = 23) => a * Math.sin(t * f) + 0.6 * a * Math.sin(t * f * 2.3);
+  if (t < 7.0) return 29 + tr(0.6);
+  if (t < 19.2) return 38 + tr(3, 7);
+  if (t < 24.2) return 60 + tr(4, 9);
+  if (t < T_THUD) return lerp(22, 13, pr(t, 24.2, 28.8)) + tr(0.4);
+  if (t < 34.0) return (t < 32.4 ? 48 + tr(1.2) : lerp(48, 20, eo(pr(t, 32.4, 34.0)))) * (t < T_THUD + 0.12 ? Math.max(0.3, pr(t, T_THUD, T_THUD + 0.12)) : 1);
+  if (t < 50.2) return 18 + tr(1.2, 5);
+  if (t < 70.6) return 28.6 + tr(0.5);
+  if (t < T_CRASH) return 26 + tr(1.5, 8);
+  if (t < T_DARK) return lerp(85, 82, pr(t, T_CRASH, T_DARK)) + tr(1.5);
+  return lerp(82, 14, eo(pr(t, T_DARK, T_DARK + 1.5)));
+}
+
+// ——— shots: [t0, t1, set, cam0, cam1] ———
+const SHOTS = [
+  [0.0, 7.0, 'room', [1640, 2260, 1.05], [1660, 2240, 1.22]],      // HOOK 2:15 — Kabir presses his mouth, the needle shakes at 29; "माँ" at the door
+  [7.0, 12.3, 'room', [1050, 2380, 0.82], [1050, 2380, 0.88]],     // उसी शाम… the broker in the doorway, whispering, pointing at the meter
+  [12.3, 19.2, 'room', [1300, 2010, 1.6], [1300, 2000, 2.3]],      // zoom into the old meter: the red line at 30
+  [19.2, 24.2, 'room', [800, 2380, 0.72], [820, 2380, 0.76]],      // the loud speakerphone call with Maa (the almirah is ajar…)
+  [24.2, 28.9, 'room', [1820, 2300, 1.1], [1820, 2300, 1.18]],     // headphones, sleep; the lamp dims → night
+  [28.9, 31.6, 'room', [1480, 2560, 2.0], [1460, 2620, 2.1]],      // 2:15 — the phone buzzes, slides, falls: THUD
+  [31.6, 33.6, 'room', [1300, 2000, 2.4], [1300, 2000, 2.5]],      // the needle jumps to 48
+  [33.6, 37.2, 'room', [1850, 2240, 1.4], [1850, 2240, 1.5]],      // Kabir wakes up
+  [37.2, 42.7, 'room', [1480, 1960, 1.35], [1520, 1950, 1.5]],     // scratching behind the wall — claw marks appear
+  [42.7, 50.2, 'gap', [5000, 2560, 1.0], [5000, 2620, 1.2]],       // the door gap: the light is blocked… backward feet
+  [50.2, 54.0, 'room', [1850, 2200, 1.65], [1850, 2200, 1.75]],    // hands over his mouth
+  [54.0, 57.8, 'room', [1300, 2000, 2.4], [1300, 2000, 2.6]],      // the needle trembles at 29 with his heartbeat
+  [57.8, 62.9, 'room', [1000, 2300, 0.95], [1050, 2300, 1.05]],    // knock knock — "बेटा… माँ हूँ…"
+  [62.9, 65.3, 'room', [1360, 2250, 1.5], [1360, 2250, 1.6]],      // his face: realisation
+  [65.3, 67.6, 'memory', [7000, 2400, 1.0], [7000, 2400, 1.06]],   // memory: the evening speakerphone call
+  [67.6, 73.4, 'room', [1250, 2400, 1.0], [1300, 2420, 1.05]],     // he steps back, away from the door…
+  [73.4, 75.3, 'room', [1440, 2620, 1.4], [1470, 2620, 1.5]],      // …his heel hits the glass; it rolls; CRASH
+  [75.3, 76.8, 'room', [1300, 2000, 2.4], [1300, 2000, 2.3]],      // 85 dB — red — the lights die
+  [76.8, 80.4, 'gap', [5000, 2700, 1.1], [5000, 2700, 1.2]],       // in the dark, the shadow slides in under the door
+  [80.4, 91.2, 'room', [320, 2150, 1.25], [320, 2120, 1.4]],       // the almirah creaks open: fingers… the ear → end card
+];
+function shotAt(t) { return SHOTS.find(s => t >= s[0] && t < s[1]) || SHOTS[SHOTS.length - 1]; }
+const HITS = [[T_THUD, 12], [T_KNOCK, 5], [T_KNOCK + 0.4, 5], [T_CRASH, 14], [T_DARK, 6]];
+function shake(t) {
+  let x = 0, y = 0;
+  for (const [h, a] of HITS) { const d = t - h; if (d < 0 || d > 0.5) continue; const e = a * Math.exp(-d / 0.08); x += (hash(BOIL.step * 3.1 + h) - .5) * 2 * e; y += (hash(BOIL.step * 5.7 + h) - .5) * 2 * e; }
+  return [x, y];
+}
+
+// ——— SET: Kabir's room (evening / night / dark) ———
+function drawRoom(t, mode) {   // mode: 'eve' | 'night' | 'dark'
+  const B = BG, eve = mode === 'eve';
+  poly(B.f, rect(-600, 800, 2900, 2800), eve ? '#c79f78' : '#262a40', 1, { seed: 10 });
+  for (let i = 0; i < 18; i++) line(B.l, [[-560 + i * 200, 820], [-560 + i * 200, 2790]], { w: 3, col: eve ? '#b88f69' : '#2e3350', seed: 11 + i });
+  poly(B.f, rect(-600, 2800, 2900, 3900), eve ? '#8a6446' : '#30272a', 1, { seed: 30 });
+  for (let i = 0; i < 7; i++) line(B.l, [[-600, 2860 + i * 140], [2900, 2860 + i * 140]], { w: 3, col: eve ? '#74523a' : '#261e20', seed: 31 + i });
+  line(B.l, [[-600, 2800], [2900, 2800]], { w: 6, col: eve ? '#6b4a32' : '#1a1416', seed: 38 });
+  // window
+  poly(B.f, rect(1750, 1250, 2250, 1850), eve ? '#f2a35a' : '#1c2a55', 1, { seed: 40 }); edge(B.l, rect(1750, 1250, 2250, 1850), eve ? '#6b4a32' : '#151726', 14, 1, 41);
+  line(B.l, [[2000, 1250], [2000, 1850]], { w: 8, col: eve ? '#6b4a32' : '#151726', seed: 42 }); line(B.l, [[1750, 1550], [2250, 1550]], { w: 8, col: eve ? '#6b4a32' : '#151726', seed: 43 });
+  if (!eve) { dab(B.f, 2130, 1360, 38, { col: '#e9f0ff', p: 1, seed: 44 }); poly(GLOW, [[1760, 1260], [2240, 1260], [2050, 2800], [1350, 2800]], '#7d93d6', mode === 'dark' ? 0.16 : 0.1, { seed: 45 }); }
+  // almirah (left) — the right leaf can open
+  const aj = almirahOpen(t);
+  poly(B.f, rect(80, 1350, 520, 2800), eve ? '#6e4a32' : '#3a281e', 1, { seed: 50 }); edge(B.l, rect(80, 1350, 520, 2800), '#120c0a', 6, 1, 51);
+  line(B.l, [[300, 1380], [300, 2780]], { w: 5, col: '#120c0a', seed: 52 });
+  if (aj > 0) { poly(B.f, rect(300, 1380, 300 + 200 * aj, 2780), '#050508', 1, { seed: 53 }); poly(B.f, [[300 + 200 * aj, 1370], [520, 1400], [520, 2770], [300 + 200 * aj, 2800]], eve ? '#7a5238' : '#46301f', 1, { seed: 54 }); }
+  for (const hx of [280, 320 + 200 * aj * 0.9]) dab(B.l, hx, 2100, 10, { col: K.gold, p: 1, seed: 55 + hx });
+  // the door (left-centre) + light gap
+  const open = mode === 'eve' && t < 12.3;
+  poly(B.f, rect(680, 1580, 1120, 2800), '#1a1210', 1, { seed: 60 });
+  if (open) { poly(B.f, rect(700, 1600, 1100, 2800), '#e9d3a0', 1, { seed: 61 }); poly(B.f, [[1100, 1600], [1180, 1560], [1180, 2840], [1100, 2800]], '#6b4a32', 1, { seed: 62 }); }
+  else { poly(B.f, rect(700, 1600, 1100, 2790), eve ? '#7d5434' : '#4a3326', 1, { seed: 63 }); edge(B.l, rect(700, 1600, 1100, 2790), '#120c0a', 5, 1, 64);
+    for (const [y0, y1] of [[1680, 2140], [2240, 2700]]) edge(B.l, rect(760, y0, 1040, y1), '#2a1c14', 4, 0.8, 65 + y0);
+    dab(B.l, 1060, 2250, 13, { col: K.gold, p: 1, seed: 67 });
+    if (mode !== 'eve') { const blocked = feetAt(t); poly(B.f, rect(700, 2786, 1100, 2800), '#ffe6a8', mode === 'dark' ? 0.3 : 1, { seed: 68 }); if (blocked > 0) for (const fx of [840, 960]) poly(B.f, rect(fx - 40, 2786, fx + 40, 2800), '#000', blocked, { seed: 69 + fx }); } }
+  edge(B.l, rect(680, 1580, 1120, 2800), '#120c0a', 10, 1, 70);
+  // the meter on the wall
+  vuMeter(PROP, 1300, 2000, 0.5, dbAt(t), { sd: 2200, label: false, shake: false, t });
+  // scratch marks behind the wallpaper (37.6 → 42.6)
+  const sc = pr(t, 38.2, 41.6); if (sc > 0 && t < 80) for (let i = 0; i < 4; i++) { const x0 = 1500 + i * 38, y0 = 1700 + i * 10, L = 340 * clamp(sc * 1.4 - i * 0.12); if (L > 0) { line(B.l, [[x0, y0], [x0 + 40, y0 + L]], { w: 9, col: '#0e0f18', seed: 80 + i }); line(B.l, [[x0 + 6, y0], [x0 + 46, y0 + L]], { w: 3, col: eve ? '#a8805c' : '#3d4260', seed: 84 + i }); } }
+  // bed (right) + side table + lamp + phone
+  part(PE, rect(2280, 2050, 2380, 2800), { col: eve ? '#6e4a32' : '#3a281e', p: 1, seed: 90 }, { w: 5, col: '#120c0a', seed: 91 });
+  part(PE, rect(1560, 2560, 2380, 2800), { col: eve ? '#6e4a32' : '#3a281e', p: 1, seed: 92 }, { w: 5, col: '#120c0a', seed: 93 });
+  part(PE, rrect(1580, 2470, 2370, 2580, 20), { col: eve ? '#e9e1cf' : '#9aa0b8', p: 1, seed: 94 }, { w: 4, col: '#120c0a', seed: 95 });
+  part(PE, rrect(2100, 2380, 2330, 2480, 30), { col: eve ? '#f6f1e4' : '#b9bed4', p: 1, seed: 96 }, { w: 4, col: '#120c0a', seed: 97 });
+  part(PROP, rect(1400, 2480, 1540, 2510), { col: eve ? '#6e4a32' : '#3a281e', p: 1, seed: 98 }, { w: 4, col: '#120c0a', seed: 99 });
+  for (const x of [1412, 1528]) part(PROP, rect(x - 8, 2510, x + 8, 2800), { col: eve ? '#5a3c28' : '#2a1c14', p: 1, seed: 100 + x }, { w: 3, col: '#120c0a', seed: 101 + x });
+  const lampOn = mode !== 'dark';
+  part(PROP, smooth([[1420, 2470], [1480, 2470], [1470, 2420], [1430, 2420]], 2), { col: '#3a3c4a', p: 1, seed: 110 }, { w: 3, col: '#120c0a', seed: 111 });
+  part(PROP, smooth([[1400, 2420], [1500, 2420], [1475, 2340], [1425, 2340]], 2), { col: lampOn ? '#ffd98a' : '#4a4436', p: 1, seed: 112 }, { w: 3, col: '#120c0a', seed: 113 });
+  if (lampOn) sglow(1450, 2390, eve ? 520 : 360, '#ffcf7a', eve ? 0.5 : 0.35 * (t > 24.2 && t < 28.9 ? 1 - pr(t, 26.5, 28.5) * 0.4 : 1), 114);
+}
+const almirahOpen = t => t >= 21.8 && t < 24.4 ? 0.12 : t >= 80.9 ? 0.75 * ei(pr(t, 80.9, 84.4)) : 0;
+const feetAt = t => t >= 44.4 && t < 76.8 ? clamp((t - 44.4) / 0.6) : 0;
+function phoneOnTable(C, t) {   // buzzes, slides, falls (28.9 → T_THUD)
+  let x = 1490, y = 2468, a = 0;
+  if (t >= 28.9) { const bz = t < 29.9 ? Math.sin(t * 90) * 3 : 0; x += bz + 60 * ei(pr(t, 29.2, 29.95)); }
+  if (t >= 29.95) { const u = pr(t, 29.95, T_THUD); x = 1550 + 50 * u; y = 2468 + 320 * u * u; a = 2.2 * u; }
+  if (t >= T_THUD) { x = 1600; y = 2788; a = Math.PI / 2; }
+  const c = Math.cos(a), s2 = Math.sin(a), R = (u, v) => [x + u * c - v * s2, y + u * s2 + v * c];
+  part(C, [R(-55, -16), R(55, -16), R(55, 12), R(-55, 12)], { col: '#15161d', p: 1, seed: 120 }, { w: 3, col: '#6b6f82', seed: 121 }); if (t >= 28.9 && t < T_THUD) poly(C.l, [R(-46, -12), R(46, -12), R(46, 6), R(-46, 6)], '#7fd0ff', 0.8, { seed: 123 });
+  if (t >= 28.9 && t < 29.9) sglow(x, y - 6, 40, '#9fd8ff', 0.6, 122);
+}
+function glassOnFloor(C, t) {   // his heel knocks it (73.8) → it rolls → CRASH
+  if (t >= T_CRASH) { if (t < 80) for (let i = 0; i < 9; i++) { const a = -Math.PI * (0.1 + 0.8 * hash(i * 2.3)), r = 30 + 90 * eo(pr(t, T_CRASH, T_CRASH + 0.4)) * (0.5 + hash(i * 1.7)); part(C, [[1560 + Math.cos(a) * r, 2795 + Math.sin(a) * r * 0.3], [1572 + Math.cos(a) * r, 2785 + Math.sin(a) * r * 0.3], [1566 + Math.cos(a) * r, 2800]], { col: '#cfe8ff', p: 0.9, seed: 130 + i }, { w: 2, col: '#7a93a8', seed: 140 + i }); } return; }
+  const u = pr(t, 73.9, T_CRASH), x = 1430 + 130 * ei(u), a = u * 7;
+  const c = Math.cos(a), s2 = Math.sin(a), y = u > 0 ? 2780 : 2760, R = (p, q) => [x + p * c - q * s2, y + p * s2 + q * c];
+  const shape = u > 0 ? [R(-55, -28), R(55, -34), R(55, 34), R(-55, 28)] : [[x - 28, 2690], [x + 28, 2690], [x + 22, 2798], [x - 22, 2798]];
+  part(C, shape, { col: '#bfe0f5', p: 0.85, seed: 150 }, { w: 3, col: '#7a93a8', seed: 151 });
+}
+
+// ——— SET: the door gap, seen from the floor ———
+function drawGap(t) {
+  const B = BG, dark = t >= T_DARK;
+  poly(B.f, rect(4200, 1000, 5800, 2600), '#4a3326', 1, { seed: 300 }); for (const [y0, y1] of [[1150, 1900], [2000, 2560]]) edge(B.l, rect(4400, y0, 5600, y1), '#2a1c14', 6, 0.8, 301 + y0);
+  poly(B.f, rect(4200, 2650, 5800, 3900), '#30272a', 1, { seed: 303 });
+  for (let i = 0; i < 5; i++) line(B.l, [[4200, 2780 + i * 220], [5800, 2780 + i * 220]], { w: 4, col: '#261e20', seed: 304 + i });
+  const lit = dark ? 0.35 : 1;
+  poly(B.f, rect(4200, 2600, 5800, 2650), '#ffe6a8', lit, { seed: 310 }); sglow(5000, 2640, 700, '#ffe6a8', 0.45 * lit, 311);
+  for (let i = 0; i < 8; i++) poly(GLOW, [[4300 + i * 190, 2650], [4380 + i * 190, 2650], [4500 + i * 200, 3600], [4380 + i * 200, 3600]], '#ffe6a8', 0.08 * lit, { seed: 320 + i });
+  const f = feetAt(t);
+  if (f > 0) for (const [fx, sg] of [[4840, -1], [5160, 1]]) {   // two feet turned BACKWARDS: heels toward us, long toes pointing away
+    poly(B.f, rect(fx - 70, 2600, fx + 70, 2650), '#000', f, { seed: 330 + fx });
+    poly(GLOW, [[fx - 90, 2650], [fx + 90, 2650], [fx + 140 + sg * 40, 3300], [fx - 140 + sg * 40, 3300]], '#000000', 0.55 * f, { seed: 334 + fx });
+  }
+  if (t >= T_DARK) {   // the shadow slides IN under the door
+    const u = ei(pr(t, 77.0, 80.2));
+    poly(FX, smooth([[4700, 2640], [5300, 2640], [5250 + 120 * u, 2650 + 900 * u], [5000, 2700 + 1100 * u], [4750 - 120 * u, 2650 + 900 * u]], 4), '#000000', 0.9, { seed: 340 });
+    for (let i = 0; i < 5; i++) { const w = 4760 + i * 120; line(FX, smooth([[w, 2650], [w + 30 * Math.sin(t * 3 + i), 2650 + 600 * u], [w + 60 * Math.sin(t * 2 + i), 2650 + (900 + 150 * hash(i)) * u]], 4, false), { w: 22, col: '#000', seed: 345 + i }); }
+  }
+}
+
+// ——— dB chip (top-left) so the danger is always readable ———
+function dbChip(t) {
+  const db = dbAt(t), col = db > 60 ? '#ff4a4a' : db > 30 ? '#ffc23a' : '#4cf08a';
+  box(190, 560, 140, 52, 'rgba(10,10,16,0.95)');
+  digits(SUBT, `${String(Math.round(db)).padStart(2, '0')} dB`, 190, 564, 58, col, { screen: true, glow: 1 });
+}
+
+// ——— printed words ———
+const SUBY = 280;
+const SUBCOL = { N: K.white, B: '#ffe46b', K: '#9fe8ff', M: '#ffb3c6', X: '#ff9a8a' };
+const WHO = { B: 'ब्रोकर', K: 'कबीर', M: 'माँ (फ़ोन)', X: 'दरवाज़े के बाहर से' };
+function subTo(t) {
+  const S = SUBS.find(s => t >= s.t0 && t < s.t1); if (!S) return;
+  const lines = S.text.split('|'), size0 = lines.length > 1 ? 70 : 78, lh = size0 * 1.3;
+  const g = SUBK.g; g.save(); g.font = `700 ${size0}px Kalam`; const tw = Math.max(...lines.map(l => g.measureText(l).width)); g.restore();
+  const sc = tw > 960 ? 960 / tw : 1, size = size0 * sc, hh = 52 + (lines.length - 1) * lh * sc / 2;
+  const cy = SUBY + (lines.length - 1) * lh * sc / 2;
+  box(540, cy, Math.min(tw * sc / 2 + 50, 532), hh, 'rgba(8,8,14,0.94)');
+  if (WHO[S.who]) { const nw = 30 + 21 * WHO[S.who].length; box(120 + nw / 2, cy - hh - 22, nw / 2 + 14, 34, SUBCOL[S.who]); wtext(SUBT, WHO[S.who], 120 + nw / 2, cy - hh - 8, { screen: true, size: 42, weight: 700, col: K.ink, seed: 5, tilt: 0 }); }
+  lines.forEach((ln, i) => wtext(SUBT, ln, 540, SUBY + 24 + i * lh * sc, { screen: true, size, weight: 700, col: SUBCOL[S.who], reveal: pr(t, S.t0 + i * 0.3, S.t0 + i * 0.3 + 0.4), seed: 11 + S.t0 * 3 + i, tilt: 0.3 }));
+}
+export const TEXTS = t => { const S = SUBS.find(s => t >= s.t0 && t < s.t1); if (!S) return []; const n = S.text.split('|').length; return [{ id: 's' + S.t0, text: S.text.replace('|', ' '), x0: 20, y0: SUBY - 90, x1: 1060, y1: SUBY + 70 + (n - 1) * 90 }]; };
+const LABELS = [[7.1, 10.0, 'उसी शाम…'], [29.0, 31.5, 'रात 2:15'], [65.4, 67.5, 'शाम का फ़ोन कॉल…']];
+const END = 85.5;
+function badge(t) { if (t > END) return; const x = 905, y = 560; box(x, y, 118, 40, 'rgba(160,30,40,0.92)'); wtext(SUBT, 'भाग 1/2', x, y + 16, { screen: true, size: 46, weight: 700, col: K.white, seed: 3, tilt: 0 }); }
+function labels(t) {
+  const L = LABELS.find(l => t >= l[0] && t < l[1]);
+  if (L) { box(540, 1690, 330, 60, 'rgba(8,8,14,0.94)'); wtext(SUBT, L[2], 540, 1712, { screen: true, size: 62, weight: 700, col: '#e8d7ff', reveal: pr(t, L[0] + 0.1, L[0] + 0.5), seed: 61 + L[0], tilt: 0 }); }
+  if (t > 4.5 && t < 7.0) {   // title
+    const u = back1(pr(t, 4.5, 4.8)); box(540, 1480, 420 * u + 1, 100 * u + 1, 'rgba(8,8,14,0.95)');
+    wtext(SUBT, 'ख़ामोशी की क़ीमत', 540, 1515, { screen: true, size: 108 * u + 1, weight: 700, col: '#e8d7ff', seed: 81, tilt: 0 });
+    const w = back1(pr(t, 5.0, 5.3)); box(540, 1640, 120 * w + 1, 44 * w + 1, 'rgba(160,30,40,0.95)');
+    wtext(SUBT, 'भाग 1', 540, 1662, { screen: true, size: 58 * w + 1, weight: 700, col: K.white, seed: 82, tilt: 0 });
+  }
+  if (t > 13.8 && t < 19.1) tag(540, 1560, '30 dB के ऊपर = ख़तरा', '#ff9a8a', 56, 'rgba(8,8,14,0.92)');
+  if (t > 46.0 && t < 50.2) tag(540, 1560, 'उल्टे पैर…', '#ff9a8a', 60, 'rgba(8,8,14,0.92)');
+  if (t > 66.2 && t < 67.6) tag(540, 1560, 'इसने माँ की आवाज़ सुन ली थी!', '#ffd36a', 50, 'rgba(8,8,14,0.92)');
+}
+function endCard(t) {
+  if (t < END) return;
+  const g = SUBT.g; g.save(); g.fillStyle = 'rgba(8,8,14,0.95)'; g.fillRect(0, 1180, W, 740); g.restore();
+  wtext(SUBT, 'भाग 1 यहीं तक…', 540, 1290, { screen: true, size: 66, weight: 700, col: '#cfd3e6', reveal: pr(t, END + 0.05, END + 0.4), seed: 90, tilt: 0 });
+  wtext(SUBT, 'तुम होते तो क्या करते?', 540, 1395, { screen: true, size: 72, weight: 700, col: '#e8d7ff', reveal: pr(t, END + 0.4, END + 0.8), seed: 91, tilt: 0 });
+  const u = back1(pr(t, END + 0.9, END + 1.2)); box(540, 1520, 360 * u + 1, 56 * u + 1, 'rgba(160,30,40,0.97)');
+  wtext(SUBT, 'भाग 2 · कल शाम 7:30', 540, 1544, { screen: true, size: 64 * u + 1, weight: 700, col: K.white, seed: 93, tilt: 0 });
+  wtext(SUBT, 'Follow & Subscribe करो · @pannapalatkahani', 540, 1650, { screen: true, size: 46, weight: 700, col: '#ffd36a', reveal: pr(t, END + 1.3, END + 1.8), seed: 94, tilt: 0 });
+  wtext(SUBT, '…पर धीरे से', 540, 1745, { screen: true, size: 46, weight: 700, col: '#cfd3e6', reveal: pr(t, END + 2.4, END + 2.8), seed: 95, tilt: 0 });
+}
+
+// ——— events for the mixer ———
 export const EV = [];
-export const DUR = 80;
-export function frame(comp, t) { return testFrame(comp, t, 'cast'); }
+const ev = (t, type, o = {}) => EV.push({ t: +t.toFixed(3), type, ...o });
+SUBS.forEach(S => { if (S.vo) ev(S.vt, 'voice', { id: S.vo, who: S.who }); });
+ev(0, 'heartbeat', { dur: 7.0 }); ev(0, 'night', { dur: 7.0 }); ev(4.5, 'stinger'); ev(7.0, 'whoosh'); ev(7.0, 'evening', { dur: 17.2 }); ev(12.3, 'needle'); ev(19.2, 'whoosh'); ev(21.8, 'creakS');
+ev(24.2, 'lampdim'); ev(28.9, 'night', { dur: 47.7 }); ev(28.9, 'buzz', { dur: 1.0 }); ev(T_THUD, 'thud'); ev(T_THUD + 0.05, 'needle'); ev(33.6, 'gasp'); ev(37.6, 'scratch', { dur: 4.6 });
+ev(42.7, 'whoosh'); ev(44.4, 'step'); ev(45.2, 'step'); ev(50.2, 'heartbeat', { dur: 7.6 }); ev(50.2, 'breath', { dur: 7.0 }); ev(T_KNOCK, 'knock'); ev(T_KNOCK + 0.4, 'knock');
+ev(65.3, 'whoosh'); ev(65.3, 'memory', { dur: 2.3 }); ev(67.6, 'whoosh'); ev(68.6, 'step'); ev(69.8, 'step'); ev(71.2, 'step'); ev(73.9, 'clink'); ev(73.9, 'roll', { dur: 1.3 }); ev(T_CRASH, 'crash'); ev(T_CRASH + 0.05, 'needle');
+ev(T_DARK, 'lampoff'); ev(76.8, 'slither', { dur: 3.6 }); ev(80.9, 'creak', { dur: 3.5 }); ev(83.5, 'stinger'); ev(END, 'write', { dur: 1.6 });
+[['A', 0], ['B', 7.0], ['C', 12.3], ['D', 19.2], ['E', 24.2], ['F', 28.9], ['G', 33.6], ['H', 37.2], ['I', 42.7], ['J', 50.2], ['K', 57.8], ['L', 62.9], ['M', 65.3], ['N', 67.6], ['O', T_CRASH], ['P', T_DARK], ['Q', 80.4], ['Z', END]].forEach(([id, t]) => ev(t, 'cue', { id }));
+
+// ——— one frame ———
+export function frame(comp, t) { return frameS(comp, toStory(t)); }
+function frameS(comp, t) {
+  const S = shotAt(t), set = S[2];
+  const e = ss((t - S[0]) / (S[1] - S[0]));
+  CAM.x = lerp(S[3][0], S[4][0], e); CAM.y = lerp(S[3][1], S[4][1], e); CAM.s = lerp(S[3][2], S[4][2], e);
+  const [shx, shy] = shake(t); CAM.x += shx / CAM.s; CAM.y += shy / CAM.s;
+  BOIL.amp = 0;
+  [PE, PROP, FG].forEach(clearGroup);
+  [BG.f, BG.l, GLOW, FX, SUBK, SUBT].forEach(clear);
+  const spk = (a, b) => talking(t, a, b) === 'open';
+  const tint = (col, a) => { const g = FX.g; g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = a; g.fillStyle = col; g.fillRect(0, 0, W, H); g.restore(); };
+  const flash = (t0, d, col = '#ffffff', a0 = 0.6) => { if (t > t0 && t < t0 + d) tint(col, a0 * (1 - pr(t, t0, t0 + d))); };
+  let vig = 0.42;
+  if (set === 'room') {
+    const mode = t >= 7.0 && t < 24.2 ? 'eve' : t >= T_DARK ? 'dark' : 'night';
+    drawRoom(t, mode);
+    phoneOnTable(PROP, t);
+    if (t >= 67.6 && t < 80) glassOnFloor(FG, t); else if (t < 67.6 && t >= 24.2) glassOnFloor(FG, 0);
+    if (t >= 76.8) glassOnFloor(FG, t);
+    // Kabir
+    const k = 1.0;
+    if (t < 7.0 || (t >= 50.2 && t < 54.0)) {   // on the bed, hands over his mouth
+      const x = 1850, hy = 2140;
+      person3(FG, seat('kabir', x, t, { hy, k, kneel: 1, exp: { eyes: 'pop', brows: 'worried', mouth: 'small' }, sweat: 1, look: [-1, 0.1], hands: { L: [x - 12, hy + 30], R: [x + 12, hy + 34] }, pose: { L: 'flat', R: 'flat' } }), 100);
+    } else if (t < 12.3) {   // evening: Kabir with his bag; the broker whispers in the doorway
+      const bx = 900, bgy = 2800, bk = 0.95, bhy = bgy - AH * bk;
+      person3(PE, stand('broker', bx, bgy, bk, t, { exp: { eyes: 'pop', brows: 'worried', mouth: spk(8.0, 12.1) ? 'open' : 'wavy' }, sweat: 1, look: [1, 0], hands: { L: [bx - 60, bhy + 300], R: [bx + 170, bhy + 120] }, pose: { R: 'point', L: 'grip' } }), 400);
+      const kx = 1420, kgy = 2810, khy = kgy - AH * k;
+      person3(FG, stand('kabir', kx, kgy, k, t, { exp: { eyes: 'open', brows: 'up', mouth: 'smile' }, look: [-1, 0], hands: { L: [kx - 80, khy + 320], R: [kx + 90, khy + 300] }, pose: { R: 'grip' } }), 100);
+      part(FG, rrect(kx + 60, kgy - 260, kx + 220, kgy - 40, 24), { col: '#3a5a8a', p: 1, seed: 160 }, { w: 4, col: '#120c0a', seed: 161 });   // his bag
+    } else if (t < 19.2) {   // (meter close-up) — no character
+    } else if (t < 24.2) {   // loud speakerphone call, laughing
+      const kx = 1250, kgy = 2810, khy = kgy - AH * k;
+      const a = person3(FG, stand('kabir', kx, kgy, k, t, { exp: { eyes: 'happy', brows: 'up', mouth: spk(19.6, 22.3) ? 'grin' : 'smile' }, look: [0.2, -0.2], hands: { L: [kx - 80, khy + 320], R: [kx + 120, khy + 60] }, pose: { R: 'grip' } }), 100);
+      part(FG, rrect(a.R[0] - 30, a.R[1] - 60, a.R[0] + 30, a.R[1] + 40, 8), { col: '#15161d', p: 1, seed: 162 }, { w: 3, col: '#6b6f82', seed: 163 });
+      if (t > 19.4) { phoneFrame(FG, kx - 290, 2060, 0.62, 2320); person3(FG, bust('maa', kx - 290, 2020, 0.66, t, { L: 210, exp: { eyes: 'happy', brows: 'up', mouth: spk(22.6, 23.9) ? 'open' : 'smile' } }), 520); }
+      if (t > 22.5) { const g = 1 - pr(t, 23.9, 24.2); poly(FX, handCircle(420, 2160, 34, 170, 0, 16), '#cdb4b0', 0.75 * g, { seed: 171 }); sglow(420, 2160, 70, '#e8d7ff', 0.5 * g, 172); }   // clue: an ear in the almirah gap
+    } else if (t < 28.9) {   // headphones on, falls asleep
+      const x = 1850, hy = 2140;
+      person3(FG, seat('kabir', x, t, { hy, k, kneel: 1, exp: t > 26.2 ? { eyes: 'closed', brows: 'calm', mouth: 'small' } : { eyes: 'happy', brows: 'calm', mouth: 'smile' }, look: [-0.5, 0.3], hands: { L: [x - 60, hy + 300], R: [x + 60, hy + 300] } }), 100);
+    } else if (t < 37.2 || (t >= 62.9 && t < 65.3)) {   // asleep → wakes / realisation
+      const x = 1850, hy = 2140, woke = t >= 33.6;
+      if (t < 62.9) person3(FG, seat('kabir', x, t, { hy, k, kneel: 1, exp: woke ? { eyes: 'pop', brows: 'up', mouth: 'o' } : { eyes: 'closed', brows: 'calm', mouth: 'small' }, look: [-1, 0], hands: { L: [x - 60, hy + 300], R: [x + 60, hy + 300] } }), 100);
+      else { const kx = 1360, kgy = 2810, khy = kgy - AH * k; person3(FG, stand('kabir', kx, kgy, k, t, { exp: { eyes: 'pop', brows: 'worried', mouth: 'o' }, sweat: 1, look: [-1, 0.1], hands: { L: [kx - 55, khy + 25], R: [kx + 55, khy + 25] }, pose: { L: 'spread', R: 'spread' }, elbowDown: 1 }), 100); }
+    } else if (t >= 54.0 && t < 57.8) {   // meter close
+    } else if (t >= 57.8 && t < 62.9) {   // knock knock — he stands frozen near the bed
+      const kx = 1380, kgy = 2810, khy = kgy - AH * k;
+      person3(FG, stand('kabir', kx, kgy, k, t, { exp: { eyes: 'pop', brows: 'worried', mouth: 'small' }, sweat: 1, look: [-1, 0], hands: { L: [kx - 12, khy + 30], R: [kx + 12, khy + 34] }, pose: { L: 'flat', R: 'flat' } }), 100);
+    } else if (t >= 67.6 && t < 75.3) {   // steps back toward the bed… the glass
+      const kx = lerp(1220, 1380, ei(pr(t, 68.4, 73.6))), kgy = 2810, khy = kgy - AH * k, ph = Math.sin((t - 68.4) * 3.2);
+      person3(FG, stand('kabir', kx, kgy, k, t, { exp: { eyes: 'pop', brows: 'worried', mouth: 'flat' }, sweat: 1, look: [-1, 0], feet: { L: [kx - 50 + ph * 20, kgy], R: [kx + 60 - ph * 20, kgy] }, hands: { L: [kx - 100, khy + 240], R: [kx + 110, khy + 250] }, pose: { L: 'spread', R: 'spread' } }), 100);
+    }
+    if (t >= 75.3 && t < 76.8) flash(T_CRASH + 0.05, 0.5, '#ff2a2a', 0.45);
+    if (mode === 'dark') tint('#000008', 0.55 * pr(t, T_DARK, T_DARK + 0.3));
+    if (t >= 80.4) {   // the almirah: fingers on the door edge, a pale ear in the dark
+      const u = pr(t, 82.2, 83.2), ex = 300 + 200 * almirahOpen(t);
+      for (let i = 0; i < 4; i++) { const y = 1980 + i * 46, L = 70 * u; if (u > 0) { line(FX, [[ex, y], [ex + 40 * u, y - 8], [ex + L, y + 10]], { w: 13, col: '#050508', seed: 400 + i }); line(FX, [[ex + 40 * u, y - 8], [ex + L, y + 10]], { w: 3, col: '#d9d0c4', seed: 404 + i }); } }
+      const g = pr(t, 83.4, 84.4); if (g > 0) { part(FG, smooth([[ex - 120, 1800], [ex - 80, 1790], [ex - 66, 1840], [ex - 84, 1880], [ex - 118, 1860]], 3), { col: '#cdb4b0', p: 0.85 * g, seed: 410 }, null); sglow(ex - 95, 1835, 120, '#e8d7ff', 0.5 * g, 411); }
+    }
+    vig = mode === 'eve' ? 0.25 : mode === 'dark' ? 0.6 : 0.45;
+  } else if (set === 'gap') {
+    drawGap(t);
+    if (t >= T_DARK) tint('#000008', 0.35);
+    vig = 0.55;
+  } else if (set === 'memory') {
+    poly(BG.f, rect(6000, 1000, 8000, 3800), '#2a2236', 1, { seed: 600 });
+    phoneFrame(PE, 7000, 2420, 1.5, 2300);
+    person3(PE, bust('maa', 7000, 2330, 1.6, t, { L: 210, exp: { eyes: 'happy', brows: 'up', mouth: BOIL.step % 3 ? 'open' : 'smile' } }), 500);
+    sglow(7000, 2420, 700, '#ffcf7a', 0.25, 601);
+    tint('#6a4a2a', 0.22);
+    vig = 0.45;
+  }
+  badge(t); if (t < END) dbChip(t);
+  if (!NOSUBS) { subTo(t); labels(t); }
+  else if (t > 4.5 && t < 7.0) labels(t);
+  endCard(t);
+  finish(comp, vig);
+}
 export function testFrame(comp, t, test) {
   [PE, PROP, FG].forEach(clearGroup); [BG.f, BG.l, GLOW, FX, SUBK, SUBT].forEach(clear); BOIL.amp = 0;
   CAM.x = 20000; CAM.y = 2400; CAM.s = 1.0;
