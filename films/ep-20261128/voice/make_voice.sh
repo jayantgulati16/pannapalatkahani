@@ -33,3 +33,4 @@ ok n4 && say n4 Sulafat "$NAR" "Style: tender, a lump in the throat. Pace: slow.
 ok n5 && say n5 Sulafat "$NAR" "Style: deeply moving, realisation; say the name MEERA clearly. Pace: slow." "मीरा… आज जो भी बनी थी… वो आवाज़ आरव की दी हुई थी।"
 ok a1 && say a1 Enceladus "$AARAV" "Style: a young MAN, soft, hoarse, a shy smile, tears in his voice, the first words after fifteen years of silence. Pace: slow." "अब तो ख़ुश हो?"
 ok m4 && say m4 Leda "$MEERA" "Style: a young WOMAN laughing through happy tears, one word, full of love. Pace: slow." "बहुत।"
+ok n6 && say n6 Sulafat "$NAR" "Style: warm, friendly, inviting, a smile in the voice, the closing line of the show. Pace: medium." "अगली कहानी देखने के लिए… सब्सक्राइब और फ़ॉलो करो!"

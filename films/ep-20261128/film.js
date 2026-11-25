@@ -301,6 +301,7 @@ export const SUBS = [
   { t0: 65.8, t1: 71.9, text: 'मीरा… आज जो भी बनी थी…|वो आवाज़ आरव की दी हुई थी।', who: 'N', vo: 'n5', vt: 65.9 },
   { t0: 75.1, t1: 78.2, text: '“अब तो ख़ुश हो?”', who: 'A', vo: 'a1', vt: 75.2, words: [75.37, 75.71, 76.5, 76.74] },
   { t0: 78.3, t1: 81.0, text: '“बहुत।”', who: 'M', vo: 'm4', vt: 78.4, words: [80.07] },
+  { t0: 82.7, t1: 87.0, text: 'अगली कहानी देखने के लिए…|Subscribe और Follow करो!', who: 'N', vo: 'n6', vt: 82.8 },
 ];
 const tickN = (S, t) => S.words.filter(w => t >= w).length;
 function meeraWords(t) {
@@ -345,7 +346,7 @@ const SHOTS = [
 const STRETCH = [];
 function toReal(s) { let r = s; for (const [a, b, x] of STRETCH) { if (s >= b) r += x; else if (s > a) r += x * (s - a) / (b - a); } return r; }
 function toStory(t) { let lo = 0, hi = 120; for (let i = 0; i < 40; i++) { const m = (lo + hi) / 2; if (toReal(m) < t) lo = m; else hi = m; } return (lo + hi) / 2; }
-export const DUR = 86.5;
+export const DUR = 87.2;
 function shotAt(t) { return SHOTS.find(s => t >= s[0] && t < s[1]) || SHOTS[SHOTS.length - 1]; }
 const HITS = [[21.8, 8], [43.0, 10], [72.3, 5]];
 function shake(t) {
@@ -591,7 +592,7 @@ function endCard(t) {
   wtext(SUBT, 'अपने आख़िरी लफ़्ज़ भी दे दोगे', 540, 1480, { screen: true, size: 58, weight: 700, col: '#ffb3c6', reveal: pr(t, END + 0.6, END + 1.0), seed: 92, tilt: 0 });
   const u = back1(pr(t, END + 1.1, END + 1.4)); box(540, 1610, 340 * u + 1, 56 * u + 1, 'rgba(160,30,40,0.97)');
   wtext(SUBT, 'अगला पन्ना कल', 540, 1634, { screen: true, size: 66 * u + 1, weight: 700, col: K.white, seed: 93, tilt: 0 });
-  wtext(SUBT, 'Follow करो · @pannapalatkahani', 540, 1740, { screen: true, size: 50, weight: 700, col: K.note, reveal: pr(t, END + 1.5, END + 1.9), seed: 94, tilt: 0 });
+  wtext(SUBT, 'Subscribe & Follow करो · @pannapalatkahani', 540, 1740, { screen: true, size: 50, weight: 700, col: K.note, reveal: pr(t, END + 1.5, END + 1.9), seed: 94, tilt: 0 });
 }
 
 // ——— events for the mixer ———
