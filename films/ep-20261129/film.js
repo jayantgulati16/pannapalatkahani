@@ -379,19 +379,19 @@ function phoneFrame(C, x, y, s, sd = 2300) {   // a phone held up: video call sc
 export const SUBS = [
   { t0: 0.2, t1: 4.6, text: '“कबीर बेटा…|दरवाज़ा खोलो… मैं हूँ।”', who: 'X', vo: 'v1', vt: 0.3 },
   { t0: 7.9, t1: 12.3, text: '“रात को… तीस डेसिबल से|ज़्यादा आवाज़ मत करना।”', who: 'B', vo: 'b1', vt: 8.0 },
-  { t0: 12.4, t1: 19.1, text: 'इस पुराने फ़्लैट के हर कमरे में|एक साउंड मीटर लगा है…|और एक ही नियम है।', who: 'N', vo: 'n1', vt: 12.5 },
+  { t0: 12.4, t1: 19.1, text: 'इस पुराने फ़्लैट के हर कमरे में|एक साउंड मीटर लगा है…|और एक ही नियम है।', who: 'N', vo: 'n1', scr: 'हर कमरे में एक साउंड मीटर…|और एक ही नियम।', vt: 12.5 },
   { t0: 19.5, t1: 22.4, text: '“हाँ माँ, पहुँच गया!|बढ़िया फ़्लैट है!”', who: 'K', vo: 'k1', vt: 19.6 },
   { t0: 22.5, t1: 24.1, text: '“खाना खा लेना बेटा।”', who: 'M', vo: 'm1', vt: 22.6 },
-  { t0: 24.2, t1: 28.8, text: 'कबीर ने इसे मज़ाक समझा…|और हेडफ़ोन लगाकर सो गया।', who: 'N', vo: 'n2', vt: 24.3 },
-  { t0: 29.0, t1: 37.1, text: 'रात सवा दो बजे… फ़ोन नीचे गिरा —|और सुई पहली बार|तीस के पार गई।', who: 'N', vo: 'n3', vt: 29.1 },
-  { t0: 37.3, t1: 42.6, text: 'तभी दीवार के पीछे से…|लंबे नाख़ूनों से|खुरचने की आवाज़ आई।', who: 'N', vo: 'n4', vt: 37.4 },
-  { t0: 42.8, t1: 50.2, text: 'दरवाज़े की दरार से दिखा…|बाहर कोई खड़ा था।|उसके पैर उल्टे मुड़े हुए थे।', who: 'N', vo: 'n5', vt: 42.9 },
-  { t0: 50.3, t1: 57.8, text: 'कबीर ने मुँह दबा लिया…|उसकी धड़कन से ही|सुई उनतीस पर काँप रही थी।', who: 'N', vo: 'n6', vt: 50.4 },
+  { t0: 24.2, t1: 28.8, text: 'कबीर ने इसे मज़ाक समझा…|और हेडफ़ोन लगाकर सो गया।', who: 'N', vo: 'n2', scr: 'कबीर ने इसे मज़ाक समझा…', vt: 24.3 },
+  { t0: 29.0, t1: 37.1, text: 'रात सवा दो बजे… फ़ोन नीचे गिरा —|और सुई पहली बार|तीस के पार गई।', who: 'N', vo: 'n3', scr: 'रात 2:15 — फ़ोन गिरा…|सुई पहली बार 30 के पार!', vt: 29.1 },
+  { t0: 37.3, t1: 42.6, text: 'तभी दीवार के पीछे से…|लंबे नाख़ूनों से|खुरचने की आवाज़ आई।', who: 'N', vo: 'n4', scr: 'दीवार के पीछे…|नाख़ूनों की खुरचन', vt: 37.4 },
+  { t0: 42.8, t1: 50.2, text: 'दरवाज़े की दरार से दिखा…|बाहर कोई खड़ा था।|उसके पैर उल्टे मुड़े हुए थे।', who: 'N', vo: 'n5', scr: 'बाहर कोई खड़ा था…|पैर उल्टे मुड़े हुए!', vt: 42.9 },
+  { t0: 50.3, t1: 57.8, text: 'कबीर ने मुँह दबा लिया…|उसकी धड़कन से ही|सुई उनतीस पर काँप रही थी।', who: 'N', vo: 'n6', scr: 'धड़कन से ही|सुई 29 पर काँप रही थी…', vt: 50.4 },
   { t0: 58.5, t1: 62.8, text: '“बेटा… माँ हूँ…|दरवाज़ा खोलो ना…”', who: 'X', vo: 'v2', vt: 58.6 },
-  { t0: 63.0, t1: 70.6, text: 'पर माँ तो दूसरे शहर में थी…|उस चीज़ ने शाम को फ़ोन पर|माँ की आवाज़ सुन ली थी।', who: 'N', vo: 'n7', vt: 63.1 },
-  { t0: 70.7, t1: 74.9, text: 'पीछे हटते ही…|उसका पैर काँच के गिलास से टकराया।', who: 'N', vo: 'n8', vt: 70.8 },
-  { t0: 77.0, t1: 85.4, text: 'कबीर को लगा ख़तरा दरवाज़े के बाहर है…|पर वो चीज़|अब कमरे के अंदर थी।', who: 'N', vo: 'n9', vt: 77.1 },
-  { t0: 85.6, t1: 91.0, text: 'भाग 2 देखने के लिए…|फ़ॉलो और सब्सक्राइब करो… पर धीरे से।', who: 'N', vo: 'n10', vt: 85.7 },
+  { t0: 63.0, t1: 70.6, text: 'पर माँ तो दूसरे शहर में थी…|उस चीज़ ने शाम को फ़ोन पर|माँ की आवाज़ सुन ली थी।', who: 'N', vo: 'n7', scr: 'पर माँ तो दूसरे शहर में थी…|उसने फ़ोन पर माँ की आवाज़ सुन ली थी!', vt: 63.1 },
+  { t0: 70.7, t1: 74.9, text: 'पीछे हटते ही…|उसका पैर काँच के गिलास से टकराया।', who: 'N', vo: 'n8', scr: 'पैर काँच के गिलास से टकराया…', vt: 70.8 },
+  { t0: 77.0, t1: 85.4, text: 'कबीर को लगा ख़तरा दरवाज़े के बाहर है…|पर वो चीज़|अब कमरे के अंदर थी।', who: 'N', vo: 'n9', scr: 'ख़तरा बाहर नहीं था…|वो चीज़ अब अंदर थी।', vt: 77.1 },
+  { t0: 85.6, t1: 91.0, text: 'भाग 2 देखने के लिए…|फ़ॉलो और सब्सक्राइब करो… पर धीरे से।', who: 'N', vo: 'n10', scr: '', vt: 85.7 },
 ];
 export const DUR = 91.2;
 const STRETCH = [];
@@ -533,36 +533,38 @@ function dbChip(t) {
   digits(SUBT, `${String(Math.round(db)).padStart(2, '0')} dB`, 190, 564, 58, col, { screen: true, glow: 1 });
 }
 
-// ——— printed words ———
-const SUBY = 280;
+// ——— printed words: LOWER THIRD, outlined text, no heavy box (Jayant/owner call 25 Nov: lighter subs for horror; dialogue in full, narration shortened) ———
+const SUBY = 1560;
 const SUBCOL = { N: K.white, B: '#ffe46b', K: '#9fe8ff', M: '#ffb3c6', X: '#ff9a8a' };
 const WHO = { B: 'ब्रोकर', K: 'कबीर', M: 'माँ (फ़ोन)', X: 'दरवाज़े के बाहर से' };
 function subTo(t) {
   const S = SUBS.find(s => t >= s.t0 && t < s.t1); if (!S) return;
-  const lines = S.text.split('|'), size0 = lines.length > 1 ? 70 : 78, lh = size0 * 1.3;
+  const txt = S.scr ?? S.text; if (!txt) return;
+  const lines = txt.split('|'), size0 = 66, lh = size0 * 1.28;
   const g = SUBK.g; g.save(); g.font = `700 ${size0}px Kalam`; const tw = Math.max(...lines.map(l => g.measureText(l).width)); g.restore();
-  const sc = tw > 960 ? 960 / tw : 1, size = size0 * sc, hh = 52 + (lines.length - 1) * lh * sc / 2;
-  const cy = SUBY + (lines.length - 1) * lh * sc / 2;
-  box(540, cy, Math.min(tw * sc / 2 + 50, 532), hh, 'rgba(8,8,14,0.94)');
-  if (WHO[S.who]) { const nw = 30 + 21 * WHO[S.who].length; box(120 + nw / 2, cy - hh - 22, nw / 2 + 14, 34, SUBCOL[S.who]); wtext(SUBT, WHO[S.who], 120 + nw / 2, cy - hh - 8, { screen: true, size: 42, weight: 700, col: K.ink, seed: 5, tilt: 0 }); }
-  lines.forEach((ln, i) => wtext(SUBT, ln, 540, SUBY + 24 + i * lh * sc, { screen: true, size, weight: 700, col: SUBCOL[S.who], reveal: pr(t, S.t0 + i * 0.3, S.t0 + i * 0.3 + 0.4), seed: 11 + S.t0 * 3 + i, tilt: 0.3 }));
+  const sc = tw > 980 ? 980 / tw : 1, size = size0 * sc;
+  const g2 = SUBT.g, top = SUBY - 60, bot = SUBY + (lines.length - 1) * lh * sc + 40;   // a soft dark fade behind the words
+  const grd = g2.createLinearGradient(0, top - 60, 0, bot + 60); grd.addColorStop(0, 'rgba(0,0,0,0)'); grd.addColorStop(0.3, 'rgba(0,0,0,0.45)'); grd.addColorStop(0.7, 'rgba(0,0,0,0.45)'); grd.addColorStop(1, 'rgba(0,0,0,0)');
+  g2.save(); g2.fillStyle = grd; g2.fillRect(0, top - 60, W, bot - top + 120); g2.restore();
+  if (WHO[S.who]) { const nw = 26 + 19 * WHO[S.who].length; box(540, top - 18, nw / 2 + 12, 28, SUBCOL[S.who]); wtext(SUBT, WHO[S.who], 540, top - 6, { screen: true, size: 36, weight: 700, col: K.ink, seed: 5, tilt: 0 }); }
+  lines.forEach((ln, i) => wtext(SUBT, ln, 540, SUBY + 24 + i * lh * sc, { screen: true, size, weight: 700, col: SUBCOL[S.who], outline: 9, reveal: pr(t, S.t0 + i * 0.3, S.t0 + i * 0.3 + 0.4), seed: 11 + S.t0 * 3 + i, tilt: 0 }));
 }
-export const TEXTS = t => { const S = SUBS.find(s => t >= s.t0 && t < s.t1); if (!S) return []; const n = S.text.split('|').length; return [{ id: 's' + S.t0, text: S.text.replace('|', ' '), x0: 20, y0: SUBY - 90, x1: 1060, y1: SUBY + 70 + (n - 1) * 90 }]; };
+export const TEXTS = t => { const S = SUBS.find(s => t >= s.t0 && t < s.t1); const tx = S && (S.scr ?? S.text); if (!tx) return []; const n = tx.split('|').length; return [{ id: 's' + S.t0, text: tx.replace(/\|/g, ' '), x0: 20, y0: SUBY - 110, x1: 1060, y1: SUBY + 60 + (n - 1) * 85 }]; };
 const LABELS = [[7.1, 10.0, 'उसी शाम…'], [29.0, 31.5, 'रात 2:15'], [65.4, 67.5, 'शाम का फ़ोन कॉल…']];
 const END = 85.5;
 function badge(t) { if (t > END) return; const x = 905, y = 560; box(x, y, 118, 40, 'rgba(160,30,40,0.92)'); wtext(SUBT, 'भाग 1/2', x, y + 16, { screen: true, size: 46, weight: 700, col: K.white, seed: 3, tilt: 0 }); }
 function labels(t) {
   const L = LABELS.find(l => t >= l[0] && t < l[1]);
-  if (L) { box(540, 1690, 330, 60, 'rgba(8,8,14,0.94)'); wtext(SUBT, L[2], 540, 1712, { screen: true, size: 62, weight: 700, col: '#e8d7ff', reveal: pr(t, L[0] + 0.1, L[0] + 0.5), seed: 61 + L[0], tilt: 0 }); }
+  if (L) { box(540, 760, 330, 60, 'rgba(8,8,14,0.94)'); wtext(SUBT, L[2], 540, 782, { screen: true, size: 62, weight: 700, col: '#e8d7ff', reveal: pr(t, L[0] + 0.1, L[0] + 0.5), seed: 61 + L[0], tilt: 0 }); }
   if (t > 4.5 && t < 7.0) {   // title
     const u = back1(pr(t, 4.5, 4.8)); box(540, 1480, 420 * u + 1, 100 * u + 1, 'rgba(8,8,14,0.95)');
     wtext(SUBT, 'ख़ामोशी की क़ीमत', 540, 1515, { screen: true, size: 108 * u + 1, weight: 700, col: '#e8d7ff', seed: 81, tilt: 0 });
     const w = back1(pr(t, 5.0, 5.3)); box(540, 1640, 120 * w + 1, 44 * w + 1, 'rgba(160,30,40,0.95)');
     wtext(SUBT, 'भाग 1', 540, 1662, { screen: true, size: 58 * w + 1, weight: 700, col: K.white, seed: 82, tilt: 0 });
   }
-  if (t > 13.8 && t < 19.1) tag(540, 1560, '30 dB के ऊपर = ख़तरा', '#ff9a8a', 56, 'rgba(8,8,14,0.92)');
-  if (t > 46.0 && t < 50.2) tag(540, 1560, 'उल्टे पैर…', '#ff9a8a', 60, 'rgba(8,8,14,0.92)');
-  if (t > 66.2 && t < 67.6) tag(540, 1560, 'इसने माँ की आवाज़ सुन ली थी!', '#ffd36a', 50, 'rgba(8,8,14,0.92)');
+  if (t > 13.8 && t < 19.1) tag(540, 760, '30 dB के ऊपर = ख़तरा', '#ff9a8a', 56, 'rgba(8,8,14,0.92)');
+  if (t > 46.0 && t < 50.2) tag(540, 760, 'उल्टे पैर…', '#ff9a8a', 60, 'rgba(8,8,14,0.92)');
+  if (t > 66.2 && t < 67.6) tag(540, 760, 'इसने माँ की आवाज़ सुन ली थी!', '#ffd36a', 50, 'rgba(8,8,14,0.92)');
 }
 function endCard(t) {
   if (t < END) return;
