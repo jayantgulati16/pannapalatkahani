@@ -101,3 +101,4 @@
 - Ep 7 on YouTube 2026-11-25 18:31 IST, video id SI08gcj0zUk, https://youtube.com/shorts/SI08gcj0zUk
 - 2026-11-25 (Jayant): the light lower-third subtitle style is the STANDING format for all NEW videos (Ep 12, Ep 13 and onward); old videos (Ep 8–11, already rendered/scheduled) stay as they are. STUDIO.md SUBTITLES rule updated (no longer an A/B — still note the numbers).
 - Ep 5 on Facebook 2026-11-25 19:30 IST, video id 1133331782822296, https://www.facebook.com/1133331782822296 (trig_013ddQiLy4687qfRtELXzLso).
+- Ep 8 posted on Instagram 2026-11-25 ~19:37 IST (कर्तव्य या भक्ति? भाग 1, reel-ep08) after Jayant said "Post kro" (the 19:30 trigger trig_01VZaU58buLf3ze5KnSrdxBg fired in another session; no post was visible), media id 17932084626179861 (permalink not yet in Windsor cache).
