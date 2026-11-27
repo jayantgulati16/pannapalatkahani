@@ -84,6 +84,15 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
    `.venv/bin/python films/ep-…/mix.py`. Loudness: ffmpeg is 6.x so mux.sh refuses — do two-pass loudnorm on out/mix.wav to −14 LUFS
    (linear=true), then `ffmpeg -i out/video.mp4 -i out/mixn.wav -map 0:v -map 1:a -c:v libx264 -preset medium -crf 22 -maxrate 8M -bufsize 16M
    -pix_fmt yuv420p -c:a aac -b:a 192k -ar 48000 -movflags +faststart -use_editlist 0 -shortest <name>.mp4` (Instagram wants no edit lists, moov first). Check blackdetect and ebur128; pull 8 frames and look.
+   **CREDITS (every episode, before delivering):** write the episode's OWN title and its REAL instrument list into the episode's
+   `CREDITS` — don't leave the copied template text. Most sample libraries (VSCO 2 CE, VCSL, FreePats, Karoryfer) are CC0 and need
+   no credit, but two REQUIRE attribution and this channel is monetised, so credit them verbatim:
+   - `piano` / `grand_piano` (= Salamander Grand Piano V3, CC BY 3.0) →
+     `Piano: "Salamander Grand Piano V3" by Alexander Holm, licensed under CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)`
+   - `drum_kit` (= MuldjordKit, CC BY 4.0) →
+     `Drums: "MuldjordKit" by Lars Muldjord (drumgizmo.org), FreePats version, licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)`
+   Check with `grep -o "'piano'\|grand_piano\|drum_kit" films/ep-…/mix.py`. Films we make are ours, commercial use included
+   (Lemo-Opuscar LICENCE, "FILMS YOU MAKE") — only these third-party samples carry conditions.
 6. **Deliver:** copy mp4 + poster.jpg to /home/claude/outputs, SendUserFile both (FYI, not a second approval); SendUserMessage with the final Instagram caption
    (Hinglish hook line + question for comments + max 5 hashtags, incl. #pannapalatkahani) and suggested post time 7–8 PM IST;
    and say it goes live at 19:30 unless he says "ruko".
