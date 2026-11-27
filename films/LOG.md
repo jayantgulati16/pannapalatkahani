@@ -107,3 +107,4 @@
 - Ep 8 on YouTube 2026-11-26 18:31 IST, video id 1u4kPXxLPAo, https://youtube.com/shorts/1u4kPXxLPAo
 - Ep 6 on Facebook 2026-11-26 19:30 IST, video id 1679591976876683, https://www.facebook.com/1679591976876683 (trig_017w1X8KnunsTwjwM9oDY7or). This was the last FB upload queued from the 19 Nov session; the FB queue continues with Ep 7 on 27 Nov (daily run's job).
 - Ep 9 posted on Instagram 2026-11-26 19:31 IST (असली भक्ति भाग 2, reel-ep09), media id 18015709067768634 (permalink not in stats yet). Ep 8 permalink: https://www.instagram.com/reel/DgKtEKwIhTV/
+- 2026-11-27 09:10 IST run: after week 1 and LOG still has no "continue" from Jayant → no episode made, no topics. Asked him once (09:31 IST) whether to continue + add YouTube. Already scheduled: Ep 10 IG today, Ep 11 28 Nov, Ep 12 29 Nov, Ep 13 30 Nov (IG/YT/FB triggers). FB Ep 7 (due 27 Nov) NOT queued — waits on his answer. Topics needed from Ep 14 (1 Dec).
