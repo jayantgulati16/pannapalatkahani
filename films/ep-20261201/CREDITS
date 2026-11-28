@@ -1,0 +1,11 @@
+आख़िरी मेट्रो (The Last Metro) — भाग 1 — credits for third-party material
+
+Picture: made entirely in code (no image or video generator, no stock footage).
+  The set and the characters are 3D models built in three.js (MIT licence); each frame is traced into outlines with the npr pass
+  adapted from Lemo-Opuscar's crayon-world style (MIT licence) and drawn in our flat cartoon style.
+Font: Kalam by Indian Type Foundry — SIL Open Font License 1.1 (fonts/OFL-Kalam.txt), via @fontsource/kalam.
+Music: original score in code (D minor horror, with a music-box lullaby).
+  Contrabass, cellos, violas, violins, trombone, tuba, horn, gran cassa, gong — VSCO 2 Community Edition (CC0 1.0).
+  Glockenspiel, kalimba, bowed vibraphone — VCSL (CC0 1.0).
+Sound effects and ambience: synthesised in code.
+Voice: Google Gemini text-to-speech (gemini-3.8-flash-tts; voices Sulafat, Enceladus, Gacrux), generated with Jayant's API key.

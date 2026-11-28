@@ -56,6 +56,14 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
 - No crayon-magic plot device ("cryon seh bahr neklo"). Look can change per story; Ep 4 introduced "night pastel on black paper" (ep-20261121).
 - Gemini key: read GEMINI_API_KEY env var if present, else /root/.gemini_key; ask Jayant only if neither exists.
 
+## 3D episodes (from Ep 14, Jayant 28 Nov: "Perfect hai")
+Template: films/ep-20261201 (README.md). Our FLAT look (never crayon). film.js = head.js + face.part.js + body.js (`sh build.sh`).
+Film time vs story time: body.js KF table stretches each shot to fit its voice; SUBS are in film time.
+RENDER IN CHUNKS: the 3D page grows in memory and crashes Chromium after ~300 frames per worker (and 3 workers OOM). Render 9 s slices:
+`node core/render/video.mjs films/ep-… --workers 2 --size 1080x1920 --q "t0=A&t1=B" --out /tmp/…/c_A.mp4` (main.js reads t0/t1),
+then concat (ffmpeg concat demuxer) + mux with mixn.wav in the usual final encode. If a slice still crashes, render it with
+still.mjs --range A:B:0.041667 (one browser) and encode the jpgs at 24 fps.
+
 ## Each morning (run starts ~09:05 IST; topic options reach Jayant ~09:30 — he sleeps till then)
 1. **Trend research (WebSearch, 4–6 searches):** what India is talking about today — festivals/observances, cricket/sports results,
    weather (monsoon, fog, heatwave, winter), viral harmless moments, big cultural days. Never: real people, politicians, politics,

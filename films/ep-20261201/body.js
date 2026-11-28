@@ -200,23 +200,27 @@ function build() {
 
 // ═══════════════════════ आख़िरी मेट्रो — भाग 1: timeline ═══════════════════════
 // N narrator (Sulafat) · R Rohan (Enceladus, tired young man) · M Maa (Gacrux, old woman, soft and strange)
+// voice-timed SUBS (FILM time). The picture below is written in STORY time; KF maps film time ↔ story time (each shot stretched to fit its voice).
+const KF = [[0, 0], [5.2, 6.6], [11.4, 15.6], [17.6, 25.0], [24.6, 32.0], [27.4, 35.2], [34.0, 43.2], [36.6, 45.8], [39.6, 48.8], [45.5, 54.7], [49.6, 58.8], [51.6, 60.8], [57.4, 66.6], [58.4, 67.6], [64.0, 73.2]];
+const kmap = (x, a, b) => { for (let i = 1; i < KF.length; i++) if (x <= KF[i][a] || i === KF.length - 1) { const [p, q] = [KF[i - 1], KF[i]]; return p[b] + (x - p[a]) * (q[b] - p[b]) / (q[a] - p[a]); } };
+const toStory = t => kmap(t, 1, 0), toFilm = u => kmap(u, 0, 1);
 export const SUBS = [
-  { t0: 0.25, t1: 5.1, text: 'रात के ग्यारह बजकर पचपन मिनट… आख़िरी मेट्रो।', scr: 'रात 11:55… आख़िरी मेट्रो।', who: 'N', vo: 'n1', vt: 0.3 },
-  { t0: 5.3, t1: 9.3, text: 'रोहन ऑफ़िस से थककर लौट रहा था… तभी माँ का फ़ोन आया।', scr: 'रोहन ऑफ़िस से थका-हारा…|तभी माँ का फ़ोन आया।', who: 'N', vo: 'n2', vt: 5.35 },
-  { t0: 9.4, t1: 11.4, text: 'माँ… बाद में बात करता हूँ।', who: 'R', vo: 'r1', vt: 9.45 },
-  { t0: 11.6, t1: 17.5, text: 'कोने में एक बूढ़ी अम्मा बैठी थीं… हाथ में पुराना टिफ़िन… नज़रें खिड़की के बाहर अँधेरे पर।', scr: 'कोने में एक बूढ़ी अम्मा…|हाथ में पुराना टिफ़िन।', who: 'N', vo: 'n3', vt: 11.65 },
-  { t0: 19.5, t1: 23.4, text: 'स्टेशन आया… दरवाज़े खुले… पर कोई नहीं चढ़ा।', scr: 'स्टेशन आया… दरवाज़े खुले…|पर कोई नहीं चढ़ा।', who: 'N', vo: 'n4', vt: 19.55 },
-  { t0: 24.7, t1: 27.3, text: 'रोहन ने अम्मा की नज़र का पीछा किया…', who: 'N', vo: 'n5', vt: 24.75 },
-  { t0: 27.6, t1: 30.2, text: 'शीशे में वो ख़ुद दिख रहा था…', who: 'N', vo: 'n6', vt: 27.65 },
-  { t0: 30.6, t1: 33.9, text: 'पर अम्मा की सीट… ख़ाली थी।', who: 'N', vo: 'n7', vt: 30.65 },
-  { t0: 39.8, t1: 43.4, text: 'रोहन बैग छोड़कर अगले डिब्बे की तरफ़ भागा…', scr: 'रोहन अगले डिब्बे की तरफ़ भागा…', who: 'N', vo: 'n8', vt: 39.85 },
-  { t0: 46.0, t1: 49.5, text: 'वही कोना। वही सीट। वही टिफ़िन।', who: 'N', vo: 'n9', vt: 46.05 },
-  { t0: 51.9, t1: 57.3, text: 'बेटा… मेरा स्टेशन आ गया… पर मैं उतर नहीं सकती।', scr: 'बेटा… मेरा स्टेशन आ गया…|पर मैं उतर नहीं सकती।', who: 'M', vo: 'm1', vt: 51.95 },
-  { t0: 58.6, t1: 64.0, text: 'भाग 2 देखने के लिए… फ़ॉलो और सब्सक्राइब करो!', scr: '', who: 'N', vo: 'n10', vt: 58.65 },
+  { t0: 0.3, t1: 6.5, text: 'रात के ग्यारह बजकर पचपन मिनट… आख़िरी मेट्रो।', scr: 'रात 11:55… आख़िरी मेट्रो।', who: 'N', vo: 'n1', vt: 0.3, d: 6.05 },
+  { t0: 6.7, t1: 12.5, text: 'रोहन ऑफ़िस से थककर लौट रहा था… तभी माँ का फ़ोन आया।', scr: 'रोहन ऑफ़िस से थका-हारा…|तभी माँ का फ़ोन आया।', who: 'N', vo: 'n2', vt: 6.7, d: 5.73 },
+  { t0: 12.7, t1: 15.0, text: 'माँ… बाद में बात करता हूँ।', who: 'R', vo: 'r1', vt: 12.7, d: 2.14 },
+  { t0: 15.75, t1: 24.7, text: 'कोने में एक बूढ़ी अम्मा बैठी थीं… हाथ में पुराना टिफ़िन… नज़रें खिड़की के बाहर अँधेरे पर।', scr: 'कोने में एक बूढ़ी अम्मा…|हाथ में पुराना टिफ़िन।', who: 'N', vo: 'n3', vt: 15.75, d: 8.77 },
+  { t0: 26.9, t1: 31.2, text: 'स्टेशन आया… दरवाज़े खुले… पर कोई नहीं चढ़ा।', scr: 'स्टेशन आया… दरवाज़े खुले…|पर कोई नहीं चढ़ा।', who: 'N', vo: 'n4', vt: 26.9, d: 4.19 },
+  { t0: 32.15, t1: 35.1, text: 'रोहन ने अम्मा की नज़र का पीछा किया…', who: 'N', vo: 'n5', vt: 32.15, d: 2.91 },
+  { t0: 35.4, t1: 38.9, text: 'शीशे में वो ख़ुद दिख रहा था…', who: 'N', vo: 'n6', vt: 35.4, d: 3.45 },
+  { t0: 39.2, t1: 42.9, text: 'पर अम्मा की सीट… ख़ाली थी।', who: 'N', vo: 'n7', vt: 39.2, d: 2.96 },
+  { t0: 49.0, t1: 52.0, text: 'रोहन बैग छोड़कर अगले डिब्बे की तरफ़ भागा…', scr: 'रोहन अगले डिब्बे की तरफ़ भागा…', who: 'N', vo: 'n8', vt: 49.0, d: 2.57 },
+  { t0: 55.1, t1: 58.8, text: 'वही कोना। वही सीट। वही टिफ़िन।', who: 'N', vo: 'n9', vt: 55.1, d: 3.63 },
+  { t0: 61.1, t1: 66.5, text: 'बेटा… मेरा स्टेशन आ गया… पर मैं उतर नहीं सकती।', scr: 'बेटा… मेरा स्टेशन आ गया…|पर मैं उतर नहीं सकती।', who: 'M', vo: 'm1', vt: 61.1, d: 5.33 },
+  { t0: 67.8, t1: 73.2, text: 'भाग 2 देखने के लिए… फ़ॉलो और सब्सक्राइब करो!', scr: '', who: 'N', vo: 'n10', vt: 67.8, d: 3.77 },
 ];
-export const DUR = 64.0;
+export const DUR = 73.2;
 const T_RING = 7.4, T_CUT = 11.2, T_STA0 = 17.6, T_OPEN = 18.4, T_CLOSE = 23.3, T_STA1 = 24.6, T_EMPTY = 30.4, T_TURN2 = 38.4, T_SEE2 = 45.5, T_BEHIND = 51.0, T_BLACK = 57.4, END = 58.4;
-const talk = (t, ids) => SUBS.some(S => ids.includes(S.vo) && t > S.vt && t < S.t1 - 0.3) && BOIL.step % 3 !== 0;
+const talk = (t, ids) => SUBS.some(S => ids.includes(S.vo) && t > S.vt && t < S.vt + S.d - 0.1) && BOIL.step % 3 !== 0;   // t = FILM time
 
 // camera: either a look-at target (lk) or a yaw/pitch (POV). yaw 0 looks -z, +π/2 looks +x.
 // [t0, t1, pos0, pos1, lookOrYaw0, lookOrYaw1, fov, ease]
@@ -234,7 +238,7 @@ const SH = [
   { t: [T_SEE2, 46.5], p: [[-0.15, 1.58, -14.45], [-0.18, 1.57, -14.5]], ...YAW(-0.55, -1.1, -0.2, -0.38), fov: 58, set: 'G2', pov: 1 },
   { t: [46.5, 49.6], p: [[-0.18, 1.57, -14.5], [-0.22, 1.55, -14.62]], ...YAW(-1.1, -1.13, -0.38, -0.4), fov: 58, fov1: 50, set: 'G2', pov: 1 },
   { t: [49.6, 51.6], p: [[-0.22, 1.55, -14.62], [-0.08, 1.56, -14.42]], ...YAW(-1.13, -Math.PI, -0.4, -0.16), fov: 52, set: 'H1', pov: 1 },
-  { t: [51.6, DUR + 1], p: [[-0.08, 1.56, -14.42], [-0.07, 1.53, -14.3]], ...LOOK([-0.04, 1.42, MAAS_Z], [-0.04, 1.43, MAAS_Z]), fov: 50, set: 'H2', pov: 1 },
+  { t: [51.6, 99], p: [[-0.08, 1.56, -14.42], [-0.07, 1.53, -14.3]], ...LOOK([-0.04, 1.42, MAAS_Z], [-0.04, 1.43, MAAS_Z]), fov: 50, set: 'H2', pov: 1 },
 ];
 const shotAt = t => SH.find(s => t >= s.t[0] && t < s.t[1]) || SH[SH.length - 1];
 // G1: stand up from the seat, turn, run down the aisle, through the gangway into the next coach
@@ -402,9 +406,9 @@ function poseWorld(t, S) {
   MAAS.g.visible = t >= T_BEHIND - 0.6;
   MAAS.head.rotation.set(-0.12, 0, 0, 'YXZ');
 }
-function exps(t, S) {
+function exps(t, S, tf) {
   const R = { exp: { eyes: 'half', brows: 'flat', mouth: 'flat' }, look: [0, 0.6] };
-  if (t >= T_RING && t < T_CUT) R.exp = { eyes: 'open', brows: 'flat', mouth: talk(t, ['r1']) ? 'open' : 'flat' };
+  if (t >= T_RING && t < T_CUT) R.exp = { eyes: 'open', brows: 'flat', mouth: talk(tf, ['r1']) ? 'open' : 'flat' };
   if (t >= T_CUT && t < T_STA0) R.exp = { eyes: 'calm', brows: 'sad', mouth: 'sad' };
   if (S.set === 'D') { R.exp = { eyes: 'half', brows: 'flat', mouth: 'flat' }; R.look = [0.4, 0]; }
   if (S.set === 'E1') { R.exp = { eyes: 'open', brows: 'flat', mouth: 'flat' }; R.look = [0, 0]; }
@@ -412,7 +416,7 @@ function exps(t, S) {
   if (S.set === 'F1') { R.exp = { eyes: 'pop', brows: 'up', mouth: 'o' }; R.look = [-0.8, 0]; R.sweat = 1; }
   const Mx = { exp: { eyes: 'open', brows: 'sad', mouth: 'flat' }, look: [0, 0] };
   if (S.set === 'F2' && t > 38.6) Mx.look = [0, 0.1];
-  if (S.set === 'H2') Mx.exp = { eyes: t > 55.6 ? 'teary' : 'open', brows: 'sad', mouth: talk(t, ['m1']) ? 'open' : 'flat' };
+  if (S.set === 'H2') Mx.exp = { eyes: t > 55.6 ? 'teary' : 'open', brows: 'sad', mouth: talk(tf, ['m1']) ? 'open' : 'flat' };
   return { R, M: Mx };
 }
 // flicker: the coach lights stutter at the scares (0 = dark, 1 = normal)
@@ -422,8 +426,9 @@ function lightAt(t) {
 }
 
 let ready = false;
-export function frame(comp, t) {
+export function frame(comp, tf) {
   if (!ready) { build(); ready = true; }
+  const t = toStory(tf);
   const S = shotAt(t);
   poseWorld(t, S);
   let pos, look;
@@ -443,7 +448,7 @@ export function frame(comp, t) {
   const Sh = shapes(snap(N, scene, cam), { minArea: 14 });
   [SC, FACE, FACER].forEach(clearGroup); [GLOW, FX, SUBK, SUBT].forEach(clear);
   drawRegions(Sh); const li = lightAt(t); glows(Sh, li);
-  const X = exps(t, S);
+  const X = exps(t, S, tf);
   const rohNow = ROH_P.g.visible ? ROH_P : ROH_L, rohR = ROHR_P.g.visible ? ROHR_P : ROHR_L;
   faceOn(FACE, rohNow, { ...X.R, skin: C3.rSkin, iris: '#3a2414', brow: '#1f1714', t }, 300);
   for (const [c, sd] of [[MAA1, 500], [MAA2, 560], [MAAS, 620]]) faceOn(FACE, c, { ...X.M, skin: C3.mSkin, fem: 1, iris: '#2a1c14', brow: '#b5b0a8', old: 1, glasses: 1, t }, sd);
@@ -465,7 +470,7 @@ export function frame(comp, t) {
     if (t >= T_BLACK) { g.fillStyle = `rgba(0,0,0,${t < END ? eio(pr(t, T_BLACK, T_BLACK + 0.25)) : 0.82})`; g.fillRect(0, 0, W, H); }
     g.restore(); }
   badge(t); clock(t);
-  if (!NOSUBS) { subTo(t); title(t); }
+  if (!NOSUBS) { subTo(tf); title(t); }
   endCard(t);
   comp.paperCam(CAM.x * 0.6, CAM.y * 0.6, CAM.s / 0.6); comp.clean = true; comp.begin(PAPER);
   comp.group(SC); comp.group(FACER); comp.crayon(GLOW.c); comp.group(FACE); comp.crayon(FX.c); comp.knock(SUBK.c); comp.crayon(SUBT.c);
@@ -475,8 +480,9 @@ export function testFrame(comp, t) { frame(comp, t); }
 
 // ——— events (for the mix) ———
 export const EV = [];
-const ev = (t, type, o = {}) => EV.push({ t: +t.toFixed(3), type, ...o });
-SUBS.forEach(S => { if (S.vo) ev(S.vt, 'voice', { id: S.vo, who: S.who }); });
+const ev = (t, type, o = {}) => { const f = toFilm(t); EV.push({ t: +f.toFixed(3), type, ...o, ...(o.dur ? { dur: +(toFilm(t + o.dur) - f).toFixed(3) } : {}) }); };
+const evF = (t, type, o = {}) => EV.push({ t: +t.toFixed(3), type, ...o });
+SUBS.forEach(S => { if (S.vo) evF(S.vt, 'voice', { id: S.vo, who: S.who }); });
 ev(0, 'train', { dur: T_STA0 - 0.6 }); ev(T_RING, 'buzz', { dur: T_CUT - T_RING }); ev(T_CUT, 'tap');
 ev(T_STA0 - 1.4, 'brake', { dur: 1.6 }); ev(T_STA0 + 0.2, 'chime'); ev(T_OPEN, 'doors'); ev(T_OPEN + 0.9, 'platform', { dur: T_CLOSE - T_OPEN }); ev(T_CLOSE - 0.6, 'beep', { dur: 0.6 }); ev(T_CLOSE, 'doors');
 ev(T_STA1, 'train', { dur: T_BLACK - T_STA1 }); ev(T_EMPTY, 'stinger'); ev(T_EMPTY, 'flicker', { dur: 0.7 }); ev(34.0, 'heartbeat', { dur: 5.6 }); ev(38.6, 'stinger'); ev(38.6, 'flicker', { dur: 0.5 });
