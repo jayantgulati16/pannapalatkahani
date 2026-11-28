@@ -122,8 +122,12 @@ for e in EV:
         for k in range(n): add(F, nz(heartbeat(.9), .28 + .1 * k / n), t + k * .8, 1.0, 0)
     elif ty == 'run':
         k = 0
-        while k * .3 < e['dur']: add(F, foot(), t + k * .3, 1.0, (-.15, .15)[k % 2]); k += 1
+        while k * .22 < e['dur']: add(F, foot(), t + k * .22, 1.0, (-.15, .15)[k % 2]); k += 1
         add(F, nz(bp(noise(e['dur']), 400, 2500)[:int(e['dur'] * SR)] * .5, .02), t, 1.0, 0)
+    elif ty == 'pant':   # his hard breathing after the run
+        k = 0
+        while k * .62 < e['dur']:
+            L = .42; x = bp(noise(L), 500, 2600)[:int(L * SR)] * np.sin(np.pi * tt_(L) / L) ** 2; add(F, nz(x, .05 * (1 - .5 * k * .62 / e['dur'])), t + k * .62, 1.0, 0); k += 1
     elif ty == 'gangway': add(F, nz(clack(.6, .9), .12), t, 1.0, 0); add(F, nz(rumble(1.0, .8)[:SR], .06), t, 1.0, 0)
     elif ty == 'whoosh': add(F, whoosh(.3, .25), t - .1, .45, 0)
     elif ty == 'boom': add(F, nz(thump(1.0, 45), .8), t, 1.0, 0); add(F, nz(rumble(2.5, 1.0)[:int(2.5 * SR)], .15), t, 1.0, 0)

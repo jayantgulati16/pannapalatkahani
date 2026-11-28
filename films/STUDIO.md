@@ -53,6 +53,7 @@ Template episode: films/baarish-wali-chitthi (Arjun + Meera, two balconies, pull
 ## Jayant's taste (20 Nov) — read before pitching
 - Soft/cute topics get rejected ("maja nhi aya"). Pitch BOLD one-line hooks by genre (horror / thriller / jasoosi / microdrama), each with the Part-1 cliffhanger.
 - 2-PART format: Part 1 ends on a cliffhanger + end card "भाग 2 · कल शाम 7:30 · Follow करो"; Part 2 next day (recap hook 0–3 s, twist, payoff, loop). A Part-2 day needs no topic research: build it from the previous TREATMENT.md.
+- SHOW THE CHARACTER, NOT ONLY THE CAMERA (Jayant 28 Nov, Ep 14: "camera bhaag raha hai — emotion dar kaise dikhega? maja nhi aya"): when a character acts (runs, turns, sees the scare), show HIM doing it with his face — tracking shots in front of him, reaction close-ups. POV only as a short insert. In 3D use the jointed rig (rohanRig/poseRig in films/ep-20261201/body.js).
 - No crayon-magic plot device ("cryon seh bahr neklo"). Look can change per story; Ep 4 introduced "night pastel on black paper" (ep-20261121).
 - Gemini key: read GEMINI_API_KEY env var if present, else /root/.gemini_key; ask Jayant only if neither exists.
 

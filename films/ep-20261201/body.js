@@ -139,8 +139,43 @@ function rohan(p, o = {}) {
   }
   let phone = null;
   if (ph) { phone = G(g, 0.02, 0.88, 0.33); phone.rotation.x = -2.24; boxm(phone, 'phone', -0.036, -0.075, -0.005, 0.036, 0.075, 0.005); }
-  boxm(g, 'bag', -0.52, 0.46, -0.14, -0.28, 0.76, 0.1);
   return { g, head: hd, r: 0.13, phone };
+}
+// Rohan STANDING / RUNNING: a jointed rig (hips → legs/knees, torso → arms/elbows, head) posed every frame by poseRig()
+function rohanRig(p) {
+  const root = G(p), hips = G(root, 0, 0.92, 0), legs = {}, arms = {};
+  ball(hips, 'trou', 0, 0, 0, 0.165, 1.05, 0.6, 0.85);
+  for (const s of [-1, 1]) {
+    const hj = G(hips, s * 0.09, 0, 0); limb(hj, 'trou', V(0, 0, 0), V(0, -0.44, 0), 0.072);
+    const kj = G(hj, 0, -0.44, 0); limb(kj, 'trou', V(0, 0, 0), V(0, -0.4, 0), 0.06); ball(kj, 'shoe', 0, -0.44, 0.05, 0.066, 0.9, 0.6, 1.6);
+    legs[s] = { hj, kj };
+  }
+  const tor = G(hips, 0, 0.04, 0);
+  const t1 = limb(tor, 'shirt', V(0, 0.08, -0.01), V(0, 0.42, 0), 0.15); t1.scale.set(1.2, 1, 0.82);
+  limb(tor, 'rSkin', V(0, 0.46, 0), V(0, 0.58, 0.01), 0.045); ball(tor, 'shirt', 0, 0.505, 0, 0.1, 1.5, 0.45, 1.15);
+  const hd = G(tor, 0, 0.71, 0.02);
+  ball(hd, 'rHead', 0, 0, 0, 0.13); for (const s of [-1, 1]) ball(hd, 'rHead', s * 0.127, -0.005, -0.005, 0.028, 0.55, 1, 1);
+  const hair = add(M(new THREE.SphereGeometry(0.139, 26, 18, 0, Math.PI * 2, 0, Math.PI * 0.5), 'rHair'), 0, 0.01, -0.012, hd); hair.rotation.x = -0.55;
+  ball(hd, 'rHair', 0.025, 0.095, 0.06, 0.075, 1.45, 0.5, 0.95);
+  for (const s of [-1, 1]) {
+    const sj = G(tor, s * 0.21, 0.4, 0); limb(sj, 'shirt', V(0, 0, 0), V(0, -0.27, 0), 0.056);
+    const ej = G(sj, 0, -0.27, 0); limb(ej, 'shirt', V(0, 0, 0), V(0, -0.08, 0), 0.05); limb(ej, 'rSkin', V(0, -0.08, 0), V(0, -0.24, 0), 0.04);
+    hand3(ej, 'rSkin', V(0, -0.24, 0), V(0, -1, 0), V(0, 0, 1), -s, 'fist');
+    arms[s] = { sj, ej };
+  }
+  return { g: root, root, hips, tor, head: hd, r: 0.13, legs, arms };
+}
+// mode: 'run' (a full sprint cycle) | 'scared' (frozen, hands up at the chest, breathing hard)
+function poseRig(Rg, mode, t) {
+  const run = mode === 'run', ph = t * Math.PI * 2 * 2.3;
+  Rg.hips.position.y = 0.92 + (run ? 0.045 * Math.abs(Math.sin(ph)) : -0.02 + 0.008 * Math.sin(t * 10));
+  Rg.tor.rotation.x = run ? 0.3 : 0.06 + 0.025 * Math.sin(t * 10);
+  for (const s of [-1, 1]) {
+    const a = Math.sin(ph + (s > 0 ? 0 : Math.PI)), L = Rg.legs[s], A = Rg.arms[s];
+    L.hj.rotation.x = run ? -0.8 * a : (s > 0 ? -0.08 : 0.06); L.kj.rotation.x = run ? 0.25 + 1.05 * Math.max(0, -a) : 0.06;
+    A.sj.rotation.set(run ? 0.85 * a : -0.35, 0, s * (run ? 0.12 : 0.3)); A.ej.rotation.x = run ? -1.35 : -1.75;
+  }
+  Rg.head.rotation.x = run ? -0.22 : -0.04;
 }
 // Maa (the old woman): white saree, the pallu over her head, grey hair, round glasses, the steel tiffin on her lap / at her chest
 function maa(p, o = {}) {
@@ -174,7 +209,7 @@ function maa(p, o = {}) {
 
 // ——— build the world ———
 let N, scene, cam, MIR, PLAT, COACH1, TL = [];
-let ROH_P, ROH_L, ROHR_P, ROHR_L, MAA1, MAA2, MAAS;
+let ROH_P, ROH_L, ROHR_P, ROHR_L, MAA1, MAA2, MAAS, RIG;
 const ROH_Z = 3.6, MAA_Z = 1.25, SEAT_X = -CW + 0.27, Z2 = -2 * CL - 1, MAA2_Z = Z2 + 12.0, MAAS_Z = -13.72;
 const seated = (p, x, z) => { const g = G(p, x, 0, z); g.rotation.y = Math.PI / 2; return g; };
 function build() {
@@ -185,7 +220,8 @@ function build() {
   COACH1 = coach(scene, 0); coach(scene, Z2);
   PLAT = platform(scene);
   ROH_P = rohan(seated(scene, SEAT_X, ROH_Z), { phone: 1 }); ROH_L = rohan(seated(scene, SEAT_X, ROH_Z));
-  MAA1 = maa(seated(scene, SEAT_X, MAA_Z));
+  MAA1 = maa(seated(scene, SEAT_X, MAA_Z)); RIG = rohanRig(scene);
+  boxm(scene, 'bag', SEAT_X - 0.12, 0.46, ROH_Z + 0.28, SEAT_X + 0.12, 0.76, ROH_Z + 0.52);   // his laptop bag (left behind when he runs)
   MAA2 = maa(seated(scene, SEAT_X, MAA2_Z));   // the next coach: the same corner seat, the same woman
   { const g = G(scene, -0.04, 0, MAAS_Z); g.rotation.y = Math.PI; MAAS = maa(g, { stand: 1 }); }   // right behind him, standing, facing -z
   // the night glass on the right-hand wall (x = +CW) reflects the coach: a mirrored copy behind it, faint. MAA IS NOT IN IT.
@@ -193,6 +229,7 @@ function build() {
   MIR = G(scene, 2 * CW + 0.08, 0, 0); MIR.scale.x = -1;
   coach(MIR, 0);
   ROHR_P = rohan(seated(MIR, SEAT_X, ROH_Z), { phone: 1 }); ROHR_L = rohan(seated(MIR, SEAT_X, ROH_Z));
+  boxm(MIR, 'bag', SEAT_X - 0.12, 0.46, ROH_Z + 0.28, SEAT_X + 0.12, 0.76, ROH_Z + 0.52);
   MAP = R;
   cam = new THREE.PerspectiveCamera(52, RW / RH, 0.03, 200);
   N = makeNPR();
@@ -234,14 +271,24 @@ const SH = [
   { t: [27.4, 34.0], p: [[-0.98, 1.27, ROH_Z], [-0.96, 1.26, ROH_Z - 0.02]], ...YAW(1.38, 1.34, -0.03, -0.05), fov: 64, fov1: 54, set: 'E2', pov: 1 },
   { t: [34.0, 36.6], p: [[0.15, 1.22, 3.0], [0.12, 1.22, 3.12]], ...LOOK([SEAT_X, 1.16, ROH_Z], [SEAT_X, 1.17, ROH_Z]), fov: 40, set: 'F1' },
   { t: [36.6, 39.6], p: [[0.5, 1.1, 2.45], [0.4, 1.12, 2.2]], ...LOOK([SEAT_X + 0.16, 1.02, MAA_Z + 0.06], [SEAT_X + 0.14, 1.08, MAA_Z + 0.06]), fov: 34, set: 'F2' },
-  { t: [39.6, 45.5], set: 'G1', fov: 62, pov: 1 },
-  { t: [T_SEE2, 46.5], p: [[-0.15, 1.58, -14.45], [-0.18, 1.57, -14.5]], ...YAW(-0.55, -1.1, -0.2, -0.38), fov: 58, set: 'G2', pov: 1 },
-  { t: [46.5, 49.6], p: [[-0.18, 1.57, -14.5], [-0.22, 1.55, -14.62]], ...YAW(-1.1, -1.13, -0.38, -0.4), fov: 58, fov1: 50, set: 'G2', pov: 1 },
-  { t: [49.6, 51.6], p: [[-0.22, 1.55, -14.62], [-0.08, 1.56, -14.42]], ...YAW(-1.13, -Math.PI, -0.4, -0.16), fov: 52, set: 'H1', pov: 1 },
-  { t: [51.6, 99], p: [[-0.08, 1.56, -14.42], [-0.07, 1.53, -14.3]], ...LOOK([-0.04, 1.42, MAAS_Z], [-0.04, 1.43, MAAS_Z]), fov: 50, set: 'H2', pov: 1 },
+  // G: he RUNS (seen, not POV) — tracking in front of him down the aisle, then from the next coach as he bursts through the gangway
+  { t: [39.6, 42.5], set: 'G1', fn: t => { const r = rigAt(t); return { pos: [r.x + 0.14, 1.36, r.z - 1.85], look: [r.x, 1.42, r.z], fov: 52 }; } },
+  { t: [42.5, T_SEE2], set: 'G1b', fn: t => ({ pos: [0.28, 1.22, -16.7], look: [0, 1.35, -13.4], fov: 50 }) },
+  { t: [T_SEE2, 47.4], set: 'G2', fn: t => { const e = eio(pr(t, T_SEE2, 47.4)); return { pos: [0.5, 1.74, lerp(-13.85, -13.95, e)], look: [lerp(-0.55, -0.75, e), 1.22, -14.85], fov: 52 }; } },
+  { t: [47.4, 49.6], set: 'G2b', hideM2: 1, fn: t => { const e = eio(pr(t, 47.4, 49.6)); return { pos: [-0.98, 1.36, -15.05], look: [-0.05, 1.58, -14.6], fov: lerp(46, 40, e) }; } },
+  { t: [49.6, 51.6], set: 'H1', fn: t => ({ pos: [0.34, 1.62, -15.5], look: [-0.05, 1.5, -13.75], fov: 48 }) },
+  { t: [51.6, 54.8], set: 'H2', hideR: 1, fn: t => { const e = eio(pr(t, 51.6, 54.8)); return { pos: [-0.07, 1.6, lerp(-14.36, -14.3, e)], look: [-0.04, 1.43, MAAS_Z], fov: 50 }; } },
+  { t: [54.8, 99], set: 'H3', hideS: 1, fn: t => { const e = eio(pr(t, 54.8, 57.4)); return { pos: [-0.04, 1.47, lerp(-13.78, -13.85, e)], look: [-0.05, 1.63, -14.42], fov: lerp(44, 38, e) }; } },
 ];
 const shotAt = t => SH.find(s => t >= s.t[0] && t < s.t[1]) || SH[SH.length - 1];
-// G1: stand up from the seat, turn, run down the aisle, through the gangway into the next coach
+// Rohan on his feet: where he is (x, z), which way he faces (yaw: π = towards -z) and his mode
+function rigAt(t) {
+  const u = pr(t, 39.6, 44.8), z0 = ROH_Z - 0.15, z1 = -14.6;
+  let x = lerp(-0.6, -0.08, eio(pr(t, 39.6, 40.4))), z = lerp(z0, z1, eo(u) * 0.15 + u * 0.85), yaw = Math.PI, mode = u < 1 ? 'run' : 'scared';
+  if (t >= T_SEE2) yaw = Math.PI + 1.15 * eio(pr(t, 45.7, 46.4));
+  if (t >= 49.6) { yaw = Math.PI + 1.15 + (Math.PI - 1.15) * eio(pr(t, 49.9, 50.9)); z = lerp(z1, -14.42, eio(pr(t, 49.6, 50.6))); }
+  return { x, z, yaw, mode };
+}
 function runCam(t) {
   const u = pr(t, 39.6, 40.6), r = pr(t, 40.6, 45.3), run = r > 0 && r < 1 ? 1 : 0;
   const p = u < 1 ? [lerp(-0.98, -0.7, eio(u)), lerp(1.27, 1.6, eio(u)), ROH_Z - 0.1 * u] : [lerp(-0.7, -0.12, eio(pr(r, 0, 0.3))), 1.6 + 0.035 * Math.abs(Math.sin(t * 9)) * run, lerp(ROH_Z - 0.1, -14.45, eio(r))];
@@ -389,8 +436,11 @@ function poseWorld(t, S) {
   for (const d of COACH1.userData.doors) if (d.s > 0) for (const L of d.leaves) { L.position.z = L.userData.h * 0.62 * open; L.position.x = d.s * 0.08 * Math.min(1, open * 5); }
   // Rohan: the phone version until he puts it away, then hands on the lap
   const ph = t < T_CUT + 0.6;
-  ROH_P.g.visible = ph; ROHR_P.g.visible = ph; ROH_L.g.visible = !ph; ROHR_L.g.visible = !ph;
+  const up = t >= 39.6;
+  ROH_P.g.visible = ph; ROHR_P.g.visible = ph; ROH_L.g.visible = !ph && !up; ROHR_L.g.visible = !ph && !up;
   if (S.pov) { ROH_P.g.visible = ROH_L.g.visible = false; }
+  RIG.g.visible = up && t < T_BLACK && !S.hideR;
+  if (up) { const r = rigAt(t); RIG.root.position.set(r.x, 0, r.z); RIG.root.rotation.y = r.yaw; poseRig(RIG, r.mode, t); }
   let ry = 0, rp = 0;
   if (t < T_CUT) { rp = 0.42; ry = 0.05; }
   else if (S.set === 'D') { ry = 0; rp = 0.1; }
@@ -402,8 +452,8 @@ function poseWorld(t, S) {
   const my = S.set === 'F2' ? lerp(0, -0.75, eio(pr(t, 37.4, 38.6))) : 0;
   MAA1.head.rotation.set(S.set === 'F2' ? -0.04 : 0.02, my, 0, 'YXZ');
   MAA1.g.visible = t < 39.6;
-  MAA2.g.visible = t >= 39.6 && t < T_BEHIND - 0.6; MAA2.head.rotation.set(0.02, 0, 0, 'YXZ');
-  MAAS.g.visible = t >= T_BEHIND - 0.6;
+  MAA2.g.visible = t >= 39.6 && t < 50.9 && !S.hideM2; MAA2.head.rotation.set(0.02, S.set === 'G2' || S.set === 'G2b' ? -0.5 * eio(pr(t, 46.2, 47.2)) : 0, 0, 'YXZ');
+  MAAS.g.visible = t >= 50.9 && !S.hideS;
   MAAS.head.rotation.set(-0.12, 0, 0, 'YXZ');
 }
 function exps(t, S, tf) {
@@ -414,9 +464,12 @@ function exps(t, S, tf) {
   if (S.set === 'E1') { R.exp = { eyes: 'open', brows: 'flat', mouth: 'flat' }; R.look = [0, 0]; }
   if (S.set === 'E2') { R.exp = { eyes: 'open', brows: 'worried', mouth: 'small' }; R.look = [0, 0]; }
   if (S.set === 'F1') { R.exp = { eyes: 'pop', brows: 'up', mouth: 'o' }; R.look = [-0.8, 0]; R.sweat = 1; }
+  if (S.set === 'G1' || S.set === 'G1b') { R.exp = { eyes: 'pop', brows: 'worried', mouth: BOIL.step % 4 < 2 ? 'open' : 'o' }; R.look = [0, 0]; R.sweat = 1; }
+  if (S.set === 'G2' || S.set === 'G2b' || S.set === 'H1') { R.exp = { eyes: 'pop', brows: 'up', mouth: S.set === 'G2b' ? 'wavy' : 'o' }; R.look = [0, 0]; R.sweat = 1; }
+  if (S.set === 'H3') { R.exp = { eyes: 'pop', brows: 'worried', mouth: 'wavy' }; R.look = [0, -0.2]; R.sweat = 1; R.tears = t > 55.4; }
   const Mx = { exp: { eyes: 'open', brows: 'sad', mouth: 'flat' }, look: [0, 0] };
   if (S.set === 'F2' && t > 38.6) Mx.look = [0, 0.1];
-  if (S.set === 'H2') Mx.exp = { eyes: t > 55.6 ? 'teary' : 'open', brows: 'sad', mouth: talk(tf, ['m1']) ? 'open' : 'flat' };
+  if (S.set === 'H2' || S.set === 'H3') Mx.exp = { eyes: t > 55.6 ? 'teary' : 'open', brows: 'sad', mouth: talk(tf, ['m1']) ? 'open' : 'flat' };
   return { R, M: Mx };
 }
 // flicker: the coach lights stutter at the scares (0 = dark, 1 = normal)
@@ -432,7 +485,8 @@ export function frame(comp, tf) {
   const S = shotAt(t);
   poseWorld(t, S);
   let pos, look;
-  if (S.set === 'G1') { const c = runCam(t); pos = c.p; const d = [Math.sin(c.yaw) * Math.cos(c.pit), Math.sin(c.pit), -Math.cos(c.yaw) * Math.cos(c.pit)]; look = pos.map((v, i) => v + d[i]); }
+  if (S.fn) { const c = S.fn(t); pos = c.p || c.pos; look = c.look; S.fovNow = c.fov; }
+  else if (S.set === 'G1x') { const c = runCam(t); pos = c.p; const d = [Math.sin(c.yaw) * Math.cos(c.pit), Math.sin(c.pit), -Math.cos(c.yaw) * Math.cos(c.pit)]; look = pos.map((v, i) => v + d[i]); }
   else {
     const e = eio(clamp((t - S.t[0]) / (S.t[1] - S.t[0])));
     pos = S.p[0].map((v, i) => lerp(v, S.p[1][i], e));
@@ -442,14 +496,14 @@ export function frame(comp, tf) {
   // a small shake on the scares
   const shk = (t0, d, a) => t > t0 && t < t0 + d ? a * (1 - pr(t, t0, t0 + d)) : 0, sa = shk(T_EMPTY, 0.5, 0.012) + shk(T_SEE2, 0.5, 0.015) + shk(T_BEHIND, 0.6, 0.02);
   pos = [pos[0] + sa * Math.sin(t * 61), pos[1] + sa * Math.cos(t * 53), pos[2]];
-  cam.fov = S.fov1 ? lerp(S.fov, S.fov1, eio(clamp((t - S.t[0]) / (S.t[1] - S.t[0])))) : S.fov; cam.updateProjectionMatrix();
+  cam.fov = S.fn ? S.fovNow : S.fov1 ? lerp(S.fov, S.fov1, eio(clamp((t - S.t[0]) / (S.t[1] - S.t[0])))) : S.fov; cam.updateProjectionMatrix();
   cam.position.set(...pos); cam.lookAt(V(...look));
   scene.updateMatrixWorld(true);
   const Sh = shapes(snap(N, scene, cam), { minArea: 14 });
   [SC, FACE, FACER].forEach(clearGroup); [GLOW, FX, SUBK, SUBT].forEach(clear);
   drawRegions(Sh); const li = lightAt(t); glows(Sh, li);
   const X = exps(t, S, tf);
-  const rohNow = ROH_P.g.visible ? ROH_P : ROH_L, rohR = ROHR_P.g.visible ? ROHR_P : ROHR_L;
+  const rohNow = RIG.g.visible ? RIG : ROH_P.g.visible ? ROH_P : ROH_L, rohR = ROHR_P.g.visible ? ROHR_P : ROHR_L;
   faceOn(FACE, rohNow, { ...X.R, skin: C3.rSkin, iris: '#3a2414', brow: '#1f1714', t }, 300);
   for (const [c, sd] of [[MAA1, 500], [MAA2, 560], [MAAS, 620]]) faceOn(FACE, c, { ...X.M, skin: C3.mSkin, fem: 1, iris: '#2a1c14', brow: '#b5b0a8', old: 1, glasses: 1, t }, sd);
   maskTo(FACE, Sh, ['rohan', 'maa']);
@@ -486,6 +540,6 @@ SUBS.forEach(S => { if (S.vo) evF(S.vt, 'voice', { id: S.vo, who: S.who }); });
 ev(0, 'train', { dur: T_STA0 - 0.6 }); ev(T_RING, 'buzz', { dur: T_CUT - T_RING }); ev(T_CUT, 'tap');
 ev(T_STA0 - 1.4, 'brake', { dur: 1.6 }); ev(T_STA0 + 0.2, 'chime'); ev(T_OPEN, 'doors'); ev(T_OPEN + 0.9, 'platform', { dur: T_CLOSE - T_OPEN }); ev(T_CLOSE - 0.6, 'beep', { dur: 0.6 }); ev(T_CLOSE, 'doors');
 ev(T_STA1, 'train', { dur: T_BLACK - T_STA1 }); ev(T_EMPTY, 'stinger'); ev(T_EMPTY, 'flicker', { dur: 0.7 }); ev(34.0, 'heartbeat', { dur: 5.6 }); ev(38.6, 'stinger'); ev(38.6, 'flicker', { dur: 0.5 });
-ev(40.6, 'run', { dur: 4.7 }); ev(44.3, 'gangway'); ev(T_SEE2, 'stinger'); ev(T_SEE2, 'flicker', { dur: 0.5 }); ev(49.6, 'whoosh'); ev(T_BEHIND, 'stinger'); ev(T_BEHIND, 'flicker', { dur: 0.6 }); ev(55.9, 'flicker', { dur: 1.2 });
+ev(39.6, 'run', { dur: 5.2 }); ev(44.8, 'pant', { dur: 12.4 }); ev(44.3, 'gangway'); ev(T_SEE2, 'stinger'); ev(T_SEE2, 'flicker', { dur: 0.5 }); ev(49.6, 'whoosh'); ev(T_BEHIND, 'stinger'); ev(T_BEHIND, 'flicker', { dur: 0.6 }); ev(55.9, 'flicker', { dur: 1.2 });
 ev(T_BLACK, 'boom'); ev(END, 'write', { dur: 1.6 });
 [['A', 0], ['B', 5.2], ['C', 11.4], ['D', T_STA0], ['E', T_STA1], ['F', T_EMPTY], ['G', 34.0], ['H', 39.6], ['I', T_SEE2], ['J', T_BEHIND], ['K', T_BLACK], ['Z', END]].forEach(([id, t]) => ev(t, 'cue', { id }));
